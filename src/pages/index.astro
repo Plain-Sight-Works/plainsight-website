@@ -277,4 +277,94 @@ const caseStudies = workEntries.map((entry) => {
 
   </script>
 
+  <script is:inline>
+    // Hero aurora performance guard. The aurora animates background-position
+    // under a blur + difference blend, which forces a full repaint each frame —
+    // cheap on a discrete GPU, brutal on older integrated ones. Sample the real
+    // frame rate while the animation runs and freeze it on slow GPUs.
+    (function () {
+      const root = document.documentElement;
+      const KEY = 'auroraPerf';   // sessionStorage verdict: 'slow' | 'ok'
+      const FPS_FLOOR = 45;       // below this a window counts as "slow"
+      const WARMUP_MS = 250;      // ignore initial load stutter
+      const WINDOW_MS = 750;      // length of each measurement window
+
+      // prefers-reduced-motion is already handled in CSS — don't double-probe.
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      // Reuse a cached verdict: GPU speed is a device trait, so there's no need
+      // to re-probe (and re-jank) on every in-session navigation. Scoped to the
+      // session so a one-off false reading self-heals on the next visit.
+      let cached = null;
+      try { cached = sessionStorage.getItem(KEY); } catch (e) {}
+      if (cached === 'slow') { root.classList.add('aurora-static'); return; }
+      if (cached === 'ok') return;
+
+      function remember(verdict) {
+        try { sessionStorage.setItem(KEY, verdict); } catch (e) {}
+      }
+
+      function runProbe() {
+        // Require TWO consecutive slow windows before freezing. A single window
+        // can dip from a GC pause, image decode, or load jank — none of which
+        // mean the GPU is actually slow.
+        let warmupStart = null;
+        let warmedUp = false;
+        let windowStart = null;
+        let frames = 0;
+        let windowsRun = 0;
+        let windowsSlow = 0;
+
+        function tick(now) {
+          // rAF is throttled to ~1fps in a hidden tab, which reads as "slow".
+          // Abandon the probe (inconclusive) and re-evaluate on the next visit.
+          if (document.hidden) return;
+
+          if (warmupStart === null) warmupStart = now;
+          if (!warmedUp) {
+            if (now - warmupStart < WARMUP_MS) { requestAnimationFrame(tick); return; }
+            warmedUp = true;
+            windowStart = now;
+            frames = 0;
+            requestAnimationFrame(tick);
+            return;
+          }
+
+          frames++;
+          const elapsed = now - windowStart;
+          if (elapsed < WINDOW_MS) { requestAnimationFrame(tick); return; }
+
+          const fps = (frames * 1000) / elapsed;
+          windowsRun++;
+          if (fps < FPS_FLOOR) windowsSlow++;
+
+          if (windowsSlow >= 2) {
+            root.classList.add('aurora-static');
+            remember('slow');
+            return;
+          }
+          if (windowsRun >= 2) {     // ran both windows, not both slow → fine
+            remember('ok');
+            return;
+          }
+          windowStart = now;          // start the second window
+          frames = 0;
+          requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+
+      // Don't start probing while backgrounded — wait until the tab is visible.
+      if (document.hidden) {
+        document.addEventListener('visibilitychange', function onVis() {
+          if (document.hidden) return;
+          document.removeEventListener('visibilitychange', onVis);
+          runProbe();
+        });
+      } else {
+        runProbe();
+      }
+    })();
+  </script>
+
 </Base>

@@ -355,6 +355,13 @@
     }
   }
 
+  /* Runtime fallback: a load-time FPS probe (see index.astro) adds this class
+     on GPUs that can't sustain the animated blur+blend, freezing the aurora
+     in place. The static gradient look is preserved — only the motion stops. */
+  .aurora-static .hero-aurora-inner::after {
+    animation: none;
+  }
+
   /* Process section — interactive panel with state-based styling */
   .section-process {
     background-color: var(--color-bg-dark-process);
