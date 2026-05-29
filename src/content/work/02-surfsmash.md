@@ -10,6 +10,8 @@ tags:
 links:
   - label: "Download on the App Store"
     url: "https://apps.apple.com/us/app/surfsmash/id6760140234"
+  - label: "Get it on Google Play"
+    url: "https://play.google.com/store/apps/details?id=com.plainsight.sportsmash"
 tech: "React Native, Expo, Next.js, Supabase, TypeScript"
 challenge: "Most fantasy sports run on tidy stat feeds and a fixed calendar. Surfing has neither. Heats run on weather windows, scores land one judge at a time, and a single perfect ten can flip a leaderboard while the surfer is still paddling back out. The job was to take that energy and turn it into a game that feels alive the moment an event goes on, across a phone, a back office, and the open web."
 overview: "Surfsmash turns the World Surf League season into a card game you play with your friends. You draft surfers, spend a limited hand of cards across all 12 events, and watch your fantasy points climb wave by wave as each contest runs live. Think fantasy football, but with barrels. Plain Sight built the whole thing: the mobile app, the admin tool that runs the scoreboard behind it, and the launch site that sends people to the stores."
@@ -41,6 +43,6 @@ facts:
     value: "Next.js, Supabase, TypeScript"
   - label: "Scope"
     value: "Mobile app, admin tool, marketing site"
-outcome: "Surfsmash went from kickoff to the App Store in about three months, tested on real devices before it shipped. It is live on iOS today, the Android build is in final review for Google Play, and the season site is up and counting down to the next event. A limited hand of cards, a leaderboard that moves with the swell, and a full fantasy platform that shipped on time."
-results: "Surfsmash shipped on time: live on iOS, Android in final review for Google Play, and the season site up and counting down to the next event. A full fantasy platform, kickoff to App Store in about three months."
+outcome: "Surfsmash went from kickoff to the App Store in about three months, tested on real devices before it shipped. It is live on the App Store and Google Play, and the season site is up and counting down to the next event. A limited hand of cards, a leaderboard that moves with the swell, and a full fantasy platform that shipped on time."
+results: "Surfsmash shipped on time: live on iOS and Android, with the season site up and counting down to the next event. A full fantasy platform, kickoff to App Store in about three months."
 ---
