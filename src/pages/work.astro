@@ -5,25 +5,32 @@ import Base from "../layouts/Base.astro";
 import CaseStudyCard from "../components/CaseStudyCard.astro";
 import CTA from "../components/CTA.astro";
 import demiHero from "../assets/case-studies/demi-hero.png";
+import surfsmashHero from "../assets/case-studies/surfsmash-website-hero.png";
 
 const projects = (await getCollection("work")).sort(
   (a, b) => a.data.order - b.data.order
 );
 
-const heroImages: Record<number, ImageMetadata> = {
-  1: demiHero,
+const heroImages: Record<string, ImageMetadata> = {
+  demi: demiHero,
+  surfsmash: surfsmashHero,
 };
 
-const descriptions: Record<number, string> = {
-  1: "Complex AI kitchen software that needed to feel simple. We led with operator pain points, not tech jargon, and built a marketing site that makes Demi feel like relief, not another learning curve.",
+const descriptions: Record<string, string> = {
+  demi: "Complex AI kitchen software that needed to feel simple. We led with operator pain points, not tech jargon, and built a marketing site that makes Demi feel like relief, not another learning curve.",
+  surfsmash: "A card-based fantasy game for the World Surf League season. We built the whole platform: the iOS and Android app, the admin tool that runs live scoring, and the launch site. Kickoff to App Store in about three months.",
 };
 
-const caseStudies = projects.map((project) => ({
-  title: project.data.title,
-  description: descriptions[project.data.order] ?? project.data.challenge,
-  slug: project.id.replace(/^\d+-/, '').replace(/\.md$/, ''),
-  image: heroImages[project.data.order],
-}));
+const caseStudies = projects.map((project) => {
+  const slug = project.id.replace(/^\d+-/, '').replace(/\.md$/, '');
+  return {
+    title: project.data.title,
+    description: descriptions[slug] ?? project.data.challenge,
+    slug,
+    image: heroImages[slug],
+    tags: project.data.tags,
+  };
+});
 ---
 
 <Base title="Work | Plain Sight | Vancouver Web Design and Development" description="Selected projects showing our strategic approach to web development.">
@@ -40,6 +47,7 @@ const caseStudies = projects.map((project) => ({
           description={study.description}
           link={`/work/${study.slug}`}
           image={study.image}
+          tags={study.tags}
         />
       ))}
     </div>

@@ -3,9 +3,16 @@ import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 import Base from "../../layouts/Base.astro";
 import CTA from "../../components/CTA.astro";
+import AppGallery from "../../components/AppGallery.astro";
 import demiHero from "../../assets/case-studies/demi-hero.png";
 import demiOrdering from "../../assets/case-studies/demi-ordering.png";
 import demiPrep from "../../assets/case-studies/demi-prep.png";
+import surfsmashIcon from "../../assets/case-studies/surfsmash-icon.png";
+import surfsmashHero from "../../assets/case-studies/surfsmash-website-hero.png";
+import surfsmashAppHome from "../../assets/case-studies/app-home.png";
+import surfsmashAppLive from "../../assets/case-studies/app-live-event.png";
+import surfsmashAppCard from "../../assets/case-studies/app-athlete-card.png";
+import surfsmashSchedule from "../../assets/case-studies/surfsmash-schedule.png";
 
 export async function getStaticPaths() {
   const projects = await getCollection("work");
@@ -18,27 +25,36 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const d = project.data;
 
-// Debug: log the data to see what's undefined
-console.log('Project ID:', project.id);
-console.log('Project data:', d);
-console.log('URL value:', d.url);
-
-const heroImages: Record<number, ImageMetadata> = {
-  1: demiHero,
+// One slug-keyed manifest of named images per case study. Add new case
+// studies here by their slug; gallery/build blocks reference these keys.
+const images: Record<string, Record<string, ImageMetadata>> = {
+  demi: { hero: demiHero, approach: demiPrep, solution: demiOrdering },
+  surfsmash: {
+    icon: surfsmashIcon,
+    hero: surfsmashHero,
+    "app-home": surfsmashAppHome,
+    "app-live-event": surfsmashAppLive,
+    "app-athlete-card": surfsmashAppCard,
+    schedule: surfsmashSchedule,
+  },
 };
 
-const approachImages: Record<number, ImageMetadata> = {
-  1: demiPrep,
-};
-
-const solutionImages: Record<number, ImageMetadata> = {
-  1: demiOrdering,
-};
-
-const heroImage = heroImages[d.order];
-const approachImage = approachImages[d.order];
-const solutionImage = solutionImages[d.order];
+const slug = project.id.replace(/^\d+-/, '').replace(/\.md$/, '');
+const img = images[slug] ?? {};
+const heroImage = img.hero;
+const approachImage = img.approach;
+const solutionImage = img.solution;
 const isAlt = d.order % 2 === 0;
+
+// Rich layout (overview / what we built / under the hood / at a glance /
+// outcome) renders when `build` is present; otherwise the Demi-style
+// challenge / approach / solution / results layout renders.
+const isRich = !!d.build;
+
+const heroLinks = [
+  { label: `Visit ${d.url.replace(/^https?:\/\//, '').replace(/\/$/, '')}`, url: d.url },
+  ...(d.links ?? []),
+].filter((link) => link.url && link.url !== '#');
 ---
 
 <Base title={`${d.title} | Plain Sight`} description={d.challenge}>
@@ -46,8 +62,35 @@ const isAlt = d.order % 2 === 0;
     <a href="/work" class="back-link">← All Projects</a>
 
     <article class="project-article">
+      {d.icon && img[d.icon] && (
+        <Image src={img[d.icon]} alt={`${d.title} app icon`} width={72} height={72} class="rounded-2xl border border-border mb-6 block" />
+      )}
       <h1 class="font-heading text-page-hero font-black tracking-tighter leading-snug mb-5">{d.title}</h1>
-      <p class="text-section-subtitle text-text-muted leading-loose max-w-[960px] mb-12">{d.subtitle}</p>
+      <p class={`text-section-subtitle text-text-muted leading-loose max-w-[960px] ${isRich ? 'mb-6' : 'mb-12'}`}>{d.subtitle}</p>
+
+      {isRich && (
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-3 mb-12">
+          {d.tags && d.tags.length > 0 && (
+            <div class="flex flex-wrap gap-2">
+              {d.tags.map((tag) => (
+                <span class="border border-border rounded-full px-3 py-0.5 text-13 uppercase tracking-wider text-text-muted">{tag}</span>
+              ))}
+            </div>
+          )}
+          <div class="flex flex-wrap gap-x-6 gap-y-2">
+            {heroLinks.map((link) => (
+              <a href={link.url} target="_blank" rel="noopener noreferrer" class="text-accent text-15 font-semibold hover:underline inline-flex items-center gap-1.5">
+                {link.label}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div class="mb-20 rounded-xl overflow-hidden border border-border">
         {heroImage ? (
@@ -59,54 +102,137 @@ const isAlt = d.order % 2 === 0;
         )}
       </div>
 
-      <section class="grid grid-cols-[2fr_1fr] max-md:grid-cols-1 gap-12 mb-20 items-start">
-        <div>
-          <h2 class="text-case-study-title font-extrabold mb-6 text-text tracking-tight">Client Challenge</h2>
-          <p class="text-section-prose text-text-muted leading-extra-loose">{d.challenge}</p>
-        </div>
-        <div class="bg-surface border border-border rounded-xl p-6">
-          <div class="mb-5">
-            <span class="font-semibold text-15 text-text block mb-1">Tech Stack</span>
-            <span class="text-text-muted text-17">{d.tech}</span>
-          </div>
-          <div>
-            <span class="font-semibold text-15 text-text block mb-1">Visit Site</span>
-            <a href={d.url} target="_blank" rel="noopener noreferrer" class="text-accent text-17 hover:underline break-all inline-flex items-center gap-1.5">
-              {d.url?.replace('https://', '') || d.url || 'N/A'}
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-            </a>
-          </div>
-        </div>
-      </section>
+      {isRich ? (
+        <>
+          {d.overview && (
+            <section class="mb-20">
+              <h2 class="text-case-study-title font-extrabold mb-6 text-text tracking-tight">The game</h2>
+              <p class="text-section-prose text-text-muted leading-extra-loose">{d.overview}</p>
+            </section>
+          )}
 
-      <section class="grid grid-cols-[1fr_1.2fr] max-md:grid-cols-1 gap-12 mb-20 items-start">
-        <div class="rounded-xl overflow-hidden max-md:order-2">
-          {approachImage && <Image src={approachImage} alt={`${d.title} strategic approach`} class="w-full h-auto" />}
-        </div>
-        <div class="max-md:order-1">
-          <h2 class="text-case-study-title font-extrabold mb-6 text-text tracking-tight">Our strategic approach</h2>
-          <p class="text-section-prose text-text-muted leading-extra-loose">{d.approach}</p>
-        </div>
-      </section>
+          <section class="mb-20">
+            <h2 class="text-case-study-title font-extrabold mb-6 text-text tracking-tight">What made it interesting</h2>
+            <p class="text-section-prose text-text-muted leading-extra-loose">{d.challenge}</p>
+          </section>
 
-      <section class="grid grid-cols-[1.2fr_1fr] max-md:grid-cols-1 gap-12 mb-20 items-start">
-        <div>
-          <h2 class="text-case-study-title font-extrabold mb-6 text-text tracking-tight">Solution</h2>
-          <p class="text-section-prose text-text-muted leading-extra-loose">{d.solution}</p>
-        </div>
-        <div class="rounded-xl overflow-hidden">
-          {solutionImage && <Image src={solutionImage} alt={`${d.title} solution`} class="w-full h-auto" />}
-        </div>
-      </section>
+          {d.build && (
+            <section class="mb-20">
+              <h2 class="text-case-study-title font-extrabold mb-8 text-text tracking-tight">What we built</h2>
+              {d.build.map((block) => {
+                const hasSingleImage = block.image && img[block.image];
+                return (
+                  <div class="mb-14 last:mb-0">
+                    {hasSingleImage ? (
+                      <div class="md:flow-root">
+                        <figure class="m-0 max-md:mb-6 md:float-right md:w-[42%] md:ml-10 md:mb-2">
+                          <div class="rounded-xl overflow-hidden border border-border">
+                            <Image src={img[block.image]} alt={block.imageCaption ?? block.heading} class="w-full h-auto block" />
+                          </div>
+                          {block.imageCaption && (
+                            <figcaption class="text-13 text-text-dim leading-loose mt-2">{block.imageCaption}</figcaption>
+                          )}
+                        </figure>
+                        <h3 class="text-item-title font-bold mb-4 text-text tracking-snug">{block.heading}</h3>
+                        <p class="text-section-prose text-text-muted leading-extra-loose">{block.body}</p>
+                      </div>
+                    ) : (
+                      <>
+                        <h3 class="text-item-title font-bold mb-4 text-text tracking-snug">{block.heading}</h3>
+                        <p class="text-section-prose text-text-muted leading-extra-loose">{block.body}</p>
+                        {block.gallery && (
+                          <AppGallery items={block.gallery.map((g) => ({ image: img[g.image], caption: g.caption }))} />
+                        )}
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+            </section>
+          )}
 
-      <section class="mb-20">
-        <h2 class="text-case-study-title font-extrabold mb-6 text-text tracking-tight">Results</h2>
-        <p class="text-section-prose text-text-muted leading-extra-loose max-w-[800px]">{d.results}</p>
-      </section>
+          {d.techNarrative && (
+            <section class="mb-20">
+              <h2 class="text-case-study-title font-extrabold mb-6 text-text tracking-tight">Under the hood</h2>
+              <p class="text-section-prose text-text-muted leading-extra-loose">{d.techNarrative}</p>
+            </section>
+          )}
+
+          {d.facts && (
+            <section class="mb-20">
+              <h2 class="text-case-study-title font-extrabold mb-6 text-text tracking-tight">At a glance</h2>
+              <div class="bg-surface border border-border rounded-xl p-6">
+                <div class="grid grid-cols-2 max-md:grid-cols-1 gap-6">
+                  {d.facts.map((fact) => (
+                    <div>
+                      <span class="block text-13 uppercase tracking-wider text-text-dim mb-1">{fact.label}</span>
+                      <span class="font-semibold text-text text-17">{fact.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+
+          {d.outcome && (
+            <section class="mb-20">
+              <h2 class="text-case-study-title font-extrabold mb-6 text-text tracking-tight">Where it landed</h2>
+              <p class="text-section-prose text-text-muted leading-extra-loose">{d.outcome}</p>
+            </section>
+          )}
+        </>
+      ) : (
+        <>
+          <section class="grid grid-cols-[2fr_1fr] max-md:grid-cols-1 gap-12 mb-20 items-start">
+            <div>
+              <h2 class="text-case-study-title font-extrabold mb-6 text-text tracking-tight">Client Challenge</h2>
+              <p class="text-section-prose text-text-muted leading-extra-loose">{d.challenge}</p>
+            </div>
+            <div class="bg-surface border border-border rounded-xl p-6">
+              <div class="mb-5">
+                <span class="font-semibold text-15 text-text block mb-1">Tech Stack</span>
+                <span class="text-text-muted text-17">{d.tech}</span>
+              </div>
+              <div>
+                <span class="font-semibold text-15 text-text block mb-1">Visit Site</span>
+                <a href={d.url} target="_blank" rel="noopener noreferrer" class="text-accent text-17 hover:underline break-all inline-flex items-center gap-1.5">
+                  {d.url?.replace('https://', '') || d.url || 'N/A'}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <section class="grid grid-cols-[1fr_1.2fr] max-md:grid-cols-1 gap-12 mb-20 items-start">
+            <div class="rounded-xl overflow-hidden max-md:order-2">
+              {approachImage && <Image src={approachImage} alt={`${d.title} strategic approach`} class="w-full h-auto" />}
+            </div>
+            <div class="max-md:order-1">
+              <h2 class="text-case-study-title font-extrabold mb-6 text-text tracking-tight">Our strategic approach</h2>
+              <p class="text-section-prose text-text-muted leading-extra-loose">{d.approach}</p>
+            </div>
+          </section>
+
+          <section class="grid grid-cols-[1.2fr_1fr] max-md:grid-cols-1 gap-12 mb-20 items-start">
+            <div>
+              <h2 class="text-case-study-title font-extrabold mb-6 text-text tracking-tight">Solution</h2>
+              <p class="text-section-prose text-text-muted leading-extra-loose">{d.solution}</p>
+            </div>
+            <div class="rounded-xl overflow-hidden">
+              {solutionImage && <Image src={solutionImage} alt={`${d.title} solution`} class="w-full h-auto" />}
+            </div>
+          </section>
+
+          <section class="mb-20">
+            <h2 class="text-case-study-title font-extrabold mb-6 text-text tracking-tight">Results</h2>
+            <p class="text-section-prose text-text-muted leading-extra-loose max-w-[800px]">{d.results}</p>
+          </section>
+        </>
+      )}
     </article>
   </main>
 

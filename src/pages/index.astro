@@ -5,6 +5,7 @@ import Base from "../layouts/Base.astro";
 import CaseStudyCard from "../components/CaseStudyCard.astro";
 import CTA from "../components/CTA.astro";
 import demiHero from "../assets/case-studies/demi-hero.png";
+import surfsmashHero from "../assets/case-studies/surfsmash-website-hero.png";
 import iconCompass from "../assets/icons/icon-compass.svg";
 import iconDisk from "../assets/icons/icon-disk.svg";
 import iconRocket from "../assets/icons/icon-rocket.svg";
@@ -19,8 +20,9 @@ const basicsIcons: Record<string, string> = {
 };
 const basicsIconKeys = ["responsive", "speed", "seo", "foundation", "accessible"];
 
-const caseStudyImages: Record<number, ImageMetadata> = {
-  1: demiHero,
+const caseStudyImages: Record<string, ImageMetadata> = {
+  demi: demiHero,
+  surfsmash: surfsmashHero,
 };
 
 const sections = (await getCollection("homepage")).sort(
@@ -38,16 +40,21 @@ const workEntries = (await getCollection("work")).sort(
   (a, b) => a.data.order - b.data.order
 );
 
-const descriptions: Record<number, string> = {
-  1: "Complex AI kitchen software that needed to feel simple. We led with operator pain points, not tech jargon, and built a marketing site that makes Demi feel like relief, not another learning curve.",
+const descriptions: Record<string, string> = {
+  demi: "Complex AI kitchen software that needed to feel simple. We led with operator pain points, not tech jargon, and built a marketing site that makes Demi feel like relief, not another learning curve.",
+  surfsmash: "A card-based fantasy game for the World Surf League season. We built the whole platform: the iOS and Android app, the admin tool that runs live scoring, and the launch site. Kickoff to App Store in about three months.",
 };
 
-const caseStudies = workEntries.map((entry) => ({
-  title: entry.data.title,
-  description: descriptions[entry.data.order] ?? entry.data.challenge,
-  link: `/work/${entry.id.replace(/^\d+-/, '').replace(/\.md$/, '')}`,
-  image: caseStudyImages[entry.data.order],
-}));
+const caseStudies = workEntries.map((entry) => {
+  const slug = entry.id.replace(/^\d+-/, '').replace(/\.md$/, '');
+  return {
+    title: entry.data.title,
+    description: descriptions[slug] ?? entry.data.challenge,
+    link: `/work/${slug}`,
+    image: caseStudyImages[slug],
+    tags: entry.data.tags,
+  };
+});
 ---
 
 <Base title="Plain Sight | Vancouver Web Design and Development" navVariant="dark">
@@ -218,6 +225,7 @@ const caseStudies = workEntries.map((entry) => ({
                   description={study.description}
                   link={study.link}
                   image={study.image}
+                  tags={study.tags}
                 />
               ))}
             </div>
