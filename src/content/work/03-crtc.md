@@ -1,47 +1,34 @@
 ---
 title: "Costa Rica Treatment Center"
-subtitle: "A bilingual rebuild that helps families choose treatment with confidence."
+subtitle: "A bilingual redesign that helps families choose treatment with clarity and confidence."
 order: 3
 url: "https://costaricatreatmentcenter.com"
 tags:
   - Website
   - Strategy & IA
-  - Bilingual
 tech: "Astro, Sanity, Tailwind CSS"
-facts:
-  - label: "Languages"
-    value: "English & Spanish, full parity"
-challenge: "Costa Rica Treatment Center helps people from around the world recover from addiction, which means most visitors are families deciding whether to send someone they love to another country. The existing site spread that decision across more than 220 pages in two languages, with three separate sections covering the same programs and a path to \"get in touch\" that kept breaking at the exact moment someone was ready to act. Everything a family needed in order to trust the center was there. It was just scattered, and hard to follow in either language."
+challenge: "Costa Rica Treatment Center helps people from around the world recover from addiction, which means most visitors are families weighing whether to send someone they love to another country. The site they landed on made that harder than it needed to be. The same programs were spread across three separate sections, the treatment approach sat several levels deep under the physical locations, and everything a family needed in order to trust the center was there but scattered. The information was good. The organization worked against the person trying to use it."
 beforeAfter:
   before:
     image: "before-footer-ia"
-    caption: "The old navigation mixed services and programs in one list."
+    caption: "The same programs were split across three overlapping sections."
   after:
     image: "what-we-treat-hub"
     caption: "One clear hub for what the center treats."
-approach: "Before we redesigned a single page, we ran a five-session audit of the entire site and catalogued 83 specific issues. That told us the real problem wasn't how the site looked, it was how it was organized. So we mapped every existing page to a decision: keep it, merge it, rebuild it, or retire it. Then we rebuilt the navigation around the questions a family asks, in the order they ask them: what do you treat, how do you treat it, where, and how do I start. Nothing now sits more than two clicks from the homepage."
-solution: "We rebuilt the site on Astro and Sanity, with English and Spanish treated as equals instead of a primary site and a half-finished translation. Three overlapping sections became one clear story about how the center treats people. Every program page carries its own pricing and a working next step. The trust story, the founders, the clinical team, the accreditations, and the testimonials, now lives in one place that builds confidence as you read. And the genuine facility photography that always set this center apart finally has room to breathe."
+approach: "Before we designed a single page, we ran a five-session audit of the whole site. It told us the real problem wasn't how the site looked, it was how it was organized: arranged the way the business thinks about itself rather than the way a family reads. So we changed the organizing principle. We mapped the site around the questions a family asks, in the order they ask them: what do you treat, how do you treat it, where does it happen, and how do I start. Nothing a family needs now sits more than two clicks from where they begin."
+solution: |
+  We rebuilt the site on Astro and Sanity. Three overlapping sections became one clear story about how the center treats people. Every program page carries its own pricing and a clear next step, so the path from "I'm interested" to "I called" holds all the way through. And the case for trust, the founders, the clinical team, the accreditations, the testimonials, and the track record, now lives in one place that builds confidence as you read.
+
+  The redesign also changed how the site feels. The old design was clean and professional but cool, closer to a hospital than a place you would want to recover. We kept the clinical credibility and added the warmth and sense of place it was missing. Warmer, more natural tones replaced the cool corporate ones. The brand's blue-teal stayed but stepped back, and forest green moved to the front, so the palette belongs to the Costa Rican landscape rather than a clinic. The photography took an editorial, nature-forward direction, grounded and premium at once, treating the setting as part of the treatment story rather than decoration. A warm serif carries the emotion and a quiet sans carries the information, so clinical content never reads coldly. English and Spanish were built as equals throughout.
 solutionGallery:
   - image: "condition-alcohol"
-    caption: "Every program page, one consistent template with pricing and a next step."
-  - image: "admissions"
-    caption: "A documented admissions path, which the old site never had."
-parity:
-  left:
-    label: "English"
-    image: "hero"
-    caption: "The new homepage hero."
-  right:
-    label: "Español"
-    image: "es-home"
-    caption: "Full parity, not a half-finished translation."
-featureImage:
-  image: "riverside"
-  caption: "The facility photography finally has room to breathe."
-results: "Families now meet a site that answers their questions in the order they ask them, in whichever language they speak, with a clear way to start a conversation on every page. The English and Spanish sites launched at full parity, and the path from \"I'm looking into this\" to \"I called\" holds all the way through. The center's own track record, which the old site never managed to state plainly, now leads the page."
+    caption: "Every program page now carries its own pricing and a clear next step."
+  - image: "riverside"
+    caption: "Photography treats the Costa Rican setting as part of the treatment story, not decoration."
+results: "Families now meet a site that answers their questions in the order they ask them, in whichever language they speak, with a clear way to start a conversation on every page. The path from \"I'm looking into this\" to \"I called\" holds all the way through, in both English and Spanish. And the center's own track record, which the old site never managed to state plainly, now leads: a 4.6 Google rating across more than 70 reviews, over 600 patients treated, and a decade of care in Costa Rica."
 resultsGallery:
   - image: "testimonials"
-    caption: "Real, verified patient stories."
-  - image: "home-mobile"
-    caption: "Built mobile-first."
+    caption: "Real, Google-verified patient stories, now leading the trust story."
+  - image: "es-home"
+    caption: "Built as equals: the full site in Spanish, not a partial translation."
 ---

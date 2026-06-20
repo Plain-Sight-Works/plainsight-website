@@ -17,11 +17,9 @@ import crtcHero from "../../assets/case-studies/crtc-home-hero.png";
 import crtcBeforeFooter from "../../assets/case-studies/crtc-before-footer-ia.png";
 import crtcWhatWeTreat from "../../assets/case-studies/crtc-what-we-treat-hub.png";
 import crtcCondition from "../../assets/case-studies/crtc-condition-alcohol.png";
-import crtcAdmissions from "../../assets/case-studies/crtc-admissions.png";
 import crtcRiverside from "../../assets/case-studies/crtc-riverside.png";
 import crtcEsHome from "../../assets/case-studies/crtc-es-home.png";
 import crtcTestimonials from "../../assets/case-studies/crtc-testimonials.png";
-import crtcHomeMobile from "../../assets/case-studies/crtc-home-mobile.png";
 
 export async function getStaticPaths() {
   const projects = await getCollection("work");
@@ -51,11 +49,9 @@ const images: Record<string, Record<string, ImageMetadata>> = {
     "before-footer-ia": crtcBeforeFooter,
     "what-we-treat-hub": crtcWhatWeTreat,
     "condition-alcohol": crtcCondition,
-    admissions: crtcAdmissions,
     riverside: crtcRiverside,
     "es-home": crtcEsHome,
     testimonials: crtcTestimonials,
-    "home-mobile": crtcHomeMobile,
   },
 };
 
@@ -65,6 +61,9 @@ const heroImage = img.hero;
 const approachImage = img.approach;
 const solutionImage = img.solution;
 const isAlt = d.order % 2 === 0;
+
+// Solution copy may hold multiple paragraphs separated by blank lines.
+const solutionParas = (d.solution ?? '').split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
 
 // Rich layout (overview / what we built / under the hood / at a glance /
 // outcome) renders when `build` is present; otherwise the Demi-style
@@ -273,7 +272,9 @@ const heroLinks = [
             <section class="grid grid-cols-[1.2fr_1fr] max-md:grid-cols-1 gap-12 mb-20 items-start">
               <div>
                 <h2 class="text-case-study-title font-extrabold mb-6 text-text tracking-tight">Solution</h2>
-                <p class="text-section-prose text-text-muted leading-extra-loose">{d.solution}</p>
+                {solutionParas.map((para, i) => (
+                  <p class={`text-section-prose text-text-muted leading-extra-loose ${i > 0 ? 'mt-6' : ''}`}>{para}</p>
+                ))}
               </div>
               <div class="rounded-xl overflow-hidden">
                 <Image src={solutionImage} alt={`${d.title} solution`} class="w-full h-auto" />
@@ -282,7 +283,9 @@ const heroLinks = [
           ) : (
             <section class="mb-20">
               <h2 class="text-case-study-title font-extrabold mb-6 text-text tracking-tight">Solution</h2>
-              <p class="text-section-prose text-text-muted leading-extra-loose max-w-[800px]">{d.solution}</p>
+              {solutionParas.map((para, i) => (
+                <p class={`text-section-prose text-text-muted leading-extra-loose max-w-[800px] ${i > 0 ? 'mt-6' : ''}`}>{para}</p>
+              ))}
 
               {d.solutionGallery && (
                 <div class="grid grid-cols-2 max-md:grid-cols-1 gap-8 mt-10">
