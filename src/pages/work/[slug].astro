@@ -62,7 +62,8 @@ const approachImage = img.approach;
 const solutionImage = img.solution;
 const isAlt = d.order % 2 === 0;
 
-// Solution copy may hold multiple paragraphs separated by blank lines.
+// Approach and solution copy may hold multiple paragraphs separated by blank lines.
+const approachParas = (d.approach ?? '').split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
 const solutionParas = (d.solution ?? '').split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
 
 // Rich layout (overview / what we built / under the hood / at a glance /
@@ -258,13 +259,17 @@ const heroLinks = [
               </div>
               <div class="max-md:order-1">
                 <h2 class="text-case-study-title font-extrabold mb-6 text-text tracking-tight">Our strategic approach</h2>
-                <p class="text-section-prose text-text-muted leading-extra-loose">{d.approach}</p>
+                {approachParas.map((para, i) => (
+                  <p class={`text-section-prose text-text-muted leading-extra-loose ${i > 0 ? 'mt-6' : ''}`}>{para}</p>
+                ))}
               </div>
             </section>
           ) : (
             <section class="mb-20">
               <h2 class="text-case-study-title font-extrabold mb-6 text-text tracking-tight">Our strategic approach</h2>
-              <p class="text-section-prose text-text-muted leading-extra-loose max-w-[800px]">{d.approach}</p>
+              {approachParas.map((para, i) => (
+                <p class={`text-section-prose text-text-muted leading-extra-loose max-w-[800px] ${i > 0 ? 'mt-6' : ''}`}>{para}</p>
+              ))}
             </section>
           )}
 
