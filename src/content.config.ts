@@ -64,11 +64,33 @@ const work = defineCollection({
       imageCaption: z.string().optional(),
     })).optional(),
     techNarrative: z.string().optional(),        // "Under the hood"
-    facts: z.array(z.object({                    // "At a glance"
+    facts: z.array(z.object({                    // "At a glance" (rich) / sidebar extras (simple)
       label: z.string(),
       value: z.string(),
     })).optional(),
     outcome: z.string().optional(),              // "Where it landed"
+    // Optional editorial blocks for the simple (challenge/approach/solution/
+    // results) layout. Image values are manifest keys resolved in [slug].astro.
+    beforeAfter: z.object({                      // labeled Before/After pair in the Challenge section
+      before: z.object({ image: z.string(), caption: z.string() }),
+      after: z.object({ image: z.string(), caption: z.string() }),
+    }).optional(),
+    solutionGallery: z.array(z.object({          // 2-up image grid in the Solution section
+      image: z.string(),
+      caption: z.string(),
+    })).optional(),
+    parity: z.object({                           // labeled side-by-side pair (e.g. EN / ES)
+      left: z.object({ label: z.string(), image: z.string(), caption: z.string() }),
+      right: z.object({ label: z.string(), image: z.string(), caption: z.string() }),
+    }).optional(),
+    featureImage: z.object({                     // single full-width image in the Solution section
+      image: z.string(),
+      caption: z.string(),
+    }).optional(),
+    resultsGallery: z.array(z.object({           // 2-up montage in the Results section
+      image: z.string(),
+      caption: z.string(),
+    })).optional(),
   }),
 });
 
