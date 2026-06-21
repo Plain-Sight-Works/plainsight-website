@@ -6,6 +6,7 @@ import CaseStudyCard from "../components/CaseStudyCard.astro";
 import CTA from "../components/CTA.astro";
 import demiHero from "../assets/case-studies/demi-hero.png";
 import surfsmashHero from "../assets/case-studies/surfsmash-website-hero.png";
+import crtcHero from "../assets/case-studies/crtc-home-hero.png";
 import iconCompass from "../assets/icons/icon-compass.svg";
 import iconDisk from "../assets/icons/icon-disk.svg";
 import iconRocket from "../assets/icons/icon-rocket.svg";
@@ -23,6 +24,7 @@ const basicsIconKeys = ["responsive", "speed", "seo", "foundation", "accessible"
 const caseStudyImages: Record<string, ImageMetadata> = {
   demi: demiHero,
   surfsmash: surfsmashHero,
+  crtc: crtcHero,
 };
 
 const sections = (await getCollection("homepage")).sort(
@@ -43,6 +45,7 @@ const workEntries = (await getCollection("work")).sort(
 const descriptions: Record<string, string> = {
   demi: "Complex AI kitchen software that needed to feel simple. We led with operator pain points, not tech jargon, and built a marketing site that makes Demi feel like relief, not another learning curve.",
   surfsmash: "A card-based fantasy game for the World Surf League season. We built the whole platform: the iOS and Android app, the admin tool that runs live scoring, and the launch site. Live now on the App Store and Google Play.",
+  crtc: "An international addiction treatment center whose site had grown hard for families to navigate. We rebuilt it around the questions families ask when choosing treatment, with a warmer design that feels as human as the care it describes.",
 };
 
 const caseStudies = workEntries.map((entry) => {

@@ -1,7 +1,7 @@
 ---
 title: "Demi"
 subtitle: "Making AI-powered kitchen management feel approachable"
-order: 1
+order: 3
 url: "https://getdemi.co"
 tags:
   - Website
