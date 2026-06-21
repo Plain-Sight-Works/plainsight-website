@@ -5,7 +5,7 @@ order: 2
 url: "https://smash.surf"
 icon: "icon"
 tags:
-  - App
+  - Mobile App
   - Website
 links:
   - label: "Download on the App Store"
