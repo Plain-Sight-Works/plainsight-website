@@ -1,7 +1,7 @@
 ---
 title: "Costa Rica Treatment Center"
 subtitle: "A bilingual redesign that helps families choose treatment with clarity and confidence."
-order: 3
+order: 1
 url: "https://costaricatreatmentcenter.com"
 tags:
   - Website
