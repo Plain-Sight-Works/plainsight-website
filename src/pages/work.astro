@@ -1,4 +1,4 @@
-S---
+---
 import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
@@ -7,6 +7,7 @@ import CTA from "../components/CTA.astro";
 import demiHero from "../assets/case-studies/demi-hero.png";
 import surfsmashHero from "../assets/case-studies/surfsmash-website-hero.png";
 import crtcHero from "../assets/case-studies/crtc-home-hero.png";
+import templetonHero from "../assets/case-studies/templeton-home-hero.png";
 
 const projects = (await getCollection("work")).sort(
   (a, b) => a.data.order - b.data.order
@@ -16,12 +17,14 @@ const heroImages: Record<string, ImageMetadata> = {
   demi: demiHero,
   surfsmash: surfsmashHero,
   crtc: crtcHero,
+  templeton: templetonHero,
 };
 
 const descriptions: Record<string, string> = {
   demi: "Complex AI kitchen software that needed to feel simple. We led with operator pain points, not tech jargon, and built a marketing site that makes Demi feel like relief, not another learning curve.",
-  surfsmash: "A card-based fantasy game for the World Surf League season. We built the whole platform: the iOS and Android app, the admin tool that runs live scoring, and the launch site. Live now on the App Store and Google Play.",
-  crtc: "An international addiction treatment center whose site had grown hard for families to navigate, with the same programs split across three overlapping sections and the case for trust scattered throughout. We rebuilt it around the questions families ask when choosing treatment, and gave it a warmer, more grounded design that feels as human as the care it describes.",
+  surfsmash: "A card-based fantasy game for the World Surf League season. We built the platform: the iOS and Android app, the live-scoring admin tool, and the launch site. Live now on the App Store and Google Play.",
+  crtc: "An international addiction treatment center whose site had grown hard for families to navigate. We rebuilt it around the questions families ask, with a design as warm as the care it describes.",
+  templeton: "A Passive House development whose website undersold it: dense, dated, and clumsy on a phone. We built a new design system in print first, then rebuilt the site clean, modern, and mobile-friendly.",
 };
 
 const caseStudies = projects.map((project) => {
@@ -43,7 +46,7 @@ const caseStudies = projects.map((project) => {
       <p class="text-page-subheading text-text-muted max-w-[960px] relative">Sites that look great and drive results for the businesses behind them</p>
     </section>
 
-    <div class="grid grid-cols-2 max-md:grid-cols-1 gap-12 mb-8 max-md:[&>*:not(:last-child)]:border-b max-md:[&>*:not(:last-child)]:border-border max-md:[&>*:not(:last-child)]:pb-12">
+    <div class="grid grid-cols-2 max-md:grid-cols-1 auto-rows-fr gap-12 mb-8 max-md:[&>*:not(:last-child)]:border-b max-md:[&>*:not(:last-child)]:border-border max-md:[&>*:not(:last-child)]:pb-12">
       {caseStudies.map((study) => (
         <CaseStudyCard
           title={study.title}
