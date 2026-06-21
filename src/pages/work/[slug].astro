@@ -20,6 +20,14 @@ import crtcCondition from "../../assets/case-studies/crtc-condition-alcohol.png"
 import crtcRiverside from "../../assets/case-studies/crtc-riverside.png";
 import crtcEsHome from "../../assets/case-studies/crtc-es-home.png";
 import crtcTestimonials from "../../assets/case-studies/crtc-testimonials.png";
+import templetonHero from "../../assets/case-studies/templeton-home-hero.png";
+import templetonBeforeHome from "../../assets/case-studies/templeton-before-home.png";
+import templetonFloorplans from "../../assets/case-studies/templeton-floorplans.png";
+import templetonFeatures from "../../assets/case-studies/templeton-features.png";
+import templetonNeighbourhood from "../../assets/case-studies/templeton-neighbourhood.png";
+import templetonBeforeNeighbourhood from "../../assets/case-studies/templeton-before-neighbourhood.png";
+import templetonBeforeMobile from "../../assets/case-studies/templeton-before-mobile.png";
+import templetonAfterMobile from "../../assets/case-studies/templeton-after-mobile.png";
 
 export async function getStaticPaths() {
   const projects = await getCollection("work");
@@ -52,6 +60,16 @@ const images: Record<string, Record<string, ImageMetadata>> = {
     riverside: crtcRiverside,
     "es-home": crtcEsHome,
     testimonials: crtcTestimonials,
+  },
+  templeton: {
+    hero: templetonHero,
+    "before-home": templetonBeforeHome,
+    floorplans: templetonFloorplans,
+    features: templetonFeatures,
+    neighbourhood: templetonNeighbourhood,
+    "before-neighbourhood": templetonBeforeNeighbourhood,
+    "before-mobile": templetonBeforeMobile,
+    "after-mobile": templetonAfterMobile,
   },
 };
 
@@ -308,12 +326,12 @@ const heroLinks = [
               {d.parity && (
                 <div class="grid grid-cols-2 max-md:grid-cols-1 gap-8 mt-8">
                   {[d.parity.left, d.parity.right].map((side) => (
-                    <figure class="m-0">
+                    <figure class="m-0 flex flex-col items-center text-center">
                       <span class="inline-block text-13 uppercase tracking-wider font-semibold text-accent border border-border rounded-full px-3 py-0.5 mb-3">{side.label}</span>
-                      <div class="rounded-xl overflow-hidden border border-border">
+                      <div class="rounded-xl overflow-hidden border border-border max-w-[280px]">
                         <Image src={img[side.image]} alt={side.caption} class="w-full h-auto block" />
                       </div>
-                      <figcaption class="text-13 text-text-dim leading-loose mt-2">{side.caption}</figcaption>
+                      <figcaption class="text-13 text-text-dim leading-loose mt-2 max-w-[280px]">{side.caption}</figcaption>
                     </figure>
                   ))}
                 </div>
