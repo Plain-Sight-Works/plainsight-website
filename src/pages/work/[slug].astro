@@ -28,6 +28,9 @@ import templetonNeighbourhood from "../../assets/case-studies/templeton-neighbou
 import templetonBeforeNeighbourhood from "../../assets/case-studies/templeton-before-neighbourhood.png";
 import templetonBeforeMobile from "../../assets/case-studies/templeton-before-mobile.png";
 import templetonAfterMobile from "../../assets/case-studies/templeton-after-mobile.png";
+import lakewoodHero from "../../assets/case-studies/lakewood-home-hero.png";
+import lakewoodFloorplans from "../../assets/case-studies/lakewood-floorplans.png";
+import lakewoodNeighbourhood from "../../assets/case-studies/lakewood-neighbourhood.png";
 
 export async function getStaticPaths() {
   const projects = await getCollection("work");
@@ -61,7 +64,7 @@ const images: Record<string, Record<string, ImageMetadata>> = {
     "es-home": crtcEsHome,
     testimonials: crtcTestimonials,
   },
-  templeton: {
+  "templeton-lakewood": {
     hero: templetonHero,
     "before-home": templetonBeforeHome,
     floorplans: templetonFloorplans,
@@ -70,6 +73,9 @@ const images: Record<string, Record<string, ImageMetadata>> = {
     "before-neighbourhood": templetonBeforeNeighbourhood,
     "before-mobile": templetonBeforeMobile,
     "after-mobile": templetonAfterMobile,
+    "lakewood-hero": lakewoodHero,
+    "lakewood-floorplans": lakewoodFloorplans,
+    "lakewood-neighbourhood": lakewoodNeighbourhood,
   },
 };
 
@@ -93,6 +99,11 @@ const heroLinks = [
   { label: `Visit ${d.url.replace(/^https?:\/\//, '').replace(/\/$/, '')}`, url: d.url },
   ...(d.links ?? []),
 ].filter((link) => link.url && link.url !== '#');
+
+// Live URLs for the simple layout's sidebar: the primary `url` plus any extras
+// in `links` (e.g. a sibling property shipped on the same build).
+const siteLinks = [{ url: d.url }, ...(d.links ?? [])]
+  .filter((link) => link.url && link.url !== '#');
 ---
 
 <Base title={`${d.title} | Plain Sight`} description={d.challenge}>
@@ -238,15 +249,19 @@ const heroLinks = [
                 </div>
               ))}
               <div>
-                <span class="font-semibold text-15 text-text block mb-1">Visit Site</span>
-                <a href={d.url} target="_blank" rel="noopener noreferrer" class="text-accent text-17 hover:underline break-all inline-flex items-center gap-1.5">
-                  {d.url?.replace('https://', '') || d.url || 'N/A'}
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                  </svg>
-                </a>
+                <span class="font-semibold text-15 text-text block mb-1">{siteLinks.length > 1 ? 'Visit Sites' : 'Visit Site'}</span>
+                <div class="flex flex-col items-start gap-2">
+                  {siteLinks.map((link) => (
+                    <a href={link.url} target="_blank" rel="noopener noreferrer" class="text-accent text-17 hover:underline break-all inline-flex items-center gap-1.5">
+                      {link.url.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        <polyline points="15 3 21 3 21 9"></polyline>
+                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                      </svg>
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           </section>
