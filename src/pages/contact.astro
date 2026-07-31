@@ -11,15 +11,15 @@ import Base from "../layouts/Base.astro";
 
     <section class="grid grid-cols-[1fr_420px] max-md:grid-cols-1 gap-8 items-start">
       <div class="bg-gradient-to-b from-surface-alt to-surface-gradient-end rounded-2xl p-10 max-md:py-8 max-md:px-6">
-        <form action="https://formspree.io/f/xvzbokbq" method="POST" class="contact-form flex flex-col gap-6">
+        <form action="https://forms.plainsight.works/api/forms/8d4e0318-18b6-421e-a305-bbaa96970445" method="POST" class="contact-form flex flex-col gap-6">
           <div class="flex flex-col gap-2">
-            <label for="brings-you" class="font-semibold text-[0.9rem] tracking-wide">What brings you here?</label>
-            <select id="brings-you" name="brings-you" required>
+            <label for="subject" class="font-semibold text-[0.9rem] tracking-wide">What brings you here?</label>
+            <select id="subject" name="subject" required>
               <option value="" disabled selected>Select one...</option>
-              <option value="exploring">I'm exploring my options</option>
-              <option value="new-site">I need a new website</option>
-              <option value="existing-site">I need help with an existing site</option>
-              <option value="ongoing-partner">I'm looking for an ongoing partner</option>
+              <option value="I'm exploring my options">I'm exploring my options</option>
+              <option value="I need a new website">I need a new website</option>
+              <option value="I need help with an existing site">I need help with an existing site</option>
+              <option value="I'm looking for an ongoing partner">I'm looking for an ongoing partner</option>
             </select>
           </div>
 
@@ -42,6 +42,11 @@ import Base from "../layouts/Base.astro";
           <div class="flex flex-col gap-2">
             <label for="message" class="font-semibold text-[0.9rem] tracking-wide">Message</label>
             <textarea id="message" name="message" rows="5" required placeholder="What are you working on? What's the timeline? Any details help."></textarea>
+          </div>
+
+          <div class="hidden">
+            <label for="_gotcha">Leave this field empty</label>
+            <input type="text" id="_gotcha" name="_gotcha" tabindex="-1" autocomplete="off" />
           </div>
 
           <button type="submit" class="btn-cta self-start mt-2">Send it</button>
