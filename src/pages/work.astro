@@ -9,6 +9,7 @@ import surfsmashHero from "../assets/case-studies/surfsmash-website-hero.png";
 import crtcHero from "../assets/case-studies/crtc-home-hero.png";
 import templetonHero from "../assets/case-studies/templeton-home-hero.png";
 import michelleHero from "../assets/case-studies/michelle-home-hero.png";
+import agaHero from "../assets/case-studies/aga-home-hero.png";
 
 const projects = (await getCollection("work")).sort(
   (a, b) => a.data.order - b.data.order
@@ -20,6 +21,7 @@ const heroImages: Record<string, ImageMetadata> = {
   crtc: crtcHero,
   "templeton-lakewood": templetonHero,
   "michelle-pauly": michelleHero,
+  "aga-beauty": agaHero,
 };
 
 const caseStudies = projects.map((project) => {

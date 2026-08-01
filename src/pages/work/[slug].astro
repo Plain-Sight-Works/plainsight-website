@@ -35,6 +35,10 @@ import michelleHero from "../../assets/case-studies/michelle-home-hero.png";
 import michelleBeforeHome from "../../assets/case-studies/michelle-before-home.png";
 import michelleCategory from "../../assets/case-studies/michelle-category.png";
 import michelleProject from "../../assets/case-studies/michelle-project.png";
+import agaHero from "../../assets/case-studies/aga-home-hero.png";
+import agaServices from "../../assets/case-studies/aga-services.png";
+import agaStudio from "../../assets/case-studies/aga-studio.png";
+import agaBookingBar from "../../assets/case-studies/aga-booking-bar.png";
 
 export async function getStaticPaths() {
   const projects = await getCollection("work");
@@ -86,6 +90,12 @@ const images: Record<string, Record<string, ImageMetadata>> = {
     "before-home": michelleBeforeHome,
     category: michelleCategory,
     project: michelleProject,
+  },
+  "aga-beauty": {
+    hero: agaHero,
+    services: agaServices,
+    studio: agaStudio,
+    "booking-bar": agaBookingBar,
   },
 };
 
