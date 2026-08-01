@@ -39,6 +39,7 @@ import agaHero from "../../assets/case-studies/aga-home-hero.png";
 import agaServices from "../../assets/case-studies/aga-services.png";
 import agaStudio from "../../assets/case-studies/aga-studio.png";
 import agaBookingBar from "../../assets/case-studies/aga-booking-bar.png";
+import agaMobileHome from "../../assets/case-studies/aga-mobile-home.png";
 
 export async function getStaticPaths() {
   const projects = await getCollection("work");
@@ -95,6 +96,7 @@ const images: Record<string, Record<string, ImageMetadata>> = {
     hero: agaHero,
     services: agaServices,
     studio: agaStudio,
+    "mobile-home": agaMobileHome,
     "booking-bar": agaBookingBar,
   },
 };
