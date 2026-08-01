@@ -16,16 +16,16 @@ approach: |
 
   It also means every claim on the page has to be real, because there is no scale to hide behind. We did not write that the room smells good or sounds calm, because neither had been confirmed. No team, no second location, no press, no credentials she does not hold, no invented reviews. Her experience is the year and a half it is, in the sentence she wrote herself, and her introduction runs close to verbatim.
 solution: |
-  We art-directed it quietly: soft diffuse light, warm neutrals, a lot of space, and real photographs of her actual room instead of stock. Four pages, Home, About, Services and Contact, and nothing past them.
+  We art-directed it quietly: soft diffuse light, warm neutrals, a lot of space, and the studio itself in her own photographs. Four pages carry the offer, Home, About, Services and Contact, and there is no sprawl past them.
 
-  Booking is the spine. Fresha cannot be embedded, so every Book Now opens her booking page in a new tab, and we generated that link so the new-client fee is waived and the tracking parameters are stripped. Without the second part, every booking the website earned would have been credited to Instagram instead. Book Now sits in the header on every page, and on a phone a sticky bar keeps WhatsApp and her number beside it the whole way down. We built the site mobile first, because in this category the booking happens after hours, from a phone, at the end of a long day.
+  Booking is the spine. Fresha cannot be embedded, so every Book Now opens her booking page in a new tab, and we generated that link so the new-client fee is waived and the tracking parameters are stripped. Without the second part, every booking the website earned would have been credited to Instagram instead. Book Now sits in the header on every desktop page, and on a phone a sticky bar carries it alongside WhatsApp and her number the whole way down. We built the site mobile first, because in this category the booking happens after hours, from a phone, at the end of a long day.
 
   We put real prices next to every service rather than behind an enquiry. Hiding a price reads as something to be negotiated and showing it reads as confidence, which is the cheaper way to look expensive. Her Instagram runs live on the page, so the feed a client already follows is the one the site shows.
 solutionGallery:
   - image: "services"
     caption: "Real prices next to every service, rather than an enquiry form."
   - image: "studio"
-    caption: "Her actual room, photographed, instead of stock."
+    caption: "Her actual room, photographed."
 parity:
   left:
     label: "First screen"
