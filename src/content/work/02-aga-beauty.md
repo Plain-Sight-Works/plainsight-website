@@ -35,5 +35,5 @@ parity:
     label: "Further down"
     image: "booking-bar"
     caption: "Further down, past the services and into the testimonials, that bar has not moved. WhatsApp, call and Book Now, all still under the thumb."
-results: "The first draft came back approved with no notes beyond a few service prices, and the site went live the next day at agabeauty.ca. Her Google listing and her Instagram now point somewhere that matches the reviews behind them: the full menu with a price on every line, her hours, her room in her own photographs, and the booking link one tap away on any page. The studio is the same room it always was. It now reads like the thing it is."
+results: "The first draft came back approved with no notes beyond a few service prices, and the site went live the next day at agabeauty.ca. Her Google listing and her Instagram now point somewhere that matches the reviews behind them: the full menu with a price on every line, her hours, her room in her own photographs, and the booking link one tap away on any page. She has a login of her own, so she can see how much traffic the site is getting and request a change to a price or a line of copy without emailing anyone and waiting on it. The studio is the same room it always was. It now reads like the thing it is."
 ---
