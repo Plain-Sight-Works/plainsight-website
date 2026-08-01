@@ -40,6 +40,10 @@ import agaServices from "../../assets/case-studies/aga-services.png";
 import agaStudio from "../../assets/case-studies/aga-studio.png";
 import agaBookingBar from "../../assets/case-studies/aga-booking-bar.png";
 import agaMobileHome from "../../assets/case-studies/aga-mobile-home.png";
+import dianaHero from "../../assets/case-studies/diana-home-hero.png";
+import dianaCheckin from "../../assets/case-studies/diana-checkin.png";
+import dianaPaths from "../../assets/case-studies/diana-paths.png";
+import dianaWorkWithMe from "../../assets/case-studies/diana-work-with-me.png";
 
 export async function getStaticPaths() {
   const projects = await getCollection("work");
@@ -98,6 +102,12 @@ const images: Record<string, Record<string, ImageMetadata>> = {
     studio: agaStudio,
     "mobile-home": agaMobileHome,
     "booking-bar": agaBookingBar,
+  },
+  "diana-ojeda": {
+    hero: dianaHero,
+    checkin: dianaCheckin,
+    paths: dianaPaths,
+    "work-with-me": dianaWorkWithMe,
   },
 };
 
