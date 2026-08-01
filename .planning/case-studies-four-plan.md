@@ -130,59 +130,78 @@ them.
 Editorial blocks: `beforeAfter` (old flat one-pager vs new category grid),
 `solutionGallery` (category grid, project detail).
 
-### 2. AGA Beauty — a brand built for a bigger business, scaled down honestly
+### 2. AGA Beauty — premium at the scale of one
 
 Tags: Website. Tech: Astro, Tailwind, Vercel. No `beforeAfter` — she had no
 website at all, only Instagram.
 
-**Challenge.** Malu Alburqueque runs a one-person home studio in Burnaby: nails,
-skin and body, one client at a time, no website, clients arriving through Google
-reviews, referrals and Instagram. Mid-build she replaced her branding with the
-family identity her sister uses in Peru — but that operation is a beauty salon
-attached to a gala-dress boutique, with a sewing team and retail floor. The
-identity was authored for something several times her size.
+**Challenge.** Malu Alburqueque runs her business out of a room in her home in
+Burnaby. Nails, skin and body, one esthetician, one client at a time. No
+storefront, no team, no website — Instagram and word of mouth, and a Google
+rating where every single review is five stars.
 
-**Approach.** Inherit the art direction, the voice and the logo; leave behind
-everything that describes a business she isn't. Nothing on the site implies more
-than one room or more than one person, and there is no team, no second location,
-no retail and no "salon" framing, because it is a private studio. Of the five
-personality traits the brand claims, exclusivity was the weakest — one person
-seeing one client at a time is not a velvet rope — so it is written as intimacy
-instead.
+In beauty, premium is normally signalled by scale: a storefront on a good
+street, a team, a retail floor, a budget. She has none of it, and the default
+small-business web presence — a template, stock photography, prices on request,
+an enquiry form — would have read as exactly the opposite of what she is. The
+gap was never the quality of the work. It was that nothing online showed it.
 
-The same discipline governs the copy: no invented reviews, prices, press or
-credentials, and no claim about scent, music or the feel of the room, because
-none of it had been confirmed. Her experience is 1.5 years, in her own written
-words, rather than the rounder number from the discovery call. Her introduction
-runs close to verbatim.
+**Approach.** Don't dress the studio up as something bigger. Make the smallness
+the premium thing, because one client at a time is precisely what a busy salon
+cannot sell. The site says plainly what she is — a quiet room, one client at a
+time, the same person every visit — and treats that as the advantage.
 
-**Solution.** Four pages — Home, About, Services, Contact — with booking as the
-spine. Fresha cannot be embedded, so every Book Now opens her Fresha page in a
-new tab, generated so the new-client fee is waived and the tracking params
-stripped, or every website booking gets credited to Instagram. Book Now sits in
-the header on every page, a sticky bar carries WhatsApp, phone and Book Now, and
-real prices sit next to every service rather than behind an enquiry. Social
-proof sits beside the booking CTA rather than isolated in its own section, and
-her Instagram feed runs live on the page. The whole thing is built mobile-first,
-because bookings in this category happen after hours from a phone.
+That forces credibility to come from somewhere other than scale, and she already
+had it. The Google score is not parked in a testimonials section near the
+footer; it sits in the hero and again beside the booking CTA. It is fetched live
+from Google at build time rather than typed in, so it cannot drift, go stale or
+be quietly inflated — which matters more, not less, when the whole case rests
+on it.
 
-The mid-build rebrand landed two days before launch and moved the logo from a
-circular badge to a wordmark with a new colour direction. It touched tokens and
-the logo; the layout and page structure never changed.
+It also means every claim has to be real, because there is no scale to hide
+behind. Nothing on the site says the room smells nice or sounds nice, because
+none of that had been confirmed. No team, no second location, no press, no
+credentials she doesn't hold, no invented reviews. Her experience is 1.5 years,
+in her own written words rather than the rounder number from the discovery
+call, and her introduction runs close to verbatim.
+
+**Solution.** Quiet editorial art direction — soft diffuse light, warm
+neutrals, a lot of space — carried on real photographs of her actual room
+rather than stock. Four pages: Home, About, Services, Contact.
+
+Booking is the spine. Fresha cannot be embedded, so every Book Now opens her
+booking page in a new tab, generated so the new-client fee is waived and the
+tracking params stripped, or every website booking gets credited to Instagram
+instead. Book Now sits in the header on every page and a sticky bar carries
+WhatsApp and phone alongside it. Real prices sit next to every service rather
+than behind an enquiry — hiding prices reads as something to negotiate, and
+showing them reads as confidence, which is the cheaper way to look expensive.
+Social proof sits beside the booking CTA rather than isolated. Her Instagram
+feed runs live on the page. Built mobile-first, because bookings in this
+category happen after hours from a phone.
 
 **Results.** First draft sent Jul 28 and approved with no notes beyond a few
-service price changes. Live Jul 29 at agabeauty.ca, with the client dashboard
-wired up so she can see her traffic and request content changes without
-emailing anyone.
+service price changes. Live Jul 29 at agabeauty.ca. Her Google listing and
+Instagram now point somewhere that matches the reviews, and the client dashboard
+lets her see her traffic and request content changes without emailing anyone.
 
 Editorial blocks: `featureImage` on the booking surface, `solutionGallery`
-(services with prices, About).
+(services with prices, the studio).
+
+**Do not hardcode the review numbers into the case study.** The live figure at
+time of writing is 5.0 from 8 Google reviews; both move, and the count is small
+enough that printing it works against the point. Write the record — every
+review five stars — not the arithmetic.
 
 **Spelling and naming, both easy to get wrong:** the surname is **Alburqueque**,
 not Albuquerque. The business is **AGA Beauty**, descriptor "Spa & Boutique".
 "Nails" is a service, never the business name — the Google listing and her own
 Instagram menu still carry older variants, and the case study must not copy
 them. Do not put the subscription rate or contract value on the page.
+
+The mid-build rebrand is **not** part of this story. Most of the site was
+already built when it landed, and it changed tokens and a logo, not the
+direction. It does not appear on the page.
 
 ### 3. Diana Ojeda — the site performs the method
 
@@ -260,11 +279,11 @@ map in `work.astro` and `caseStudyImages` in `index.astro`.
 | `michelle-before-home` | archived old site |
 | `michelle-category` | live, a category grid |
 | `michelle-project` | live, project detail showing the metadata block |
-| `aga-home-hero` | live, homepage — also the card image |
-| `aga-services` | live, services with prices beside each |
+| `aga-home-hero` | live, homepage hero carrying the Google score — also the card image |
+| `aga-services` | live, services with real prices beside each |
 | `aga-about` | live, About with Malu's portrait |
+| `aga-studio` | live, the real room, her own photographs |
 | `aga-booking-bar` | live, **390px**, sticky WhatsApp / phone / Book Now bar |
-| `aga-reviews` | live, social proof beside the booking CTA |
 | `diana-home-hero` | live, homepage — also the card image |
 | `diana-checkin` | live, the "Right now, I feel" interaction |
 | `diana-paths` | live, paths grid |
