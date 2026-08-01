@@ -1,0 +1,230 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../layouts/Base.astro";
+import CaseStudyCard from "../components/CaseStudyCard.astro";
+import CTA from "../components/CTA.astro";
+import Portrait from "../components/Portrait.astro";
+import crtcHero from "../assets/case-studies/crtc-home-hero.png";
+import surfsmashHero from "../assets/case-studies/surfsmash-website-hero.png";
+import templetonHero from "../assets/case-studies/templeton-home-hero.png";
+import demiHero from "../assets/case-studies/demi-hero.png";
+
+const sections = (await getCollection("about")).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const rendered = await Promise.all(
+  sections.map(async (s) => ({
+    ...s,
+    rendered: await render(s),
+  }))
+);
+
+// Portrait manifest. Drop a 4:5 photo in src/assets/team/, import it here, add
+// the key, then set `photo:` on that person in 03-team.md. Until then
+// Portrait.astro renders the initials placeholder and the layout is unchanged.
+const portraits: Record<string, ImageMetadata> = {};
+
+const caseStudyImages: Record<string, ImageMetadata> = {
+  crtc: crtcHero,
+  surfsmash: surfsmashHero,
+  templeton: templetonHero,
+  demi: demiHero,
+};
+
+const descriptions: Record<string, string> = {
+  crtc: "An international addiction treatment center whose site had grown hard for families to navigate. We rebuilt it around the questions families ask, with a design as warm as the care it describes.",
+  surfsmash: "A card-based fantasy game for the World Surf League season. We built the platform: the iOS and Android app, the live-scoring admin tool, and the launch site. Live now on the App Store and Google Play.",
+  templeton: "A Passive House development whose website undersold it: dense, dated, and clumsy on a phone. We built a new design system in print first, then rebuilt the site clean, modern, and mobile-friendly.",
+  demi: "Complex AI kitchen software that needed to feel simple. We led with operator pain points, not tech jargon, and built a marketing site that makes Demi feel like relief, not another learning curve.",
+};
+
+// Two cards is the right amount of proof for this page. /work carries the rest.
+const featured = (await getCollection("work"))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 2)
+  .map((entry) => {
+    const slug = entry.id.replace(/^\d+-/, "").replace(/\.md$/, "");
+    return {
+      title: entry.data.title,
+      description: descriptions[slug] ?? entry.data.challenge,
+      link: `/work/${slug}`,
+      image: caseStudyImages[slug],
+      tags: entry.data.tags,
+    };
+  });
+
+// Renders only when real quotes exist, so nothing placeholder-shaped ships.
+const testimonials = (await getCollection("testimonials")).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<Base
+  title="About | Plain Sight | Vancouver Web Design and Development"
+  description="Plain Sight is Adrian and Ricardo, two senior designers and developers who have been building for the web together since 2005."
+>
+  <main>
+    {rendered.map((section) => {
+      const { Content } = section.rendered;
+      const d = section.data;
+
+      if (d.section === "hero") return (
+        <section class="container pt-22 max-md:pt-16">
+          <div class="py-14 max-md:py-10">
+            <h1 class="font-heading text-page-hero font-black tracking-tighter leading-snug mb-5">{d.heading}</h1>
+            <div class="max-w-[960px] text-page-subheading text-text-muted leading-[1.7]">
+              <Content />
+            </div>
+          </div>
+        </section>
+      );
+
+      if (d.section === "story") return (
+        <section class="animate-on-scroll relative py-section max-md:py-16">
+          <div class="container">
+            <h2 class="font-heading text-problem-title font-black tracking-tight text-text mb-12">{d.heading}</h2>
+            <div class="max-w-[900px] text-problem-prose text-text-muted leading-loose mb-12 [&>p]:mb-6 [&>p:last-child]:mb-0">
+              <Content />
+            </div>
+            {d.kicker && (
+              <p class="max-w-[900px] text-problem-kicker tracking-tight font-semibold text-primary">{d.kicker}</p>
+            )}
+          </div>
+        </section>
+      );
+
+      if (d.section === "team") return (
+        <section class="animate-on-scroll relative py-section bg-gradient-to-b from-surface-alt to-surface-gradient-end">
+          <div class="container">
+            <div class="mb-12">
+              <p class="text-15 font-semibold tracking-widest uppercase text-primary">The team</p>
+              <h2 class="font-heading text-section-title font-extrabold tracking-tight">{d.heading}</h2>
+              {d.subheading && (
+                <p class="text-section-subtitle text-text-muted leading-loose max-w-[800px] mt-4">{d.subheading}</p>
+              )}
+            </div>
+            <div class="grid grid-cols-2 max-md:grid-cols-1 gap-12 max-md:gap-14">
+              {d.people?.map((person) => (
+                <article class="flex flex-col">
+                  <div class="mb-6 max-w-[420px]">
+                    <Portrait
+                      src={person.photo ? portraits[person.photo] : undefined}
+                      name={person.name}
+                      initials={person.initials}
+                    />
+                  </div>
+                  <h3 class="font-heading text-36 font-black tracking-tight leading-tight text-text mb-1">{person.name}</h3>
+                  <p class="font-mono text-13 uppercase tracking-wider text-text-dim mb-5">{person.role}</p>
+                  <p class="text-body text-text-muted leading-loose mb-6">{person.bio}</p>
+                  <ul class="list-none flex flex-wrap items-center gap-x-3 gap-y-2 mt-auto pt-2">
+                    {person.facts.map((fact, i) => (
+                      <li class="flex items-center gap-3 text-15 text-text-dim">
+                        {i > 0 && <span class="text-border-alt" aria-hidden="true">&middot;</span>}
+                        <span>{fact}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+
+      if (d.section === "how-we-work") return (
+        <section class="animate-on-scroll relative py-section">
+          <div class="container">
+            <h2 class="font-heading text-section-title font-extrabold tracking-tight mb-12">{d.heading}</h2>
+            <div class="max-w-[900px] flex flex-col gap-8">
+              {d.items?.map((item) => (
+                <p class="text-problem-prose text-text-muted leading-loose">
+                  <span class="font-extrabold text-text">{item.title}</span> {item.description}
+                </p>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+
+      if (d.section === "post-launch") return (
+        <section class="dark-section animate-on-scroll relative py-section max-md:py-20 overflow-hidden bg-bg-dark-process">
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[140%] pointer-events-none z-0" style="background: radial-gradient(ellipse 50% 50% at 50% 50%, var(--color-hero-glow-1) 0%, var(--color-hero-glow-2) 40%, transparent 70%);" aria-hidden="true"></div>
+          <div class="container relative z-1">
+            <h2 class="font-heading text-subsection-title font-black tracking-tighter leading-tight text-text mb-8">{d.heading}</h2>
+            <div class="max-w-[900px] text-problem-prose text-text-muted leading-loose [&>p]:mb-6 [&>p:last-child]:mb-0">
+              <Content />
+            </div>
+          </div>
+        </section>
+      );
+
+      if (d.section === "proof") return (
+        <section class="animate-on-scroll relative py-section">
+          <div class="container">
+            <div class="mb-12">
+              <p class="text-15 font-semibold tracking-widest uppercase text-primary">Our work</p>
+              <h2 class="font-heading text-section-title font-extrabold tracking-tight">{d.heading}</h2>
+            </div>
+            <div class="grid grid-cols-2 max-md:grid-cols-1 auto-rows-fr gap-12 max-md:[&>*:not(:last-child)]:border-b max-md:[&>*:not(:last-child)]:border-border max-md:[&>*:not(:last-child)]:pb-12">
+              {featured.map((study) => (
+                <CaseStudyCard
+                  title={study.title}
+                  description={study.description}
+                  link={study.link}
+                  image={study.image}
+                  tags={study.tags}
+                />
+              ))}
+            </div>
+            {d.cta_text && d.cta_link && (
+              <div class="mt-12">
+                <a href={d.cta_link} class="inline-flex items-center gap-2 text-cta font-semibold text-accent-hover hover:gap-3 hover:no-underline transition-all duration-300 ease-out-expo">
+                  {d.cta_text}
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            )}
+            {testimonials.length > 0 && (
+              <div class="mt-20 max-md:mt-16 flex flex-col gap-12">
+                {testimonials.map((t) => (
+                  <div class="flex items-stretch gap-10 max-w-[900px] max-md:gap-6">
+                    <div class="w-[3px] flex-shrink-0 rounded-[2px] bg-gradient-to-b from-accent to-pop" aria-hidden="true"></div>
+                    <blockquote class="m-0 p-0">
+                      <p class="font-sans text-[1.5rem] font-medium leading-[1.5] tracking-snug text-text-muted mb-8 max-md:mb-6">&ldquo;{t.data.quote}&rdquo;</p>
+                      <footer class="flex flex-col gap-[0.15rem]">
+                        <span class="font-bold text-22 text-text tracking-snug">{t.data.name}</span>
+                        <span class="text-section-subtitle text-text-muted">{t.data.title}</span>
+                      </footer>
+                    </blockquote>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+      );
+
+      if (d.section === "facts") return (
+        <section class="relative pb-section">
+          <div class="container">
+            <ul class="list-none flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-border-alt pt-8">
+              {d.facts?.map((fact, i) => (
+                <li class="flex items-center gap-3 text-15 text-text-dim">
+                  {i > 0 && <span class="text-border-alt" aria-hidden="true">&middot;</span>}
+                  <span>{fact}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      );
+
+      if (d.section === "cta") return (
+        <CTA heading={d.heading} ctaText={d.cta_text} ctaLink={d.cta_link}>
+          <Content />
+        </CTA>
+      );
+    })}
+  </main>
+</Base>
