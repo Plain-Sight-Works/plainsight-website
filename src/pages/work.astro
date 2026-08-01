@@ -11,6 +11,7 @@ import templetonHero from "../assets/case-studies/templeton-home-hero.png";
 import michelleHero from "../assets/case-studies/michelle-home-hero.png";
 import agaHero from "../assets/case-studies/aga-home-hero.png";
 import dianaHero from "../assets/case-studies/diana-home-hero.png";
+import rayHero from "../assets/case-studies/ray-home-hero.png";
 
 const projects = (await getCollection("work")).sort(
   (a, b) => a.data.order - b.data.order
@@ -24,6 +25,7 @@ const heroImages: Record<string, ImageMetadata> = {
   "michelle-pauly": michelleHero,
   "aga-beauty": agaHero,
   "diana-ojeda": dianaHero,
+  "ray-pauly": rayHero,
 };
 
 const caseStudies = projects.map((project) => {
