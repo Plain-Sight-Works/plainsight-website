@@ -1,6 +1,6 @@
 ---
 title: "Diana Ojeda"
-subtitle: "A Gestalt coaching site that opens with one question instead of a menu of services."
+subtitle: "A Gestalt coaching site where a felt check-in fills the slot a service menu would have taken."
 order: 3
 url: "https://www.dianaojeda.ca"
 tags:

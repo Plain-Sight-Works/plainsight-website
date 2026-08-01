@@ -27,9 +27,9 @@ solution: |
 
   We made the albums the navigation. They sit in the top right as words, so every album is one click from every page, with no index in between and no menu to open first above phone width. The header counts them at build time, so adding one does not break it. About sits beside them as a modal rather than a page, so nobody leaves the photographs for it.
 
-  Photographs open in a PhotoSwipe lightbox that fills the window, on a deep grey rather than pure black, driven by the arrow keys and Escape or by a swipe. The panel beside the image on a desktop window carries the title, description and location he typed where he uploaded the file, alongside the album and the date, camera and exposure read out of the file.
+  Photographs open in a PhotoSwipe lightbox that fills the window, on a deep grey rather than pure black, driven by the arrow keys and Escape or by a swipe. The panel beside the image on a desktop window carries the album alongside the title, description and location he typed where he uploaded the file, and the date, camera and exposure read out of the file.
 
-  We kept the Studio to three things: the site's settings, the homepage grid in the order he drags it into, and the albums. The two settings documents can be edited but not created or deleted, so there is nothing to remove by accident. Sanity's CDN sizes each upload for the slot it lands in, and a deploy button beside the content makes the publishing his to press.
+  We kept the Studio to three things: Site Settings, the Homepage Gallery that holds the grid in the order he drags it into, and the albums. Site Settings and the Homepage Gallery can be edited but not created or deleted, so there is nothing to remove by accident. Sanity's CDN sizes each upload for the slot it lands in, and a deploy button beside the content makes the publishing his to press.
 solutionGallery:
   - image: "home-scrolled"
     caption: "One scroll in, the name has folded into the bar at the top and the grid has the screen to itself."
