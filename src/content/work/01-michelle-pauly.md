@@ -16,7 +16,7 @@ beforeAfter:
     caption: "The old site ran everything down one scroll. A built office and a graduate project, given the same weight, one small label between them."
   after:
     image: "hero"
-    caption: "The homepage is the grid, under a category filter. No splash, no hero, no featured project."
+    caption: "The homepage is the grid, under a category filter. No hero image, no featured project."
 approach: |
   We built the site for one audience: architecture firms deciding whether to hire her. Not prospective clients, not the public, not other students. We resolved every structural decision against that reader, and most of them resolved quickly.
 
@@ -24,7 +24,7 @@ approach: |
 
   We made her role a field on every project, next to the firm she did it at, the phases she carried and the scope, instead of something buried in a paragraph. On work she did not author, stating that plainly is more credible than leaving it vague, and it is what makes the part she did own legible.
 solution: |
-  We made the homepage the work. No splash, no hero image, no featured project, just the grid with a category filter above it: All, Residential, Commercial. Categories are documents in the CMS she can add, rename and reorder, and a category with nothing published in it hides itself rather than opening onto an empty page.
+  We made the homepage the work. No hero image, no featured project, just the grid with a category filter above it: All, Residential, Commercial. Categories are documents in the CMS she can add, rename and reorder, and a category with nothing published in it hides itself rather than opening onto an empty page.
 
   We kept the grids uniform. Every project sits in the same 4:5 portrait crop at the same size, with its name and a type line underneath, always visible. We held nothing back behind a hover, so the grid reads the same on a laptop and on a phone, and no project is quietly ranked above another by being bigger.
 
@@ -36,5 +36,5 @@ solutionGallery:
     caption: "Commercial, filtered out of the same grid. Uniform 4:5 crops, names always visible, no hover reveal."
   - image: "project"
     caption: "Every project leads with the image and states her role, the firm, and the phases she carried."
-results: "The site is live at michellepauly.com with ten projects across two categories, and she adds, edits and reorders all of it in Sanity without a developer. Images are served to the slot the tile occupies rather than to the viewport, which takes 19% off the above-fold homepage payload at 1440, 47% at 1920 and 60% at 2560, all at DPR2, and holds it flat at 897 KiB across every desktop DPR2 viewport. The portfolio now opens on the work a hiring firm came for, and says on every project what she was responsible for."
+results: "The site is live at michellepauly.com with ten projects across two categories, and she adds, edits and reorders all of it in Sanity without a developer. Images are served to the slot the tile occupies rather than to the viewport, which against viewport-sized delivery takes 19% off the above-fold homepage payload at 1440, 47% at 1920 and 60% at 2560, all at DPR2, and holds it flat at 897 KiB across every desktop DPR2 viewport. The portfolio now opens on the work a hiring firm came for, and says on every project what she was responsible for."
 ---

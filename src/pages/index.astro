@@ -4,10 +4,8 @@ import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import CaseStudyCard from "../components/CaseStudyCard.astro";
 import CTA from "../components/CTA.astro";
-import demiHero from "../assets/case-studies/demi-hero.png";
 import surfsmashHero from "../assets/case-studies/surfsmash-website-hero.png";
 import crtcHero from "../assets/case-studies/crtc-home-hero.png";
-import templetonHero from "../assets/case-studies/templeton-home-hero.png";
 import michelleHero from "../assets/case-studies/michelle-home-hero.png";
 import agaHero from "../assets/case-studies/aga-home-hero.png";
 import iconCompass from "../assets/icons/icon-compass.svg";
@@ -24,11 +22,11 @@ const basicsIcons: Record<string, string> = {
 };
 const basicsIconKeys = ["responsive", "speed", "seo", "foundation", "accessible"];
 
+// Only the four featured entries reach this page, so only their heroes are
+// imported here. /work carries the full set and has its own imports.
 const caseStudyImages: Record<string, ImageMetadata> = {
-  demi: demiHero,
   surfsmash: surfsmashHero,
   crtc: crtcHero,
-  "templeton-lakewood": templetonHero,
   "michelle-pauly": michelleHero,
   "aga-beauty": agaHero,
 };
@@ -51,6 +49,15 @@ const rendered = await Promise.all(
 const workEntries = (await getCollection("work"))
   .filter((entry) => entry.data.featured !== undefined)
   .sort((a, b) => a.data.featured! - b.data.featured!);
+
+// The schema cannot express "exactly four, all distinct". Two entries sharing
+// a `featured` value would silently render a fifth card. Fail the build instead.
+if (workEntries.length !== 4) {
+  throw new Error(
+    `Homepage expects exactly 4 featured work entries, found ${workEntries.length}: ` +
+      workEntries.map((e) => `${e.id} (featured: ${e.data.featured})`).join(", ")
+  );
+}
 
 const caseStudies = workEntries.map((entry) => {
   const slug = entry.id.replace(/^\d+-/, '').replace(/\.md$/, '');
