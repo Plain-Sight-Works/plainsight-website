@@ -1,19 +1,20 @@
-# Three new case studies — Michelle Pauly, Diana Ojeda, Ray Pauly Photo
+# Four new case studies — Michelle Pauly, AGA Beauty, Diana Ojeda, Ray Pauly Photo
 
 Branch: `case-studies-three`, cut from `main` at `94e199b`.
 Date: 2026-07-31
 
 ## Goal
 
-Add three shipped projects to the work section as full editorial case studies,
-matching the Templeton/CRTC tier. Reorder the work listing so the new three lead
-it. Keep the homepage at four cards, swapping Demi out for Michelle Pauly.
+Add four shipped projects to the work section as full editorial case studies,
+matching the Templeton/CRTC tier. Reorder the work listing so the new four lead
+it. Keep the homepage at four cards.
 
-All three sites are live and verified:
+All four sites are live and verified:
 
 | Project | URL | Stack |
 | --- | --- | --- |
 | Michelle Pauly | `https://www.michellepauly.com` | Astro, Sanity, Vercel |
+| AGA Beauty | `https://agabeauty.ca` | Astro, Tailwind, Vercel |
 | Diana Ojeda | `https://www.dianaojeda.ca` | Astro, Tailwind, Vercel |
 | Ray Pauly Photo | `https://raypaulyphoto.com` | Astro, Sanity, PhotoSwipe, Vercel |
 
@@ -22,7 +23,10 @@ All three sites are live and verified:
 Michelle's and Ray's sites were unpaid work for family. The copy never says so,
 and never invents client language either — no "the client needed", no "they came
 to us", no fabricated brief or budget. Write them as "we built" and let the work
-carry it. Diana is a real paying client and can be written normally.
+carry it. Diana and AGA Beauty are paying clients and can be written normally.
+
+No case study carries a dollar figure, a payment split, a rate exception or an
+engagement type. That is deal history, not portfolio.
 
 This is a rule about honesty, not about hiding anything: the pages make no claim
 that isn't true.
@@ -34,12 +38,13 @@ that isn't true.
 | order | slug | file |
 | --- | --- | --- |
 | 1 | `michelle-pauly` | `01-michelle-pauly.md` |
-| 2 | `diana-ojeda` | `02-diana-ojeda.md` |
-| 3 | `ray-pauly` | `03-ray-pauly.md` |
-| 4 | `crtc` | `04-crtc.md` |
-| 5 | `surfsmash` | `05-surfsmash.md` |
-| 6 | `templeton` | `06-templeton.md` |
-| 7 | `demi` | `07-demi.md` |
+| 2 | `aga-beauty` | `02-aga-beauty.md` |
+| 3 | `diana-ojeda` | `03-diana-ojeda.md` |
+| 4 | `ray-pauly` | `04-ray-pauly.md` |
+| 5 | `crtc` | `05-crtc.md` |
+| 6 | `surfsmash` | `06-surfsmash.md` |
+| 7 | `templeton` | `07-templeton.md` |
+| 8 | `demi` | `08-demi.md` |
 
 The four existing files are renamed and their `order` values bumped. Slugs are
 derived by stripping the numeric prefix, so no URL changes.
@@ -47,8 +52,8 @@ derived by stripping the numeric prefix, so no URL changes.
 ## Homepage: an explicit featured set
 
 `index.astro` currently maps over every work entry with no cap. Left alone, the
-reorder would put seven cards on the homepage led by the three new ones. It must
-stay at four, and it must keep the strongest three where they are.
+reorder would put eight cards on the homepage led by the four new ones. It must
+stay at four.
 
 Add an optional `featured` number to the work schema. Only featured entries
 appear on the homepage, sorted by that number — independent of `order`.
@@ -57,10 +62,10 @@ appear on the homepage, sorted by that number — independent of `order`.
 | --- | --- | --- |
 | 1 | CRTC | unchanged |
 | 2 | Surfsmash | unchanged |
-| 3 | Templeton | unchanged |
+| 3 | AGA Beauty | replaces Templeton |
 | 4 | Michelle Pauly | replaces Demi |
 
-Demi, Diana and Ray omit `featured` and appear on `/work` only.
+Templeton, Demi, Diana and Ray omit `featured` and appear on `/work` only.
 
 Two ordering fields is one more than the site has today, so the rationale
 belongs in a comment on the schema: `order` is the full listing, `featured` is
@@ -71,10 +76,10 @@ this branch is removing hardcoded per-slug maps from that file, not adding one.
 ## `cardDescription` moves into frontmatter
 
 Today the same card blurbs are hardcoded in `index.astro`, `work.astro` and
-`about.astro`. Adding three case studies would mean editing three maps.
+`about.astro`. Adding four case studies would mean editing three maps.
 
 Add `cardDescription: z.string()` to the work schema, required, and fill it in
-for all seven entries. Delete the `descriptions` maps from `index.astro` and
+for all eight entries. Delete the `descriptions` maps from `index.astro` and
 `work.astro`, along with the `?? project.data.challenge` fallbacks.
 
 `about.astro` does not exist on `main` — it lives only on the `about-page`
@@ -85,9 +90,9 @@ for CRTC and Templeton. Consolidating means picking one blurb per project.
 **Use the `/work` wording**, which is already shared by two of the three
 surfaces. The homepage's two longer variants are dropped.
 
-## The three case studies
+## The four case studies
 
-All three use the full editorial layout already supported by `[slug].astro`:
+All four use the full editorial layout already supported by `[slug].astro`:
 `challenge` → optional `beforeAfter` → `approach` → `solution` → gallery →
 `results` → optional `resultsGallery`. No new components, no new CSS, no schema
 fields beyond `cardDescription` and `featured`.
@@ -125,7 +130,61 @@ them.
 Editorial blocks: `beforeAfter` (old flat one-pager vs new category grid),
 `solutionGallery` (category grid, project detail).
 
-### 2. Diana Ojeda — the site performs the method
+### 2. AGA Beauty — a brand built for a bigger business, scaled down honestly
+
+Tags: Website. Tech: Astro, Tailwind, Vercel. No `beforeAfter` — she had no
+website at all, only Instagram.
+
+**Challenge.** Malu Alburqueque runs a one-person home studio in Burnaby: nails,
+skin and body, one client at a time, no website, clients arriving through Google
+reviews, referrals and Instagram. Mid-build she replaced her branding with the
+family identity her sister uses in Peru — but that operation is a beauty salon
+attached to a gala-dress boutique, with a sewing team and retail floor. The
+identity was authored for something several times her size.
+
+**Approach.** Inherit the art direction, the voice and the logo; leave behind
+everything that describes a business she isn't. Nothing on the site implies more
+than one room or more than one person, and there is no team, no second location,
+no retail and no "salon" framing, because it is a private studio. Of the five
+personality traits the brand claims, exclusivity was the weakest — one person
+seeing one client at a time is not a velvet rope — so it is written as intimacy
+instead.
+
+The same discipline governs the copy: no invented reviews, prices, press or
+credentials, and no claim about scent, music or the feel of the room, because
+none of it had been confirmed. Her experience is 1.5 years, in her own written
+words, rather than the rounder number from the discovery call. Her introduction
+runs close to verbatim.
+
+**Solution.** Four pages — Home, About, Services, Contact — with booking as the
+spine. Fresha cannot be embedded, so every Book Now opens her Fresha page in a
+new tab, generated so the new-client fee is waived and the tracking params
+stripped, or every website booking gets credited to Instagram. Book Now sits in
+the header on every page, a sticky bar carries WhatsApp, phone and Book Now, and
+real prices sit next to every service rather than behind an enquiry. Social
+proof sits beside the booking CTA rather than isolated in its own section, and
+her Instagram feed runs live on the page. The whole thing is built mobile-first,
+because bookings in this category happen after hours from a phone.
+
+The mid-build rebrand landed two days before launch and moved the logo from a
+circular badge to a wordmark with a new colour direction. It touched tokens and
+the logo; the layout and page structure never changed.
+
+**Results.** First draft sent Jul 28 and approved with no notes beyond a few
+service price changes. Live Jul 29 at agabeauty.ca, with the client dashboard
+wired up so she can see her traffic and request content changes without
+emailing anyone.
+
+Editorial blocks: `featureImage` on the booking surface, `solutionGallery`
+(services with prices, About).
+
+**Spelling and naming, both easy to get wrong:** the surname is **Alburqueque**,
+not Albuquerque. The business is **AGA Beauty**, descriptor "Spa & Boutique".
+"Nails" is a service, never the business name — the Google listing and her own
+Instagram menu still carry older variants, and the case study must not copy
+them. Do not put the subscription rate or contract value on the page.
+
+### 3. Diana Ojeda — the site performs the method
 
 Tags: Website. Tech: Astro, Tailwind, Vercel. No `beforeAfter`.
 
@@ -160,10 +219,7 @@ Contact.
 Editorial blocks: `featureImage` on the check-in interaction (the centrepiece),
 `solutionGallery` (paths grid, Work With Me).
 
-Do not put a dollar figure, the payment split or the portfolio-rate exception on
-the page.
-
-### 3. Ray Pauly Photo — get out of the way
+### 4. Ray Pauly Photo — get out of the way
 
 Tags: Website, CMS. Tech: Astro, Sanity, PhotoSwipe, Vercel.
 
@@ -193,10 +249,10 @@ Editorial blocks: `beforeAfter` (2022 archive vs new homepage),
 
 ## Screenshots
 
-Fifteen PNGs into `src/assets/case-studies/`, captured with Playwright at
-1440px viewport width, prefixed by slug. Each is then imported into the manifest
-in `work/[slug].astro` and, for the three hero images, the `heroImages` map in
-`work.astro` and `caseStudyImages` in `index.astro`.
+Twenty PNGs into `src/assets/case-studies/`, captured with Playwright at 1440px
+viewport width unless noted, prefixed by slug. Each is then imported into the
+manifest in `work/[slug].astro` and, for the four hero images, the `heroImages`
+map in `work.astro` and `caseStudyImages` in `index.astro`.
 
 | Key | Source |
 | --- | --- |
@@ -204,6 +260,11 @@ in `work/[slug].astro` and, for the three hero images, the `heroImages` map in
 | `michelle-before-home` | archived old site |
 | `michelle-category` | live, a category grid |
 | `michelle-project` | live, project detail showing the metadata block |
+| `aga-home-hero` | live, homepage — also the card image |
+| `aga-services` | live, services with prices beside each |
+| `aga-about` | live, About with Malu's portrait |
+| `aga-booking-bar` | live, **390px**, sticky WhatsApp / phone / Book Now bar |
+| `aga-reviews` | live, social proof beside the booking CTA |
 | `diana-home-hero` | live, homepage — also the card image |
 | `diana-checkin` | live, the "Right now, I feel" interaction |
 | `diana-paths` | live, paths grid |
@@ -234,17 +295,18 @@ the `beforeAfter` block for that case study rather than approximate it.
 - `src/content.config.ts` — add `cardDescription` (required) and `featured`
   (optional number) to the work schema, with the comment explaining the two
   ordering fields.
-- `src/content/work/01-michelle-pauly.md`, `02-diana-ojeda.md`,
-  `03-ray-pauly.md` — new.
-- `src/content/work/04-crtc.md`, `05-surfsmash.md`, `06-templeton.md`,
-  `07-demi.md` — renamed from `01`–`04`, `order` bumped, `cardDescription`
-  added, `featured` added to CRTC, Surfsmash and Templeton.
+- `src/content/work/01-michelle-pauly.md`, `02-aga-beauty.md`,
+  `03-diana-ojeda.md`, `04-ray-pauly.md` — new.
+- `src/content/work/05-crtc.md`, `06-surfsmash.md`, `07-templeton.md`,
+  `08-demi.md` — renamed from `01`–`04`, `order` bumped, `cardDescription`
+  added. CRTC and Surfsmash keep a `featured` value; Templeton and Demi get
+  none, which is what drops them off the homepage.
 - `src/pages/work.astro` — delete the `descriptions` map, read
-  `cardDescription`; add the three hero imports.
+  `cardDescription`; add the four hero imports.
 - `src/pages/index.astro` — delete the `descriptions` map, read
-  `cardDescription`, filter and sort by `featured`; swap the Demi hero import
-  for Michelle's.
-- `src/pages/work/[slug].astro` — add the new imports and three manifest
+  `cardDescription`, filter and sort by `featured`; swap the Templeton and Demi
+  hero imports for AGA's and Michelle's.
+- `src/pages/work/[slug].astro` — add the new imports and four manifest
   entries.
 - `src/assets/case-studies/` — the new PNGs.
 
@@ -254,20 +316,20 @@ any CSS.
 
 ## Verification
 
-- `npm run build` clean, with three more pages than before.
-- `/work` lists seven in the order above; `/` lists exactly four, ending on
-  Michelle Pauly.
+- `npm run build` clean, with four more pages than before.
+- `/work` lists eight in the order above; `/` lists exactly four — CRTC,
+  Surfsmash, AGA Beauty, Michelle Pauly.
 - Every new case study page renders its images — a missing manifest key fails
   silently rather than erroring, so check each page rather than trusting the
   build.
-- The three `url` values resolve.
+- The four `url` values resolve.
 
 ## Follow-up, not in this branch
 
 When `about-page` merges, `about.astro` arrives carrying its own hardcoded
 `descriptions` map of the four old slugs and a `.slice(0, 2)` over `order`.
-After this reorder that would feature Michelle and Diana rather than CRTC and
-Surfsmash, and the two new slugs would fall through to the `challenge`
+After this reorder that would feature Michelle and AGA Beauty rather than CRTC
+and Surfsmash, and the new slugs would fall through to the `challenge`
 fallback. It needs the same treatment applied here: read `cardDescription`, and
 take the top two by `featured`.
 
