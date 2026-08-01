@@ -37,6 +37,13 @@ const work = defineCollection({
     title: z.string(),
     subtitle: z.string(),
     order: z.number(),
+    // `order` drives the full /work listing. `featured` is the homepage
+    // shortlist and is deliberately a different, shorter list: entries
+    // without it never reach the homepage. Keep the homepage at four.
+    featured: z.number().optional(),
+    // Card blurb for /work and the homepage. It lives here so the same copy
+    // stops being pasted into every page that renders a CaseStudyCard.
+    cardDescription: z.string(),
     url: z.string(),
     challenge: z.string(),
     approach: z.string().optional(),

@@ -1,7 +1,9 @@
 ---
 title: "Surfsmash"
 subtitle: "A card-based fantasy game for the 2026 World Surf League season, built top to bottom and shipped to the App Store."
-order: 2
+order: 6
+featured: 2
+cardDescription: "A card-based fantasy game for the World Surf League season. We built the platform: the iOS and Android app, the live-scoring admin tool, and the launch site. Live now on the App Store and Google Play."
 url: "https://smash.surf"
 icon: "icon"
 tags:

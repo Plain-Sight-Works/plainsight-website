@@ -40,22 +40,19 @@ const rendered = await Promise.all(
   }))
 );
 
-const workEntries = (await getCollection("work")).sort(
-  (a, b) => a.data.order - b.data.order
-);
-
-const descriptions: Record<string, string> = {
-  demi: "Complex AI kitchen software that needed to feel simple. We led with operator pain points, not tech jargon, and built a marketing site that makes Demi feel like relief, not another learning curve.",
-  surfsmash: "A card-based fantasy game for the World Surf League season. We built the platform: the iOS and Android app, the live-scoring admin tool, and the launch site. Live now on the App Store and Google Play.",
-  crtc: "An international addiction treatment center whose site had grown hard for families to navigate. We rebuilt it around the questions families ask when choosing treatment, with a warmer design that feels as human as the care it describes.",
-  "templeton-lakewood": "Two sibling Passive House developments by the same East Vancouver builder. We built a design system, proved it in a print brochure first, then carried it onto both rebuilt sites: modern, clear, and finally easy to use on a phone.",
-};
+// The homepage carries a shortlist, not the whole collection. Entries opt in
+// by setting `featured`, which orders them independently of /work's `order`.
+// Four cards is the layout; adding a fifth is a design decision, not a
+// content one.
+const workEntries = (await getCollection("work"))
+  .filter((entry) => entry.data.featured !== undefined)
+  .sort((a, b) => a.data.featured! - b.data.featured!);
 
 const caseStudies = workEntries.map((entry) => {
   const slug = entry.id.replace(/^\d+-/, '').replace(/\.md$/, '');
   return {
     title: entry.data.title,
-    description: descriptions[slug] ?? entry.data.challenge,
+    description: entry.data.cardDescription,
     link: `/work/${slug}`,
     image: caseStudyImages[slug],
     tags: entry.data.tags,

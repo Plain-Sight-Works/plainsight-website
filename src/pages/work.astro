@@ -20,18 +20,11 @@ const heroImages: Record<string, ImageMetadata> = {
   "templeton-lakewood": templetonHero,
 };
 
-const descriptions: Record<string, string> = {
-  demi: "Complex AI kitchen software that needed to feel simple. We led with operator pain points, not tech jargon, and built a marketing site that makes Demi feel like relief, not another learning curve.",
-  surfsmash: "A card-based fantasy game for the World Surf League season. We built the platform: the iOS and Android app, the live-scoring admin tool, and the launch site. Live now on the App Store and Google Play.",
-  crtc: "An international addiction treatment center whose site had grown hard for families to navigate. We rebuilt it around the questions families ask, with a design as warm as the care it describes.",
-  "templeton-lakewood": "Two sibling Passive House developments whose websites undersold them: dense, crowded, and clumsy on a phone. We built one design system in print first, then carried it onto both sites, clean and modern on every screen.",
-};
-
 const caseStudies = projects.map((project) => {
   const slug = project.id.replace(/^\d+-/, '').replace(/\.md$/, '');
   return {
     title: project.data.title,
-    description: descriptions[slug] ?? project.data.challenge,
+    description: project.data.cardDescription,
     slug,
     image: heroImages[slug],
     tags: project.data.tags,
