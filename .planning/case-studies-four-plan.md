@@ -43,8 +43,11 @@ that isn't true.
 | 4 | `ray-pauly` | `04-ray-pauly.md` |
 | 5 | `crtc` | `05-crtc.md` |
 | 6 | `surfsmash` | `06-surfsmash.md` |
-| 7 | `templeton` | `07-templeton.md` |
+| 7 | `templeton-lakewood` | `07-templeton-lakewood.md` |
 | 8 | `demi` | `08-demi.md` |
+
+The Templeton entry was merged with Lakewood on `main` at `94e199b`; its slug
+is `templeton-lakewood` and its title covers both developments.
 
 The four existing files are renamed and their `order` values bumped. Slugs are
 derived by stripping the numeric prefix, so no URL changes.
@@ -186,7 +189,9 @@ Instagram now point somewhere that matches the reviews, and the client dashboard
 lets her see her traffic and request content changes without emailing anyone.
 
 Editorial blocks: `featureImage` on the booking surface, `solutionGallery`
-(services with prices, the studio).
+(services with prices, the studio). No portrait of Malu: the layout has no slot
+left for it once those are placed, and the case study's point is the shape of
+her business rather than her face.
 
 **Do not hardcode the review numbers into the case study.** The live figure at
 time of writing is 5.0 from 8 Google reviews; both move, and the count is small
@@ -264,14 +269,20 @@ publish.
 without a developer.
 
 Editorial blocks: `beforeAfter` (2022 archive vs new homepage),
-`solutionGallery` (album grid, lightbox).
+`solutionGallery` (album grid, inside an album), `resultsGallery` (the
+PhotoSwipe lightbox, the About modal open over the gallery).
 
 ## Screenshots
 
-Twenty PNGs into `src/assets/case-studies/`, captured with Playwright at 1440px
-viewport width unless noted, prefixed by slug. Each is then imported into the
-manifest in `work/[slug].astro` and, for the four hero images, the `heroImages`
-map in `work.astro` and `caseStudyImages` in `index.astro`.
+Eighteen PNGs into `src/assets/case-studies/`, captured with Playwright at
+1440px viewport width unless noted, prefixed by slug. Each is then imported into
+the manifest in `work/[slug].astro` and, for the four hero images, the
+`heroImages` map in `work.astro` and `caseStudyImages` in `index.astro`.
+
+Every key below is placed in a `beforeAfter`, `featureImage` or gallery block by
+the entry that owns it. A key that is imported but never referenced renders
+nothing and fails nothing, so the set is deliberately kept to what the layout
+actually has slots for.
 
 | Key | Source |
 | --- | --- |
@@ -281,14 +292,12 @@ map in `work.astro` and `caseStudyImages` in `index.astro`.
 | `michelle-project` | live, project detail showing the metadata block |
 | `aga-home-hero` | live, homepage hero carrying the Google score — also the card image |
 | `aga-services` | live, services with real prices beside each |
-| `aga-about` | live, About with Malu's portrait |
 | `aga-studio` | live, the real room, her own photographs |
 | `aga-booking-bar` | live, **390px**, sticky WhatsApp / phone / Book Now bar |
 | `diana-home-hero` | live, homepage — also the card image |
 | `diana-checkin` | live, the "Right now, I feel" interaction |
 | `diana-paths` | live, paths grid |
 | `diana-work-with-me` | live, Work With Me |
-| `diana-about` | live, About |
 | `ray-home-hero` | live, hero into album grid — also the card image |
 | `ray-before-home` | Wayback, Feb 2022 |
 | `ray-album-grid` | live, album grid |
@@ -316,8 +325,9 @@ the `beforeAfter` block for that case study rather than approximate it.
   ordering fields.
 - `src/content/work/01-michelle-pauly.md`, `02-aga-beauty.md`,
   `03-diana-ojeda.md`, `04-ray-pauly.md` — new.
-- `src/content/work/05-crtc.md`, `06-surfsmash.md`, `07-templeton.md`,
-  `08-demi.md` — renamed from `01`–`04`, `order` bumped, `cardDescription`
+- `src/content/work/05-crtc.md`, `06-surfsmash.md`,
+  `07-templeton-lakewood.md`, `08-demi.md` — renamed from `01`–`04`, `order`
+  bumped, `cardDescription`
   added. CRTC and Surfsmash keep a `featured` value; Templeton and Demi get
   none, which is what drops them off the homepage.
 - `src/pages/work.astro` — delete the `descriptions` map, read
