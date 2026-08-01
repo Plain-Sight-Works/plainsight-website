@@ -31,6 +31,10 @@ import templetonAfterMobile from "../../assets/case-studies/templeton-after-mobi
 import lakewoodHero from "../../assets/case-studies/lakewood-home-hero.png";
 import lakewoodFloorplans from "../../assets/case-studies/lakewood-floorplans.png";
 import lakewoodNeighbourhood from "../../assets/case-studies/lakewood-neighbourhood.png";
+import michelleHero from "../../assets/case-studies/michelle-home-hero.png";
+import michelleBeforeHome from "../../assets/case-studies/michelle-before-home.png";
+import michelleCategory from "../../assets/case-studies/michelle-category.png";
+import michelleProject from "../../assets/case-studies/michelle-project.png";
 
 export async function getStaticPaths() {
   const projects = await getCollection("work");
@@ -76,6 +80,12 @@ const images: Record<string, Record<string, ImageMetadata>> = {
     "lakewood-hero": lakewoodHero,
     "lakewood-floorplans": lakewoodFloorplans,
     "lakewood-neighbourhood": lakewoodNeighbourhood,
+  },
+  "michelle-pauly": {
+    hero: michelleHero,
+    "before-home": michelleBeforeHome,
+    category: michelleCategory,
+    project: michelleProject,
   },
 };
 

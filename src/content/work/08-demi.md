@@ -2,7 +2,6 @@
 title: "Demi"
 subtitle: "Making AI-powered kitchen management feel approachable"
 order: 8
-featured: 4
 cardDescription: "Complex AI kitchen software that needed to feel simple. We led with operator pain points, not tech jargon, and built a marketing site that makes Demi feel like relief, not another learning curve."
 url: "https://getdemi.co"
 tags:
