@@ -31,6 +31,25 @@ import templetonAfterMobile from "../../assets/case-studies/templeton-after-mobi
 import lakewoodHero from "../../assets/case-studies/lakewood-home-hero.png";
 import lakewoodFloorplans from "../../assets/case-studies/lakewood-floorplans.png";
 import lakewoodNeighbourhood from "../../assets/case-studies/lakewood-neighbourhood.png";
+import michelleHero from "../../assets/case-studies/michelle-home-hero.png";
+import michelleBeforeHome from "../../assets/case-studies/michelle-before-home.png";
+import michelleCategory from "../../assets/case-studies/michelle-category.png";
+import michelleProject from "../../assets/case-studies/michelle-project.png";
+import agaHero from "../../assets/case-studies/aga-home-hero.png";
+import agaServices from "../../assets/case-studies/aga-services.png";
+import agaStudio from "../../assets/case-studies/aga-studio.png";
+import agaBookingBar from "../../assets/case-studies/aga-booking-bar.png";
+import agaMobileHome from "../../assets/case-studies/aga-mobile-home.png";
+import dianaHero from "../../assets/case-studies/diana-home-hero.png";
+import dianaCheckin from "../../assets/case-studies/diana-checkin.png";
+import dianaPaths from "../../assets/case-studies/diana-paths.png";
+import dianaWorkWithMe from "../../assets/case-studies/diana-work-with-me.png";
+import rayHero from "../../assets/case-studies/ray-home-hero.png";
+import rayBeforeHome from "../../assets/case-studies/ray-before-home.png";
+import rayHomeScrolled from "../../assets/case-studies/ray-home-scrolled.png";
+import rayAlbum from "../../assets/case-studies/ray-album.png";
+import rayLightbox from "../../assets/case-studies/ray-lightbox.png";
+import rayAboutModal from "../../assets/case-studies/ray-about-modal.png";
 
 export async function getStaticPaths() {
   const projects = await getCollection("work");
@@ -76,6 +95,33 @@ const images: Record<string, Record<string, ImageMetadata>> = {
     "lakewood-hero": lakewoodHero,
     "lakewood-floorplans": lakewoodFloorplans,
     "lakewood-neighbourhood": lakewoodNeighbourhood,
+  },
+  "michelle-pauly": {
+    hero: michelleHero,
+    "before-home": michelleBeforeHome,
+    category: michelleCategory,
+    project: michelleProject,
+  },
+  "aga-beauty": {
+    hero: agaHero,
+    services: agaServices,
+    studio: agaStudio,
+    "mobile-home": agaMobileHome,
+    "booking-bar": agaBookingBar,
+  },
+  "diana-ojeda": {
+    hero: dianaHero,
+    checkin: dianaCheckin,
+    paths: dianaPaths,
+    "work-with-me": dianaWorkWithMe,
+  },
+  "ray-pauly": {
+    hero: rayHero,
+    "before-home": rayBeforeHome,
+    "home-scrolled": rayHomeScrolled,
+    album: rayAlbum,
+    lightbox: rayLightbox,
+    "about-modal": rayAboutModal,
   },
 };
 

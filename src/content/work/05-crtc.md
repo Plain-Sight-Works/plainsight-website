@@ -1,7 +1,9 @@
 ---
 title: "Costa Rica Treatment Center"
 subtitle: "A bilingual redesign that helps families choose treatment with clarity and confidence."
-order: 1
+order: 5
+featured: 1
+cardDescription: "An international addiction treatment center whose site had grown hard for families to navigate. We rebuilt it around the questions families ask, with a design as warm as the care it describes."
 url: "https://crtc.vercel.app"
 tags:
   - Website
