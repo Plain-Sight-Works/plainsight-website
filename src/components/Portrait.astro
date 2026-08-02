@@ -1,0 +1,28 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  src?: ImageMetadata;
+  name: string;
+  initials: string;
+}
+
+const { src, name, initials } = Astro.props;
+---
+
+{src ? (
+  <Image
+    src={src}
+    alt={`Portrait of ${name}`}
+    class="w-full aspect-[4/5] object-cover rounded-xl block border border-border-subtle"
+  />
+) : (
+  /* Placeholder so the layout is final before the photos exist. Adding a real
+     portrait is a frontmatter change plus one manifest line in about.astro. */
+  <div
+    class="w-full aspect-[4/5] rounded-xl bg-surface-alt border border-border-subtle flex items-center justify-center"
+    aria-hidden="true"
+  >
+    <span class="font-heading text-72 font-black tracking-tighter leading-none text-text opacity-10 select-none">{initials}</span>
+  </div>
+)}

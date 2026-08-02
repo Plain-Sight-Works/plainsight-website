@@ -17,6 +17,47 @@ const homepage = defineCollection({
   }),
 });
 
+const about = defineCollection({
+  type: 'content',
+  schema: z.object({
+    section: z.string(),
+    order: z.number(),
+    heading: z.string().optional(),
+    subheading: z.string().optional(),
+    kicker: z.string().optional(),
+    cta_text: z.string().optional(),
+    cta_link: z.string().optional(),
+    items: z.array(z.object({
+      title: z.string(),
+      description: z.string(),
+    })).optional(),
+    // The two partner bios. `photo` is a manifest key resolved in about.astro;
+    // omit it and Portrait.astro renders the initials placeholder instead.
+    people: z.array(z.object({
+      name: z.string(),
+      role: z.string(),
+      initials: z.string(),
+      bio: z.string(),
+      photo: z.string().optional(),
+      facts: z.array(z.string()),
+    })).optional(),
+    // Plain typographic strip (location, size, entity type, hours).
+    facts: z.array(z.string()).optional(),
+  }),
+});
+
+// Site-wide client testimonials. Intentionally empty until real quotes exist —
+// every consumer checks for entries first, so nothing placeholder-shaped ships.
+const testimonials = defineCollection({
+  type: 'content',
+  schema: z.object({
+    order: z.number(),
+    quote: z.string(),
+    name: z.string(),
+    title: z.string(),
+  }),
+});
+
 const services = defineCollection({
   type: 'content',
   schema: z.object({
@@ -101,4 +142,4 @@ const work = defineCollection({
   }),
 });
 
-export const collections = { homepage, services, work };
+export const collections = { homepage, about, testimonials, services, work };
