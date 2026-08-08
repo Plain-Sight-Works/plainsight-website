@@ -48,7 +48,9 @@ const work = defineCollection({
     challenge: z.string(),
     approach: z.string().optional(),
     solution: z.string().optional(),
-    results: z.string(),
+    // Optional: a case study only carries a Results block when it has a real
+    // outcome to report. Without one the section is padding, so it is omitted.
+    results: z.string().optional(),
     tech: z.string(),
     // Optional fields for richer case studies (e.g. Surfsmash).
     // When `build` is present the template renders the expanded layout;
