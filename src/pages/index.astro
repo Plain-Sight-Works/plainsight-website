@@ -243,6 +243,20 @@ const caseStudies = workEntries.map((entry) => {
                 />
               ))}
             </div>
+            {d.cta_text && d.cta_link && (
+              <div class="mt-12">
+                <a
+                  href={d.cta_link}
+                  class="group inline-flex items-center gap-2 no-underline font-semibold text-cta text-accent transition-colors duration-fast hover:text-accent-hover hover:no-underline"
+                >
+                  {d.cta_text}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-[1em] h-[1em] transition-transform duration-fast group-hover:translate-x-1" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </a>
+              </div>
+            )}
           </div>
         </section>
       );
