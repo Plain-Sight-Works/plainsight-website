@@ -2,6 +2,11 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
+> **Superseded for AGA Beauty (2026-08-06).** The AGA angle in this document
+> ("one client at a time", "no storefront / no website at all", smallness as
+> the premium thing) was rejected. Do not write copy from it.
+> `.planning/focus/02-aga-beauty.md` governs.
+
 **Goal:** Add Michelle Pauly, AGA Beauty, Diana Ojeda and Ray Pauly Photo to the
 Plain Sight work section as full editorial case studies, leading the `/work`
 listing, while the homepage stays at exactly four cards.

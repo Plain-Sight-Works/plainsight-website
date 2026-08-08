@@ -3,6 +3,11 @@
 Branch: `case-studies-three`, cut from `main` at `94e199b`.
 Date: 2026-07-31
 
+> **Superseded for AGA Beauty (2026-08-06).** The AGA angle in this document
+> ("one client at a time", "no storefront / no website at all", smallness as
+> the premium thing) was rejected. Do not write copy from it.
+> `.planning/focus/02-aga-beauty.md` governs.
+
 ## Goal
 
 Add four shipped projects to the work section as full editorial case studies,
