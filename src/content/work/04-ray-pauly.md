@@ -1,44 +1,45 @@
 ---
 title: "Ray Pauly Photo"
-subtitle: "A photography portfolio where nothing on the page competes with the photographs."
+subtitle: "A photographer's portfolio, untouched for years, rebuilt as a modern gallery he keeps current himself."
 order: 4
 url: "https://raypaulyphoto.com"
 tags:
   - Website
   - CMS
 tech: "Astro, Sanity, PhotoSwipe, Vercel"
-cardDescription: "A photography portfolio still running on jQuery-era plugins, down to an IE6 transparency shim in its source. We replaced it with a quiet, image-first gallery he publishes to himself."
-challenge: "Raymond Pauly is a photographer in Costa Rica. The site carrying his work ran on a vendor platform, themed once and then left alone. The pages behind the homepage came off one index.php with a view parameter on the end of it, the stylesheets sat under themes/raypaulyphoto/ next to an admin sheet, the head still ran validation wired to a shopping cart the theme no longer rendered, and it loaded jquery.js, jcarousel and cycle.lite alongside a conditional comment that still handed Internet Explorer 6 a PNG transparency shim. It was also emptying out. The sidebar had once listed ten galleries, from Birds and Scenic to Concerts and Churches of Costa Rica; by 2022 that list rendered as a heading with nothing under it, and Birds was the only gallery still reachable. The homepage cycled through featured photographs on a timer, with no way to stop on one or pick another, at 800 pixels on the long edge, which was as large as any image on that site ever got. Someone opens a photographer's site to look at photographs, at a size worth looking at, and to choose which ones. That site moved them along on a timer, showed them narrower than a laptop window, and had one gallery left to show."
+cardDescription: "A photography portfolio still running on jQuery-era plugins, down to an IE6 transparency shim in its source. We rebuilt it as a modern gallery, with a CMS simple enough that he publishes new work himself."
+challenge: |
+  Raymond Pauly is a photographer in Costa Rica. His site was built for him in 2009, in custom PHP, and nothing about it had changed since. It showed small images that did not scale up on larger displays. The design around them dated the work by more than a decade.
+
+  The site came with its own management system. It sat unattended for so long that a PHP upgrade broke the code and he could no longer edit anything.
 beforeAfter:
   before:
     image: "before-home"
-    caption: "The old homepage: one photograph at a time, 800 pixels wide inside a frame, cycling on a timer on a page that still shipped an IE6 transparency shim."
+    caption: "The old homepage: one small photo at a time, cycling on a timer."
   after:
     image: "hero"
-    caption: "His name, one line under it, and then the photographs. Nothing between the top of the page and the work."
+    caption: "The new homepage. The grid starts where the old site ran its slideshow."
 approach: |
-  We built a portfolio and not a photography business. There is no call to action anywhere on the site, no enquiry form, no pricing, no line asking to be hired. The footer is an email address and a link to his Instagram, and that is the whole of the ask. Everything else on a page is either a photograph or the smallest amount of type needed to find one.
+  We wanted a site that looks modern and puts the photos first, showing them as large and as sharp as a visitor's screen allows. Nothing came across from the old one: the albums, the categories and the photos in them were all chosen again from scratch.
 
-  That settled the art direction by subtraction. The ground is a warm off-white, the text is near black, and there is no accent colour anywhere on the site, because a brand colour sitting next to a photograph is one more thing competing with it. We gave the photographs themselves no rounded corners and no drop shadow, so nothing frames them and nothing sits between them and the page.
+  We looked at other photographers' portfolios together, and at how portals like Pixieset and SmugMug present a body of work, and took the structure from there.
 
-  We also built it so that publishing is something he does himself. A photographer who hands a file to someone else and waits for it stops adding work, and the site stops growing with him. So we kept the editing side short enough to hold in your head: open it, make an album, drag the photographs in, publish.
+  Ray also had to get back the ability to publish his own work, so the site would keep growing after we handed it over.
 solution: |
-  We made the homepage his name, one line under it, and then the photographs. Scrolling folds the name into a sticky bar and fades the line out where it sits, leaving the photographs sharing the screen with his name at nav size and the album names. The grid is dense rather than uniform: two columns on a phone up to five on a very wide screen, with marked photographs taking a two by two block and tall ones two rows, so the page finds a rhythm without anyone laying it out by hand.
+  The homepage opens with a masonry grid of featured photos, so a visitor sees Ray's best work immediately. Ray flags which photos appear there himself, and the masonry layout sizes them unevenly, so the page stays varied the whole way down. His albums are the site's navigation, one click from any page.
 
-  We made the albums the navigation. They sit in the top right as words, so every album is one click from every page, with no index in between and no menu to open first above phone width. The header counts them at build time, so adding one does not break it. About sits beside them as a modal rather than a page, so nobody leaves the photographs for it.
+  We set the ground as a warm off-white and the type near black, and left accent colour out of the palette entirely, so the only colour anywhere on the site comes from the photos. Each one is served at the full resolution a visitor's screen can use.
 
-  Photographs open in a PhotoSwipe lightbox that fills the window, on a deep grey rather than pure black, driven by the arrow keys and Escape or by a swipe. The panel beside the image on a desktop window carries the album alongside the title, description and location he typed where he uploaded the file, and the date, camera and exposure read out of the file.
+  Opening a photo brings up a panel of information about it. Ray types the title, description and category, and the rest is read out of the file's EXIF data: the camera and its settings, and the place the photo was taken.
 
-  We kept the Studio to three things: Site Settings, the Homepage Gallery that holds the grid in the order he drags it into, and the albums. Site Settings and the Homepage Gallery can be edited but not created or deleted, so there is nothing to remove by accident. Sanity's CDN sizes each upload for the slot it lands in, and a deploy button beside the content makes the publishing his to press.
+  Ray publishes from a Sanity Studio that holds the site settings, the albums, and the order of the homepage grid, which he sets by dragging photos around. He can put new work up whenever he wants.
 solutionGallery:
   - image: "home-scrolled"
-    caption: "One scroll in, the name has folded into the bar at the top and the grid has the screen to itself."
+    caption: "One scroll in, his name has folded into the bar at the top and the grid fills the screen."
   - image: "album"
-    caption: "Inside an album, a title and then the same grid. The albums are the navigation, so each one is one click from every page."
-results: "The site is live at raypaulyphoto.com. Where the old gallery list had emptied to a heading with nothing under it, the albums are now the navigation, every one a click from any page. Nothing advances on a timer, and nothing decides for a visitor which photograph they are looking at. The question the old site could not answer, which photographs are there and which one do I want to see, is answered on the first screen."
-resultsGallery:
+    caption: "An album page shows its title and then the same grid."
   - image: "lightbox"
-    caption: "The lightbox fills the window on a deep grey, with the title, description and location he typed in the Studio set alongside the album it belongs to."
+    caption: "The photo's information panel: what Ray wrote in the Studio, and the camera and settings read out of the file."
   - image: "about-modal"
-    caption: "About opens over the gallery on the browser's own dialog element, rather than sending anyone to a page of its own."
+    caption: "About opens over the gallery instead of on a page of its own."
 ---
