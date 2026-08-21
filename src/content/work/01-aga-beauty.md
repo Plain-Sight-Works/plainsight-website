@@ -1,7 +1,7 @@
 ---
 title: "AGA Beauty"
 subtitle: "Personalized one-on-one care in a private Burnaby studio, presented as the premium service it is."
-order: 2
+order: 1
 featured: 1
 url: "https://agabeauty.ca"
 tags:

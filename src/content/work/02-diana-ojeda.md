@@ -1,7 +1,7 @@
 ---
 title: "Diana Ojeda"
 subtitle: "Two decades of embodied practice in Toronto, on a site under her own name for the first time."
-order: 3
+order: 2
 url: "https://www.dianaojeda.ca"
 tags:
   - Website

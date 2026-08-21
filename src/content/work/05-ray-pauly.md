@@ -1,7 +1,7 @@
 ---
 title: "Ray Pauly Photo"
 subtitle: "A photographer's portfolio, untouched for years, rebuilt as a modern gallery he keeps current himself."
-order: 4
+order: 5
 published: false
 url: "https://raypaulyphoto.com"
 tags:

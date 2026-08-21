@@ -1,7 +1,7 @@
 ---
 title: "Templeton Living & Lakewood Living"
 subtitle: "One design system across a print brochure and the websites for two sibling Passive House developments in East Vancouver."
-order: 7
+order: 3
 featured: 2
 cardDescription: "Two sibling Passive House developments, a couple of years into selling, on websites that kept half their information inside a slider. We designed one system for the print brochure first, then rebuilt both sites on it, focused on what was still for sale."
 url: "https://templetonliving.ca"

@@ -1,7 +1,7 @@
 ---
 title: "Costa Rica Treatment Center"
 subtitle: "An addiction treatment center's site, rebuilt warmer and reorganized around how it gets read."
-order: 5
+order: 6
 published: false
 cardDescription: "An international addiction treatment center whose site split the same programs across three separate sections, behind a design gone cold and dated. We reorganized it around the questions a family asks, in the order they ask them, and rebuilt it warm enough to match the care."
 url: "https://crtc.vercel.app"

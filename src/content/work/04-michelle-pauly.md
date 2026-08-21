@@ -1,7 +1,7 @@
 ---
 title: "Michelle Pauly"
 subtitle: "An architectural designer's portfolio rebuilt for a new stage in her career."
-order: 1
+order: 4
 url: "https://www.michellepauly.com"
 tags:
   - Website
