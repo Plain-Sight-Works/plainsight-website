@@ -27,7 +27,10 @@ copy:
 - **Warmth, and an explanation.** The site has to feel like her *and* make an
   unfamiliar practice legible.
 - **A path, not a menu.** The visitor starts from how they feel and is walked
-  forward, arriving at the coaching page already knowing why it might help.
+  forward. Be careful what you claim the first step achieves: naming the
+  feeling and reading it described back gets them ready for how Diana would
+  address it. It does not yet tell them why her work would help. That comes
+  after they follow the link.
 
 ## Lead with
 

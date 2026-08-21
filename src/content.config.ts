@@ -37,6 +37,12 @@ const work = defineCollection({
     title: z.string(),
     subtitle: z.string(),
     order: z.number(),
+    // `published: false` shelves an entry: it stays in the repo but is dropped
+    // by every page that reads this collection, so no card, no /work/<slug>
+    // page and no images reach the build. Its hero and manifest imports must
+    // come out of index.astro, work.astro and work/[slug].astro too, or the
+    // assets ship anyway.
+    published: z.boolean().default(true),
     // `order` drives the full /work listing. `featured` is the homepage
     // shortlist and is deliberately a different, shorter list: entries
     // without it never reach the homepage. Keep the homepage at four.

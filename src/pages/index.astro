@@ -4,9 +4,7 @@ import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import CaseStudyCard from "../components/CaseStudyCard.astro";
 import CTA from "../components/CTA.astro";
-import surfsmashHero from "../assets/case-studies/surfsmash-website-hero.png";
-import crtcHero from "../assets/case-studies/crtc-home-hero.png";
-import michelleHero from "../assets/case-studies/michelle-home-hero.png";
+import templetonHero from "../assets/case-studies/templeton-home-hero.png";
 import agaHero from "../assets/case-studies/aga-home-hero.png";
 import iconCompass from "../assets/icons/icon-compass.svg";
 import iconDisk from "../assets/icons/icon-disk.svg";
@@ -22,13 +20,11 @@ const basicsIcons: Record<string, string> = {
 };
 const basicsIconKeys = ["responsive", "speed", "seo", "foundation", "accessible"];
 
-// Only the four featured entries reach this page, so only their heroes are
+// Only the featured entries reach this page, so only their heroes are
 // imported here. /work carries the full set and has its own imports.
 const caseStudyImages: Record<string, ImageMetadata> = {
-  surfsmash: surfsmashHero,
-  crtc: crtcHero,
-  "michelle-pauly": michelleHero,
   "aga-beauty": agaHero,
+  "templeton-lakewood": templetonHero,
 };
 
 const sections = (await getCollection("homepage")).sort(
@@ -44,17 +40,17 @@ const rendered = await Promise.all(
 
 // The homepage carries a shortlist, not the whole collection. Entries opt in
 // by setting `featured`, which orders them independently of /work's `order`.
-// Four cards is the layout; adding a fifth is a design decision, not a
+// Two cards is the layout; adding a third is a design decision, not a
 // content one.
-const workEntries = (await getCollection("work"))
+const workEntries = (await getCollection("work", (entry) => entry.data.published))
   .filter((entry) => entry.data.featured !== undefined)
   .sort((a, b) => a.data.featured! - b.data.featured!);
 
-// The schema cannot express "exactly four, all distinct". Two entries sharing
-// a `featured` value would silently render a fifth card. Fail the build instead.
-if (workEntries.length !== 4) {
+// The schema cannot express "exactly two, all distinct". A third entry
+// carrying `featured` would silently render a third card. Fail the build.
+if (workEntries.length !== 2) {
   throw new Error(
-    `Homepage expects exactly 4 featured work entries, found ${workEntries.length}: ` +
+    `Homepage expects exactly 2 featured work entries, found ${workEntries.length}: ` +
       workEntries.map((e) => `${e.id} (featured: ${e.data.featured})`).join(", ")
   );
 }

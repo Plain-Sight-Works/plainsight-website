@@ -4,22 +4,6 @@ import { Image } from "astro:assets";
 import Base from "../../layouts/Base.astro";
 import CTA from "../../components/CTA.astro";
 import AppGallery from "../../components/AppGallery.astro";
-import demiHero from "../../assets/case-studies/demi-hero.png";
-import demiOrdering from "../../assets/case-studies/demi-ordering.png";
-import demiPrep from "../../assets/case-studies/demi-prep.png";
-import surfsmashIcon from "../../assets/case-studies/surfsmash-icon.png";
-import surfsmashHero from "../../assets/case-studies/surfsmash-website-hero.png";
-import surfsmashAppHome from "../../assets/case-studies/app-home.png";
-import surfsmashAppLive from "../../assets/case-studies/app-live-event.png";
-import surfsmashAppCard from "../../assets/case-studies/app-athlete-card.png";
-import surfsmashSchedule from "../../assets/case-studies/surfsmash-schedule.png";
-import crtcHero from "../../assets/case-studies/crtc-home-hero.png";
-import crtcBeforeFooter from "../../assets/case-studies/crtc-before-footer-ia.png";
-import crtcWhatWeTreat from "../../assets/case-studies/crtc-what-we-treat-hub.png";
-import crtcCondition from "../../assets/case-studies/crtc-condition-alcohol.png";
-import crtcRiverside from "../../assets/case-studies/crtc-riverside.png";
-import crtcEsHome from "../../assets/case-studies/crtc-es-home.png";
-import crtcTestimonials from "../../assets/case-studies/crtc-testimonials.png";
 import templetonHero from "../../assets/case-studies/templeton-home-hero.png";
 import templetonBeforeHome from "../../assets/case-studies/templeton-before-home.png";
 import templetonFloorplans from "../../assets/case-studies/templeton-floorplans.png";
@@ -44,15 +28,9 @@ import dianaHero from "../../assets/case-studies/diana-home-hero.png";
 import dianaCheckin from "../../assets/case-studies/diana-checkin.png";
 import dianaPaths from "../../assets/case-studies/diana-paths.png";
 import dianaWorkWithMe from "../../assets/case-studies/diana-work-with-me.png";
-import rayHero from "../../assets/case-studies/ray-home-hero.png";
-import rayBeforeHome from "../../assets/case-studies/ray-before-home.png";
-import rayHomeScrolled from "../../assets/case-studies/ray-home-scrolled.png";
-import rayAlbum from "../../assets/case-studies/ray-album.png";
-import rayLightbox from "../../assets/case-studies/ray-lightbox.png";
-import rayAboutModal from "../../assets/case-studies/ray-about-modal.png";
 
 export async function getStaticPaths() {
-  const projects = await getCollection("work");
+  const projects = await getCollection("work", (project) => project.data.published);
   return projects.map((project) => ({
     params: { slug: project.id.replace(/^\d+-/, '').replace(/\.md$/, '') },
     props: { project },
@@ -65,24 +43,6 @@ const d = project.data;
 // One slug-keyed manifest of named images per case study. Add new case
 // studies here by their slug; gallery/build blocks reference these keys.
 const images: Record<string, Record<string, ImageMetadata>> = {
-  demi: { hero: demiHero, approach: demiPrep, solution: demiOrdering },
-  surfsmash: {
-    icon: surfsmashIcon,
-    hero: surfsmashHero,
-    "app-home": surfsmashAppHome,
-    "app-live-event": surfsmashAppLive,
-    "app-athlete-card": surfsmashAppCard,
-    schedule: surfsmashSchedule,
-  },
-  crtc: {
-    hero: crtcHero,
-    "before-footer-ia": crtcBeforeFooter,
-    "what-we-treat-hub": crtcWhatWeTreat,
-    "condition-alcohol": crtcCondition,
-    riverside: crtcRiverside,
-    "es-home": crtcEsHome,
-    testimonials: crtcTestimonials,
-  },
   "templeton-lakewood": {
     hero: templetonHero,
     "before-home": templetonBeforeHome,
@@ -114,14 +74,6 @@ const images: Record<string, Record<string, ImageMetadata>> = {
     checkin: dianaCheckin,
     paths: dianaPaths,
     "work-with-me": dianaWorkWithMe,
-  },
-  "ray-pauly": {
-    hero: rayHero,
-    "before-home": rayBeforeHome,
-    "home-scrolled": rayHomeScrolled,
-    album: rayAlbum,
-    lightbox: rayLightbox,
-    "about-modal": rayAboutModal,
   },
 };
 

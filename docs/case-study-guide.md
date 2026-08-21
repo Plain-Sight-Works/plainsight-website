@@ -112,21 +112,28 @@ nothing about whether we can think.
 
 ### Length
 
-**The whole body runs 350 to 450 words. 450 is a hard ceiling.**
+**The per-field ceilings bind. Each field is measured on its own.**
 
 | Field | Shape | Ceiling |
 |---|---|---|
 | `challenge` | 2 paragraphs | 120 |
 | `approach` | 3 short paragraphs | 130 |
 | `solution` | 4 paragraphs | 230 |
-| `results` | optional, 1 paragraph | 80 |
+| `results` | optional, 1 to 2 paragraphs | 120 |
 
-**The total binds. The per-field ceilings do not.** They add to 560, so they
-cannot all be spent at once. A field near its ceiling means another is well
-under it.
+**`challenge` through `solution` run 350 to 450 words together.** That is the
+whole body of a case study with no `results`. Where a project has a real
+outcome to state, `results` sits on top of it rather than inside it.
 
-For scale: Michelle runs 363 words and Diana 441. Both are finished, neither is
-thin, and a case study that says everything in 350 is done rather than short.
+This used to work the other way round: one 450-word total that everything had
+to fit inside, per-field ceilings that never bound. It produced compressed,
+listy writing in whichever field got squeezed last, which was always `results`.
+A sentence written to hit a number is the wrong sentence. If a field is at its
+ceiling and still not saying the thing, the fix is in that field.
+
+For scale: Michelle runs 363 words and Diana 441, both without a `results`.
+Both are finished, neither is thin, and a case study that says everything in
+350 is done rather than short.
 
 When a draft is over, cut it. Do not move words from one field into another;
 that is the same draft with the overflow hidden. A field that runs long is
@@ -141,7 +148,7 @@ and do not raise the quality of their work as a question in order to dismiss it:
 Neither is true and both read badly.
 
 **`approach`** — the strategy and the reasoning behind it, at intent level. What
-had to be true of the site, and why. Never where anything sits on the page.
+had to be true of the site, and why.
 
 **`solution`** — a quick walk through the design, strategy and technical
 decisions that were made, and what each one is for. Not a tour of what the page
@@ -152,8 +159,14 @@ to and the first thing cut when a draft is trimmed for length. Keep it.
 
 See *Decisions, not furniture* below. It is the rule this field fails most.
 
-**`results`** — optional. It states what is true of the live site now, and
-nothing else.
+**`results`** — optional. It states what is true of the live site now, and how
+the client received it. Nothing else.
+
+**The client's reaction counts.** AGA Beauty opens on "the first draft came back
+approved with no notes beyond a few service prices." That is a fact about the
+engagement rather than the site, and it stays: it is the only place a reader
+learns how the client took the work. It survives because it is specific and
+checkable. "She was thrilled" is not.
 
 Three things it is not. **Not the old site:** a sentence about what the previous
 site failed to do is the `challenge` again in different clothes. **Not what the
@@ -231,8 +244,10 @@ alive" closes the loop without echoing it.
 ### What does not belong in any field
 
 - **Placement mechanics.** "Directly under Book Now and linked down to the
-  quotes it summarises." Putting a rating high on a page is not a feat, and
-  narrating where things sit reads as filler.
+  quotes it summarises." Narrating where things sit reads as filler. **The line
+  is whether the placement was a priority call.** Giving the rating and the
+  testimonials prominence is a decision about what the page leads with, and it
+  stays. Routing the reader from one block to another is furniture, and it goes.
 - **Implementation detail.** Build-time fetching, UTM parameters, which
   third-party widget refused to embed. If it matters to the business, one plain
   sentence about the outcome; otherwise nothing.

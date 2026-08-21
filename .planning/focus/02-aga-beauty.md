@@ -5,9 +5,8 @@ editing any AGA Beauty copy: the card, the case study body, or anything on
 agabeauty.ca itself.
 
 This brief covers **what to say about this project**. It says nothing about
-shape, length or structure, which are the same for every case study and live
-in the *Case study cards* and *Case study bodies* sections of
-`plain-sight-writing-guides/guides/marketing-copy.md`. Read both.
+shape, length or structure, which are the same for every case study and live in
+`docs/case-study-guide.md`. Read both.
 
 ## What the project is about
 
@@ -85,8 +84,8 @@ into copy.
 - Four pages: Home, About, Services, Contact.
 - Booking runs through Fresha in a new tab, with the new-client fee waived
   and UTM parameters stripped so bookings aren't miscredited to Instagram.
-- Built mobile first; a sticky bar carries Book Now, WhatsApp and her number
-  down the whole page on a phone.
+- Built mobile first; on a phone a sticky bar runs along the bottom of every
+  page with Book Now, WhatsApp and her number on it.
 - Her Instagram grid is fetched at build time rather than rebuilt by hand.
 - Her experience is a year and a half, in her own words. Her introduction runs
   close to verbatim.
