@@ -6,7 +6,6 @@ import CaseStudyCard from "../components/CaseStudyCard.astro";
 import CTA from "../components/CTA.astro";
 import templetonHero from "../assets/case-studies/templeton-home-hero.png";
 import michelleHero from "../assets/case-studies/michelle-home-hero.png";
-import agaHero from "../assets/case-studies/aga-home-hero.png";
 import dianaHero from "../assets/case-studies/diana-home-hero.png";
 
 const projects = (await getCollection("work", (entry) => entry.data.published)).sort(
@@ -16,7 +15,6 @@ const projects = (await getCollection("work", (entry) => entry.data.published)).
 const heroImages: Record<string, ImageMetadata> = {
   "templeton-lakewood": templetonHero,
   "michelle-pauly": michelleHero,
-  "aga-beauty": agaHero,
   "diana-ojeda": dianaHero,
 };
 
