@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { shouldSkip, slugFromHostname, buildPayload } from '../../public/beacon.js';
+import { shouldSkip, slugFromHostname, buildPayload, handleClick } from '../../public/beacon.js';
 
 describe('slugFromHostname', () => {
   it('takes the first label', () => {
@@ -72,5 +72,48 @@ describe('buildPayload', () => {
       referrer: '',
       label: "Let's talk",
     });
+  });
+});
+
+describe('handleClick', () => {
+  function clickEventOn(target) {
+    return { target };
+  }
+
+  it('sends teaser_cta_clicked with the marked element text', () => {
+    const button = document.createElement('button');
+    button.setAttribute('data-ps-cta', '');
+    button.textContent = "  Book now  ";
+    document.body.appendChild(button);
+
+    const send = vi.fn();
+    handleClick(clickEventOn(button), send);
+
+    expect(send).toHaveBeenCalledWith('teaser_cta_clicked', 'Book now');
+  });
+
+  it('sends nothing for a plain button with no data-ps-cta', () => {
+    const button = document.createElement('button');
+    button.textContent = 'Menu';
+    document.body.appendChild(button);
+
+    const send = vi.fn();
+    handleClick(clickEventOn(button), send);
+
+    expect(send).not.toHaveBeenCalled();
+  });
+
+  it('resolves a click inside a marked element to the marked ancestor', () => {
+    const cta = document.createElement('a');
+    cta.setAttribute('data-ps-cta', '');
+    const span = document.createElement('span');
+    span.textContent = 'Call us today';
+    cta.appendChild(span);
+    document.body.appendChild(cta);
+
+    const send = vi.fn();
+    handleClick(clickEventOn(span), send);
+
+    expect(send).toHaveBeenCalledWith('teaser_cta_clicked', 'Call us today');
   });
 });

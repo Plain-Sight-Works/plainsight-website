@@ -101,18 +101,29 @@ function start(win) {
     observer.observe(overlay);
   }
 
-  win.document.addEventListener('click', (event) => {
-    // Same reasoning as the IntersectionObserver callback above: a click
-    // handler runs on its own turn of the event loop, outside start()'s try.
-    try {
-      const el = event.target && event.target.closest && event.target.closest('a,button');
-      if (!el) return;
-      const text = (el.textContent || '').trim().replace(/\s+/g, ' ');
-      if (text) send('teaser_cta_clicked', text);
-    } catch (_) {
-      /* never throws into the page */
-    }
-  }, { passive: true, capture: true });
+  win.document.addEventListener('click', (event) => handleClick(event, send), {
+    passive: true,
+    capture: true,
+  });
+}
+
+// Every real call to action in a teaser carries `data-ps-cta`. The selector
+// stays that explicit marker, never `a,button`: a teaser's mobile menu
+// button and its booking-form disclosure are buttons too, and guessing
+// which button counts as a call to action is the mistake that made this
+// column meaningless in the first place. See the teaser skill's build
+// conventions for which elements get the attribute.
+export function handleClick(event, send) {
+  // Same reasoning as the IntersectionObserver callback above: a click
+  // handler runs on its own turn of the event loop, outside start()'s try.
+  try {
+    const el = event.target && event.target.closest && event.target.closest('[data-ps-cta]');
+    if (!el) return;
+    const text = (el.textContent || '').trim().replace(/\s+/g, ' ');
+    if (text) send('teaser_cta_clicked', text);
+  } catch (_) {
+    /* never throws into the page */
+  }
 }
 
 try {
