@@ -13,6 +13,18 @@ describe('slugFromHostname', () => {
   it('returns null for a host that is not a teaser', () => {
     expect(slugFromHostname('localhost')).toBe(null);
   });
+
+  it('returns null for a lookalike apex', () => {
+    expect(slugFromHostname('foo.evilplainsight.works')).toBe(null);
+  });
+
+  it('returns null for a host that merely starts with the apex', () => {
+    expect(slugFromHostname('plainsight.works.attacker.com')).toBe(null);
+  });
+
+  it('returns null for a deeper subdomain of the apex', () => {
+    expect(slugFromHostname('a.b.plainsight.works')).toBe(null);
+  });
 });
 
 describe('shouldSkip', () => {
@@ -33,6 +45,14 @@ describe('shouldSkip', () => {
 
   it('does not match a cookie whose name merely ends in ps_internal', () => {
     expect(shouldSkip({ webdriver: false }, 'not_ps_internal=1')).toEqual({ skip: false });
+  });
+
+  it('skips when the marker is the only cookie', () => {
+    expect(shouldSkip({ webdriver: false }, 'ps_internal=1')).toEqual({ skip: true, reason: 'internal' });
+  });
+
+  it('skips when the marker is the last cookie', () => {
+    expect(shouldSkip({ webdriver: false }, 'a=1; ps_internal=1')).toEqual({ skip: true, reason: 'internal' });
   });
 });
 

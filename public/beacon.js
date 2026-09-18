@@ -18,7 +18,9 @@ export const ENDPOINT = 'https://dashboard.plainsight.works/api/beacon';
 export function slugFromHostname(hostname) {
   const labels = String(hostname || '').split('.');
   if (labels.length < 3) return null;
-  if (!labels.slice(1).join('.').endsWith('plainsight.works')) return null;
+  // Exact match on the apex, not a suffix check: a suffix check would also
+  // match a lookalike registered domain such as evilplainsight.works.
+  if (labels.slice(1).join('.') !== 'plainsight.works') return null;
   return labels[0] || null;
 }
 
@@ -83,21 +85,33 @@ function start(win) {
   const overlay = win.document.querySelector('.preview-overlay');
   if (overlay && win.IntersectionObserver) {
     const observer = new win.IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          send('teaser_preview_reached');
-          observer.disconnect();
+      // This callback runs on a later turn of the event loop, so the
+      // top-level try/catch around start() cannot catch a throw here.
+      try {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            send('teaser_preview_reached');
+            observer.disconnect();
+          }
         }
+      } catch (_) {
+        /* never throws into the page */
       }
     });
     observer.observe(overlay);
   }
 
   win.document.addEventListener('click', (event) => {
-    const el = event.target && event.target.closest && event.target.closest('a,button');
-    if (!el) return;
-    const text = (el.textContent || '').trim().replace(/\s+/g, ' ');
-    if (text) send('teaser_cta_clicked', text);
+    // Same reasoning as the IntersectionObserver callback above: a click
+    // handler runs on its own turn of the event loop, outside start()'s try.
+    try {
+      const el = event.target && event.target.closest && event.target.closest('a,button');
+      if (!el) return;
+      const text = (el.textContent || '').trim().replace(/\s+/g, ' ');
+      if (text) send('teaser_cta_clicked', text);
+    } catch (_) {
+      /* never throws into the page */
+    }
   }, { passive: true, capture: true });
 }
 
