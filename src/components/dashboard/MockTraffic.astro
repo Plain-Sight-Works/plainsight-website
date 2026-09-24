@@ -1,0 +1,43 @@
+---
+import MockWindow from "./MockWindow.astro";
+
+const sources = [
+  { label: "Google", share: "61%", width: "w-[61%]" },
+  { label: "Social", share: "18%", width: "w-[18%]" },
+  { label: "Other websites", share: "13%", width: "w-[13%]" },
+  { label: "Direct", share: "8%", width: "w-[8%]" },
+];
+
+const pages = [
+  { path: "/", views: "842" },
+  { path: "/services", views: "391" },
+  { path: "/contact", views: "206" },
+];
+---
+
+<MockWindow label="Traffic">
+  <div class="mb-5">
+    <div class="text-label font-semibold uppercase tracking-wider text-text-dim">Visitors this month</div>
+    <div class="font-heading text-48 font-extrabold leading-none tracking-tight text-text tabular-nums">1,284</div>
+  </div>
+  <div class="mb-5 flex flex-col gap-2.5">
+    {sources.map((s) => (
+      <div class="grid grid-cols-[7.5rem_1fr_2.5rem] items-center gap-3 text-13 max-sm:grid-cols-[6.5rem_1fr_2.5rem]">
+        <span class="text-text-muted">{s.label}</span>
+        <span class="h-2 overflow-hidden rounded-full bg-surface-gradient-end">
+          <span class:list={["block h-full rounded-full bg-accent", s.width]}></span>
+        </span>
+        <span class="text-right font-semibold text-text tabular-nums">{s.share}</span>
+      </div>
+    ))}
+  </div>
+  <div class="text-label font-semibold uppercase tracking-wider text-text-dim">Top pages</div>
+  <ul class="divide-y divide-border-alt">
+    {pages.map((p) => (
+      <li class="flex justify-between py-2 text-13">
+        <span class="font-mono text-text">{p.path}</span>
+        <span class="text-text-muted tabular-nums">{p.views}</span>
+      </li>
+    ))}
+  </ul>
+</MockWindow>

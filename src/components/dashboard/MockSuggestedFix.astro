@@ -1,0 +1,25 @@
+---
+import MockWindow from "./MockWindow.astro";
+---
+
+<MockWindow label="Suggested improvement" tone="dark" class="ring-1 ring-primary-light/40">
+  <div class="mb-4 font-sans text-21 font-bold leading-snug tracking-snug text-text">Make your phone number tappable on phones</div>
+  <dl class="mb-5 flex flex-col gap-3 text-15 leading-relaxed">
+    <div>
+      <dt class="text-label font-semibold uppercase tracking-wider text-text-dim">What we found</dt>
+      <dd class="text-text-muted">212 people opened your contact page on a phone this month. 4 tapped the number, because it shows as plain text.</dd>
+    </div>
+    <div>
+      <dt class="text-label font-semibold uppercase tracking-wider text-text-dim">The change</dt>
+      <dd class="text-text-muted">Turn the number into a call button at the top of the page on phones.</dd>
+    </div>
+    <div>
+      <dt class="text-label font-semibold uppercase tracking-wider text-text-dim">What gets checked</dt>
+      <dd class="text-text-muted">Calls from the site, for 30 days after it goes live.</dd>
+    </div>
+  </dl>
+  <div class="flex gap-3">
+    <span class="flex-1 rounded-lg bg-pop px-4 py-2.5 text-center text-15 font-bold text-bg-dark-process">Approve</span>
+    <span class="flex-1 rounded-lg border border-border px-4 py-2.5 text-center text-15 font-semibold text-text-muted">Decline</span>
+  </div>
+</MockWindow>

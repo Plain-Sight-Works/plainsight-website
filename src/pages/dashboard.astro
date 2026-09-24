@@ -1,0 +1,386 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../layouts/Base.astro";
+import CTA from "../components/CTA.astro";
+import HeroAurora from "../components/HeroAurora.astro";
+import StatusBadge from "../components/dashboard/StatusBadge.astro";
+import MockChangeRequest from "../components/dashboard/MockChangeRequest.astro";
+import MockInbox from "../components/dashboard/MockInbox.astro";
+import MockTraffic from "../components/dashboard/MockTraffic.astro";
+import MockSuggestedFix from "../components/dashboard/MockSuggestedFix.astro";
+import MockPayments from "../components/dashboard/MockPayments.astro";
+
+// Copy source: plain-sight-dashboard/docs/psd-explainer.md. Approved as written.
+
+type Status = "live" | "coming";
+type Module = { title: string; status: Status; description: string };
+
+const ideaParts = [
+  {
+    lead: "Your business keeps the website current.",
+    body: "What you know about your business goes into the dashboard once: your hours, services and prices, and the answers to the questions customers ask. From there it keeps your website, your Google listing and the assistant on your site up to date.",
+    color: "bg-primary-light",
+  },
+  {
+    lead: "The website keeps you informed.",
+    body: "Every enquiry arrives in one inbox, and the dashboard tracks how people find your site and what they do once they're on it.",
+    color: "bg-secondary-light",
+  },
+  {
+    lead: "The dashboard turns all of it into improvements.",
+    body: "Every night it reads how visitors used your site and what customers asked. When it finds something that's costing you enquiries, like a contact form people abandon halfway, a phone number nobody taps on mobile, or a question fifteen people asked this month that no page answers, it writes up the change it recommends. You approve it, the change goes live, and the dashboard checks whether more people got in touch afterward. Nobody has to read a report or work out what the numbers mean.",
+    color: "bg-tertiary",
+  },
+];
+
+const benefits = [
+  { lead: "Your website improves without you managing it.", body: "The dashboard finds what's costing you enquiries and proposes the fix. Your part is saying yes or no." },
+  { lead: "Your customers get answers faster.", body: "The assistant handles the common questions, and every enquiry arrives in one place." },
+  { lead: "You stay in control.", body: "The dashboard suggests; you decide. Every change waits for your approval, however long we've worked together." },
+  { lead: "It's all behind one sign-in.", body: "Traffic, enquiries, improvements, change requests and billing." },
+];
+
+const keepCurrent: Module[] = [
+  { title: "Knowledge base", status: "coming", description: "Upload what you already have, like price lists, FAQs, service manuals and old website copy, and the dashboard turns it into one source of truth about your business." },
+  { title: "Business details, banners, calendars and FAQs", status: "coming", description: "Update your hours, services, an announcement or an events calendar in the dashboard, and your website and Google listing update with it." },
+  { title: "Site assistant", status: "coming", description: "A chat assistant on your website that answers visitors' questions from your knowledge base, and hands the conversation to you when it should." },
+  { title: "Blog posts", status: "coming", description: "New posts about the work you do, drafted from your knowledge base and reviewed by a person before anything is published." },
+  { title: "Change requests", status: "live", description: "Want something changed yourself? Pick the page, describe the change, and send it to us." },
+  { title: "Request history and status", status: "coming", description: "Every request you've sent, and whether it's received, in progress or done." },
+];
+
+const knowHappening: Module[] = [
+  { title: "Traffic", status: "live", description: "How many people visited, where they came from (Google, social, another website) and which pages they read, for every site on your account." },
+  { title: "Google search results", status: "coming", description: "How often your site shows up in Google, how often people click, and the searches they typed to find you." },
+  { title: "Your Google Business Profile", status: "coming", description: "Calls, direction requests and profile views from your Google listing, next to your website numbers." },
+  { title: "Your headline numbers", status: "coming", description: "The numbers that matter most, on the first screen after you sign in, compared with last month." },
+  { title: "Local rankings", status: "coming", description: "Where you rank when someone nearby searches for what you do, on a map of your area." },
+  { title: "Reviews and listings", status: "coming", description: "New reviews as they arrive, review requests sent to recent customers, and your business details checked across the directories Google looks at." },
+  { title: "Inbox", status: "live", description: "Every message sent through your site's forms, in one list. Mark them read, archive them, filter by form or site, and download the list for Excel or Google Sheets." },
+  { title: "Where your leads come from", status: "coming", description: "For each enquiry, how that person first found you (a Google search, your listing, an ad, a referral) and the pages they read before getting in touch. Over a month, it shows which sources and pages bring you customers." },
+  { title: "Reply from the dashboard", status: "coming", description: "Answer an enquiry without leaving the dashboard, from your own business email address." },
+  { title: "Instant replies", status: "coming", description: "A personal reply goes out to a new enquiry within a minute, with a few questions that tell you whether it's a good lead." },
+  { title: "Monthly report", status: "coming", description: "A short email each month: what happened on your site, what changed, and what the dashboard is watching." },
+];
+
+const customersAsking: Module = { title: "What customers are asking", status: "coming", description: "The questions from your forms and the assistant, grouped by topic and counted. A question that keeps coming up is a page your site is missing." };
+const suggested: Module = { title: "Suggested improvements", status: "coming", description: "Fixes the dashboard recommends from how visitors use your site and what they ask. It works in a loop:" };
+const changeLog: Module = { title: "Change log", status: "coming", description: "Everything that changed on your site, when, and what happened to the numbers afterward." };
+
+const loop = [
+  { title: "Watch", description: "The dashboard follows what visitors do on your site and what they ask you." },
+  { title: "Find", description: "It compares that against patterns we know, such as a phone number nobody taps on mobile, a button that doesn't look clickable, or the same question asked over and over." },
+  { title: "Suggest", description: "It writes up what it found and the change it recommends, in plain language." },
+  { title: "Approve", description: "You say yes or no. Nothing changes on your site without your approval." },
+  { title: "Check", description: "After the change goes live, the dashboard tracks the number it was meant to move and shows you the result." },
+];
+
+const faqs = [
+  { q: "I already have a website. Why would I need this?", a: "A site that never changes after launch slowly falls behind the business it describes. The dashboard keeps finding what's costing you enquiries and fixing it, with your approval." },
+  { q: "Why not Wix or one of the AI website builders?", a: "They're solid tools for putting a site up. Nothing in the box tells you next month what to change, answers your customers from what you know, or checks whether a change worked." },
+  { q: "Do I need to understand analytics?", a: "No. The dashboard reads the numbers for you and tells you what it would change and why, in plain language." },
+  { q: "Will anything change on my site without my say-so?", a: "Never. Every suggested change waits for your approval." },
+  { q: "Do I own my domain?", a: "Yes, always." },
+];
+
+const ctaEntry = (await getCollection("homepage")).find((s) => s.data.section === "cta");
+if (!ctaEntry) throw new Error("Homepage CTA entry missing");
+const { Content: CtaContent } = await render(ctaEntry);
+
+const arrowIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="14 6 20 12 14 18"/></svg>`;
+---
+
+<Base
+  title="The Plain Sight Dashboard | Plain Sight"
+  description="The Plain Sight Dashboard connects your website to your business, so the site stays current, learns from your customers, and keeps getting better at bringing them in."
+  navVariant="dark"
+>
+  <main>
+    <!-- In one line -->
+    <section class="dark-section relative min-h-[80vh] flex items-center overflow-hidden bg-[var(--color-bg-dark-hero)] text-[var(--color-text-light)] max-md:pt-[var(--nav-height)]">
+      <HeroAurora />
+      <div class="container">
+        <div class="relative z-1 py-24 max-md:py-16">
+          <h1 class="font-heading text-hero font-black leading-[0.85] tracking-tighter mb-[var(--spacing-hero-gap)] pb-[0.15em] text-white max-w-[11ch]">The Plain Sight Dashboard</h1>
+          <p class="text-hero-tagline mb-[var(--spacing-hero-cta-gap)] leading-relaxed font-normal max-w-[900px] text-white/85">The Plain Sight Dashboard connects your website to your business, so the site stays current, learns from your customers, and keeps getting better at bringing them in.</p>
+          <a href="/contact" class="btn-cta text-hero-cta">Get in touch</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- The problem -->
+    <section class="relative py-section max-md:py-16">
+      <div class="container">
+        <h2 class="font-heading text-problem-title font-black tracking-tight text-text mb-12 max-md:mb-8">The problem</h2>
+        <div class="max-w-[1000px] text-problem-prose text-text-muted leading-loose">
+          <p class="mb-6">Most owners see the launch as the finish line. The site gets built, it goes up, it brings in a few enquiries, and the work stops there. After that the business keeps changing and the site doesn't: the hours change and the site still shows the old ones, customers keep asking questions it never answers, and nobody looks at where visitors give up.</p>
+          <p><span class="font-extrabold text-text">The launch is one milestone in a process that should keep going.</span> Companies with marketing budgets pay people to keep improving their sites after launch: watching what visitors do, changing what isn't working, and checking the result. The Plain Sight Dashboard brings that to a small business and does most of the work automatically.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- The idea -->
+    <section class="relative py-section max-md:py-16 bg-gradient-to-b from-surface-alt to-surface-gradient-end">
+      <div class="container">
+        <div class="mb-14 max-md:mb-10">
+          <h2 class="font-heading text-section-title font-extrabold tracking-tight mb-6">The idea</h2>
+          <p class="max-w-[820px] text-section-subtitle text-text-muted leading-relaxed">Every site we build comes with its own dashboard, and the dashboard joins the site to the business behind it. Information flows both ways.</p>
+        </div>
+
+        <!-- Diagram: business and website feed each other through the dashboard -->
+        <div class="mb-16 max-md:mb-12 grid grid-cols-[1fr_auto_1.15fr_auto_1fr] max-lg:grid-cols-1 items-center gap-4 max-lg:gap-3 max-lg:max-w-[420px] max-lg:mx-auto" aria-hidden="true">
+          <div class="rounded-2xl border border-border-alt bg-bg p-6 text-center shadow-sm">
+            <svg class="mx-auto mb-3 size-8 text-primary-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9v11h18V9"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M10 20v-5h4v5"/></svg>
+            <div class="font-heading text-26 font-extrabold tracking-tight">Your business</div>
+          </div>
+
+          <div class="flex flex-col max-lg:flex-row items-center justify-center gap-2 max-lg:gap-8 px-2">
+            <span class="flex items-center gap-1.5 text-primary-light">
+              <span class="flex size-6 items-center justify-center rounded-full bg-primary-light text-label font-bold text-btn-text">1</span>
+              <span class="max-lg:rotate-90" set:html={arrowIcon} />
+            </span>
+            <span class="flex items-center gap-1.5 text-secondary-accessible">
+              <span class="rotate-180 max-lg:rotate-270" set:html={arrowIcon} />
+              <span class="flex size-6 items-center justify-center rounded-full bg-secondary-light text-label font-bold text-bg-dark-process">2</span>
+            </span>
+          </div>
+
+          <div class="relative rounded-2xl bg-bg-dark-process p-8 text-center text-text-light shadow-card-hover ring-1 ring-primary-light/40">
+            <span class="absolute -top-3 -right-3 flex size-8 items-center justify-center rounded-full bg-tertiary text-15 font-bold text-btn-text shadow-sm">3</span>
+            <svg class="mx-auto mb-3 size-9 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><polyline points="21 3 21 9 15 9"/></svg>
+            <div class="font-heading text-36 font-black leading-none tracking-tight">The dashboard</div>
+          </div>
+
+          <div class="flex flex-col max-lg:flex-row items-center justify-center gap-2 max-lg:gap-8 px-2">
+            <span class="flex items-center gap-1.5 text-primary-light">
+              <span class="flex size-6 items-center justify-center rounded-full bg-primary-light text-label font-bold text-btn-text">1</span>
+              <span class="max-lg:rotate-90" set:html={arrowIcon} />
+            </span>
+            <span class="flex items-center gap-1.5 text-secondary-accessible">
+              <span class="rotate-180 max-lg:rotate-270" set:html={arrowIcon} />
+              <span class="flex size-6 items-center justify-center rounded-full bg-secondary-light text-label font-bold text-bg-dark-process">2</span>
+            </span>
+          </div>
+
+          <div class="rounded-2xl border border-border-alt bg-bg p-6 text-center shadow-sm">
+            <svg class="mx-auto mb-3 size-8 text-primary-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <div class="font-heading text-26 font-extrabold tracking-tight">Your website</div>
+          </div>
+        </div>
+
+        <ol class="grid grid-cols-3 max-lg:grid-cols-1 gap-10 max-lg:gap-8">
+          {ideaParts.map((part, i) => (
+            <li class="flex flex-col gap-4">
+              <span class:list={["flex size-9 items-center justify-center rounded-full text-17 font-bold", part.color, i === 1 ? "text-bg-dark-process" : "text-btn-text"]}>{i + 1}</span>
+              <h3 class="font-sans text-21 font-bold leading-snug tracking-snug text-text">{part.lead}</h3>
+              <p class="text-body text-text-muted leading-relaxed">{part.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- Why it matters -->
+    <section class="dark-section relative py-section max-md:py-20 bg-[var(--color-bg-dark-process)]">
+      <div class="container">
+        <h2 class="font-heading text-section-title font-extrabold tracking-tight text-text mb-14 max-md:mb-10">Why it matters</h2>
+        <div class="grid grid-cols-2 max-md:grid-cols-1 gap-x-16 gap-y-12 max-md:gap-y-10">
+          {benefits.map((b) => (
+            <div class="border-t border-border pt-6">
+              <h3 class="font-sans text-item-title font-bold leading-tight tracking-tight text-text mb-3">{b.lead}</h3>
+              <p class="text-body text-text-muted leading-relaxed">{b.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- What's inside: groups one and two -->
+    <section class="relative pt-section pb-24 max-md:pt-20 max-md:pb-16 bg-bg">
+      <div class="container">
+        <h2 class="font-heading text-section-title font-extrabold tracking-tight mb-16 max-md:mb-12">What's inside</h2>
+
+        {[
+          { title: "Keep your site current", modules: keepCurrent, mocks: ["change"] },
+          { title: "Know what's happening", modules: knowHappening, mocks: ["traffic", "inbox"] },
+        ].map((group, gi) => (
+          <div class:list={["grid grid-cols-[minmax(0,5fr)_minmax(0,6fr)] max-lg:grid-cols-1 gap-16 max-lg:gap-10", gi > 0 && "mt-24 max-md:mt-20 border-t border-border-alt pt-24 max-md:pt-16"]}>
+            <div class="lg:sticky lg:top-24 lg:self-start flex flex-col gap-8">
+              <h3 class="font-heading text-subsection-title font-black tracking-tighter leading-tight">{group.title}</h3>
+              {group.mocks.includes("change") && <MockChangeRequest />}
+              {group.mocks.includes("traffic") && <MockTraffic />}
+              {group.mocks.includes("inbox") && <MockInbox />}
+            </div>
+            <ul class="divide-y divide-border-alt border-y border-border-alt">
+              {group.modules.map((m) => (
+                <li class="py-6">
+                  <div class="mb-2 flex items-start justify-between gap-4">
+                    <h4 class="font-sans text-21 font-bold leading-snug tracking-snug text-text">{m.title}</h4>
+                    <span class="mt-0.5"><StatusBadge status={m.status} /></span>
+                  </div>
+                  <p class="text-body text-text-muted leading-relaxed">{m.description}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- What's inside: group three -->
+    <section class="section-process relative py-section max-md:py-20">
+      <div class="process-blob-blur" aria-hidden="true">
+        <div class="process-blob"></div>
+      </div>
+      <div class="container relative z-1">
+        <h3 class="font-heading text-subsection-title font-black tracking-tighter leading-tight mb-12 max-md:mb-10">Get better over time</h3>
+
+        <div class="mb-16 max-md:mb-12 max-w-[760px] border-y border-border py-6">
+          <div class="mb-2 flex items-start justify-between gap-4">
+            <h4 class="font-sans text-21 font-bold leading-snug tracking-snug text-text">{customersAsking.title}</h4>
+            <span class="mt-0.5"><StatusBadge status={customersAsking.status} /></span>
+          </div>
+          <p class="text-body text-text-muted leading-relaxed">{customersAsking.description}</p>
+        </div>
+
+        <div class="rounded-3xl border border-border bg-bg-dark-hero/60 p-12 max-lg:p-8 max-md:-mx-2 max-md:p-5">
+          <div class="mb-12 max-md:mb-8 grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] max-lg:grid-cols-1 gap-12 max-lg:gap-10 items-center">
+            <div>
+              <div class="mb-5"><StatusBadge status={suggested.status} /></div>
+              <h4 class="font-heading text-section-title font-extrabold leading-none tracking-tight text-text mb-6">{suggested.title}</h4>
+              <p class="text-section-subtitle text-text-muted leading-relaxed">{suggested.description}</p>
+            </div>
+            <MockSuggestedFix />
+          </div>
+
+          <div class="process-panel" data-active="0">
+            <div class="process-nav">
+              {loop.map((step, i) => (
+                <button class="process-nav-item" data-index={i} type="button" aria-controls={`loop-detail-${i}`}>
+                  <span class="process-nav-number">{String(i + 1).padStart(2, "0")}</span>
+                  <span class="process-nav-line" aria-hidden="true"></span>
+                  <span class="process-nav-title">{step.title}</span>
+                </button>
+              ))}
+            </div>
+            <div class="process-details lg:min-h-[260px]">
+              {loop.map((step, i) => (
+                <div class="process-detail" id={`loop-detail-${i}`} data-index={i}>
+                  <span class="process-detail-number">{String(i + 1).padStart(2, "0")}</span>
+                  <p class="process-detail-title">{step.title}.</p>
+                  <p class="text-section-subtitle text-text-muted max-w-[520px]">{step.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <p class="mt-10 max-md:mt-8 border-t border-border pt-8 text-section-subtitle text-text leading-relaxed max-w-[760px]">When there's nothing worth changing, the dashboard says so and waits for the next real signal.</p>
+        </div>
+
+        <div class="mt-16 max-md:mt-12 max-w-[760px] border-y border-border py-6">
+          <div class="mb-2 flex items-start justify-between gap-4">
+            <h4 class="font-sans text-21 font-bold leading-snug tracking-snug text-text">{changeLog.title}</h4>
+            <span class="mt-0.5"><StatusBadge status={changeLog.status} /></span>
+          </div>
+          <p class="text-body text-text-muted leading-relaxed">{changeLog.description}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Paying for your site -->
+    <section class="relative py-section max-md:py-20 bg-gradient-to-b from-surface-alt to-surface-gradient-end">
+      <div class="container grid grid-cols-[minmax(0,6fr)_minmax(0,5fr)] max-lg:grid-cols-1 gap-16 max-lg:gap-12 items-center">
+        <div>
+          <h2 class="font-heading text-section-title font-extrabold tracking-tight mb-8">Paying for your site</h2>
+          <div class="text-section-prose text-text-muted leading-loose">
+            <p class="mb-6">We build the payment plan around your project. You can pay for the build up front, pay in stages as each part is finished, or turn it into a monthly fee with nothing to pay at the start. When a stage is done, you get an email, look over the work, and approve the payment from your dashboard. Your card is only charged on the day a payment is due.</p>
+            <p>Your schedule, receipts and invoices sit in the dashboard next to everything else, so you can always see what you've paid and what's coming next.</p>
+          </div>
+        </div>
+        <MockPayments />
+      </div>
+    </section>
+
+    <!-- Questions people ask -->
+    <section class="relative py-section max-md:py-20 bg-bg">
+      <div class="container">
+        <h2 class="font-heading text-subsection-title font-black tracking-tighter leading-tight mb-12 max-md:mb-10">Questions people ask</h2>
+        <div class="max-w-[800px] divide-y divide-border-alt" id="faq-list">
+          {faqs.map((f, i) => (
+            <div class="faq-item -mx-4 px-4 hover:bg-surface-alt transition-colors duration-200" data-open={i === 0 ? "true" : "false"}>
+              <button class="faq-button w-full flex items-center justify-between gap-6 py-5 text-left cursor-pointer" type="button" aria-expanded={i === 0 ? "true" : "false"}>
+                <span class="text-section-subtitle font-semibold text-text tracking-tight">{f.q}</span>
+                <svg class="faq-chevron shrink-0 w-5 h-5 text-accent transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+              </button>
+              <div class:list={["faq-content overflow-hidden transition-[height] duration-300 ease-in-out", i > 0 && "h-0"]}>
+                <p class="text-body text-text-muted leading-relaxed pb-5">{f.a}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <CTA heading={ctaEntry.data.heading} ctaText={ctaEntry.data.cta_text} ctaLink={ctaEntry.data.cta_link}>
+      <CtaContent />
+    </CTA>
+  </main>
+
+  <script>
+    const panel = document.querySelector('.process-panel');
+    const section = document.querySelector('.section-process');
+    if (panel && section) {
+      const isMobile = () => window.innerWidth <= 768;
+      const activate = (index: string) => {
+        panel.setAttribute('data-active', index);
+        section.setAttribute('data-active', index);
+      };
+
+      panel.querySelectorAll('.process-nav-item').forEach(item => {
+        const index = (item as HTMLElement).dataset.index!;
+        item.addEventListener('click', () => activate(index));
+        if (!isMobile()) item.addEventListener('mouseenter', () => activate(index));
+        item.addEventListener('focus', () => activate(index));
+      });
+
+      section.setAttribute('data-active', '0');
+    }
+
+    const faqItems = document.querySelectorAll('#faq-list .faq-item');
+
+    faqItems.forEach((item) => {
+      const content = item.querySelector('.faq-content') as HTMLElement;
+      const chevron = item.querySelector('.faq-chevron') as SVGElement;
+      if (item.getAttribute('data-open') === 'true') {
+        content.style.height = content.scrollHeight + 'px';
+        chevron.style.transform = 'rotate(180deg)';
+      }
+    });
+
+    faqItems.forEach((item) => {
+      const button = item.querySelector('.faq-button') as HTMLButtonElement;
+      const content = item.querySelector('.faq-content') as HTMLElement;
+      const chevron = item.querySelector('.faq-chevron') as SVGElement;
+
+      button.addEventListener('click', () => {
+        const isOpen = item.getAttribute('data-open') === 'true';
+
+        faqItems.forEach((el) => {
+          el.setAttribute('data-open', 'false');
+          (el.querySelector('.faq-button') as HTMLButtonElement).setAttribute('aria-expanded', 'false');
+          (el.querySelector('.faq-content') as HTMLElement).style.height = '0px';
+          (el.querySelector('.faq-chevron') as SVGElement).style.transform = '';
+        });
+
+        if (!isOpen) {
+          item.setAttribute('data-open', 'true');
+          button.setAttribute('aria-expanded', 'true');
+          content.style.height = content.scrollHeight + 'px';
+          chevron.style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+  </script>
+</Base>

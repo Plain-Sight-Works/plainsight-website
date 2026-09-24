@@ -355,7 +355,7 @@
     }
   }
 
-  /* Runtime fallback: a load-time FPS probe (see index.astro) adds this class
+  /* Runtime fallback: a load-time FPS probe (see HeroAurora.astro) adds this class
      on GPUs that can't sustain the animated blur+blend, freezing the aurora
      in place. The static gradient look is preserved — only the motion stops. */
   .aurora-static .hero-aurora-inner::after {
@@ -423,6 +423,11 @@
     background: var(--color-quaternary);
   }
 
+  .section-process[data-active="4"] .process-blob {
+    clip-path: polygon(22% 48%, 6% 26%, 36% 78%, 94% 80%, 60% 22%, 28% 12%, 70% 96%, 86% 56%, 76% 22%, 90% 38%, 40% 90%, 10% 30%, 50% 48%, 72% 66%);
+    background: var(--color-primary-light);
+  }
+
   .process-panel {
     display: grid;
     grid-template-columns: 1fr 1.4fr;
@@ -483,7 +488,8 @@
   .process-panel[data-active="0"] .process-nav-item[data-index="0"],
   .process-panel[data-active="1"] .process-nav-item[data-index="1"],
   .process-panel[data-active="2"] .process-nav-item[data-index="2"],
-  .process-panel[data-active="3"] .process-nav-item[data-index="3"] {
+  .process-panel[data-active="3"] .process-nav-item[data-index="3"],
+  .process-panel[data-active="4"] .process-nav-item[data-index="4"] {
     padding-left: 0.5rem;
   }
 
@@ -531,10 +537,22 @@
     color: var(--color-quaternary);
   }
 
+  .process-panel[data-active="4"] .process-nav-item[data-index="4"] .process-nav-number {
+    color: var(--color-primary-light);
+  }
+  .process-panel[data-active="4"] .process-nav-item[data-index="4"] .process-nav-line {
+    width: 3rem;
+    background: var(--color-primary-light);
+  }
+  .process-panel[data-active="4"] .process-detail-number {
+    color: var(--color-primary-light);
+  }
+
   .process-panel[data-active="0"] .process-nav-item[data-index="0"] .process-nav-title,
   .process-panel[data-active="1"] .process-nav-item[data-index="1"] .process-nav-title,
   .process-panel[data-active="2"] .process-nav-item[data-index="2"] .process-nav-title,
-  .process-panel[data-active="3"] .process-nav-item[data-index="3"] .process-nav-title {
+  .process-panel[data-active="3"] .process-nav-item[data-index="3"] .process-nav-title,
+  .process-panel[data-active="4"] .process-nav-item[data-index="4"] .process-nav-title {
     color: var(--color-text);
     font-weight: 700;
   }
@@ -558,7 +576,8 @@
   .process-panel[data-active="0"] .process-detail[data-index="0"],
   .process-panel[data-active="1"] .process-detail[data-index="1"],
   .process-panel[data-active="2"] .process-detail[data-index="2"],
-  .process-panel[data-active="3"] .process-detail[data-index="3"] {
+  .process-panel[data-active="3"] .process-detail[data-index="3"],
+  .process-panel[data-active="4"] .process-detail[data-index="4"] {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -610,6 +629,10 @@
       top: 44%;
     }
 
+    .section-process[data-active="4"] .process-blob-blur {
+      top: 57%;
+    }
+
     .process-panel {
       display: flex;
       flex-direction: column;
@@ -633,6 +656,7 @@
     .process-nav-item[data-index="1"] { --item-index: 1; }
     .process-nav-item[data-index="2"] { --item-index: 2; }
     .process-nav-item[data-index="3"] { --item-index: 3; }
+    .process-nav-item[data-index="4"] { --item-index: 4; }
 
     .process-nav-number {
       transition: color 300ms var(--ease-out-expo), font-size 300ms var(--ease-out-expo);
@@ -645,14 +669,16 @@
     .process-panel[data-active="0"] .process-nav-item[data-index="0"] .process-nav-number,
     .process-panel[data-active="1"] .process-nav-item[data-index="1"] .process-nav-number,
     .process-panel[data-active="2"] .process-nav-item[data-index="2"] .process-nav-number,
-    .process-panel[data-active="3"] .process-nav-item[data-index="3"] .process-nav-number {
+    .process-panel[data-active="3"] .process-nav-item[data-index="3"] .process-nav-number,
+    .process-panel[data-active="4"] .process-nav-item[data-index="4"] .process-nav-number {
       font-size: 1.5rem;
     }
 
     .process-panel[data-active="0"] .process-nav-item[data-index="0"] .process-nav-title,
     .process-panel[data-active="1"] .process-nav-item[data-index="1"] .process-nav-title,
     .process-panel[data-active="2"] .process-nav-item[data-index="2"] .process-nav-title,
-    .process-panel[data-active="3"] .process-nav-item[data-index="3"] .process-nav-title {
+    .process-panel[data-active="3"] .process-nav-item[data-index="3"] .process-nav-title,
+    .process-panel[data-active="4"] .process-nav-item[data-index="4"] .process-nav-title {
       font-size: 1.75rem;
       font-weight: 700;
     }
@@ -671,6 +697,10 @@
 
     .process-panel[data-active="3"] .process-nav-item[data-index="3"] .process-nav-number {
       color: var(--color-quaternary);
+    }
+
+    .process-panel[data-active="4"] .process-nav-item[data-index="4"] .process-nav-number {
+      color: var(--color-primary-light);
     }
 
     .process-nav-line {
@@ -698,11 +728,13 @@
     .process-detail[data-index="1"] { --detail-index: 1; }
     .process-detail[data-index="2"] { --detail-index: 2; }
     .process-detail[data-index="3"] { --detail-index: 3; }
+    .process-detail[data-index="4"] { --detail-index: 4; }
 
     .process-panel[data-active="0"] .process-detail[data-index="0"],
     .process-panel[data-active="1"] .process-detail[data-index="1"],
     .process-panel[data-active="2"] .process-detail[data-index="2"],
-    .process-panel[data-active="3"] .process-detail[data-index="3"] {
+    .process-panel[data-active="3"] .process-detail[data-index="3"],
+    .process-panel[data-active="4"] .process-detail[data-index="4"] {
       max-height: 500px;
       padding: 0 0 2rem;
     }
@@ -721,15 +753,17 @@
       display: none;
     }
 
-    .process-nav-item[data-index="3"] {
+    .process-nav-item:last-child {
       border-bottom: 1px solid var(--color-border);
     }
 
-    .process-panel[data-active="3"] .process-nav-item[data-index="3"] {
+    .process-panel[data-active="3"] .process-nav-item[data-index="3"]:last-child,
+    .process-panel[data-active="4"] .process-nav-item[data-index="4"]:last-child {
       border-bottom: none;
     }
 
-    .process-panel[data-active="3"] .process-detail[data-index="3"] {
+    .process-panel[data-active="3"] .process-detail[data-index="3"]:last-child,
+    .process-panel[data-active="4"] .process-detail[data-index="4"]:last-child {
       border-bottom: 1px solid var(--color-border);
       padding-bottom: 2rem;
     }
