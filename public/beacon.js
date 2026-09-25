@@ -82,29 +82,42 @@ function start(win) {
 
   send('teaser_visited');
 
-  const overlay = win.document.querySelector('.preview-overlay');
-  if (overlay && win.IntersectionObserver) {
-    const observer = new win.IntersectionObserver((entries) => {
-      // This callback runs on a later turn of the event loop, so the
-      // top-level try/catch around start() cannot catch a throw here.
-      try {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            send('teaser_preview_reached');
-            observer.disconnect();
-          }
-        }
-      } catch (_) {
-        /* never throws into the page */
-      }
-    });
-    observer.observe(overlay);
-  }
+  observePreview(win, send);
 
   win.document.addEventListener('click', (event) => handleClick(event, send), {
     passive: true,
     capture: true,
   });
+}
+
+// teaser_preview_reached means the prospect saw the gated fourth beat, not
+// that its top pixel crossed the fold (PLS-209). The root's bottom edge is
+// pulled up by 30% of the viewport, so the event fires once the section fills
+// at least 30% of the screen, or all of it has scrolled into view if it is
+// shorter than that. A margin rather than `threshold: 0.3`: a threshold is a
+// fraction of the section, which a section taller than about three screens
+// never reaches, and the observer's first callback reports isIntersecting for
+// any overlap at all, whatever the threshold.
+export const PREVIEW_OBSERVER_OPTIONS = { rootMargin: '0px 0px -30% 0px', threshold: 0 };
+
+export function observePreview(win, send) {
+  const overlay = win.document.querySelector('.preview-overlay');
+  if (!overlay || !win.IntersectionObserver) return;
+  const observer = new win.IntersectionObserver((entries) => {
+    // This callback runs on a later turn of the event loop, so the
+    // top-level try/catch around start() cannot catch a throw here.
+    try {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          send('teaser_preview_reached');
+          observer.disconnect();
+        }
+      }
+    } catch (_) {
+      /* never throws into the page */
+    }
+  }, PREVIEW_OBSERVER_OPTIONS);
+  observer.observe(overlay);
 }
 
 // Every real call to action in a teaser carries `data-ps-cta`. The selector

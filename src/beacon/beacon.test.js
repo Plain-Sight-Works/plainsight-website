@@ -1,5 +1,12 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { shouldSkip, slugFromHostname, buildPayload, handleClick } from '../../public/beacon.js';
+import {
+  shouldSkip,
+  slugFromHostname,
+  buildPayload,
+  handleClick,
+  observePreview,
+  PREVIEW_OBSERVER_OPTIONS,
+} from '../../public/beacon.js';
 
 describe('slugFromHostname', () => {
   it('takes the first label', () => {
@@ -115,5 +122,66 @@ describe('handleClick', () => {
     handleClick(clickEventOn(span), send);
 
     expect(send).toHaveBeenCalledWith('teaser_cta_clicked', 'Call us today');
+  });
+});
+
+describe('observePreview', () => {
+  // A stand-in IntersectionObserver that records how it was built and lets a
+  // test deliver entries by hand.
+  function fakeWindow(hasOverlay = true) {
+    const observers = [];
+    class FakeObserver {
+      constructor(callback, options) {
+        this.callback = callback;
+        this.options = options;
+        this.observed = [];
+        this.disconnected = false;
+        observers.push(this);
+      }
+      observe(el) {
+        this.observed.push(el);
+      }
+      disconnect() {
+        this.disconnected = true;
+      }
+    }
+    const overlay = { className: 'preview-overlay' };
+    const win = {
+      document: { querySelector: (sel) => (hasOverlay && sel === '.preview-overlay' ? overlay : null) },
+      IntersectionObserver: FakeObserver,
+    };
+    return { win, observers, overlay };
+  }
+
+  it('observes the gated section with the root pulled up by 30% of the viewport (PLS-209)', () => {
+    const { win, observers, overlay } = fakeWindow();
+    observePreview(win, vi.fn());
+    expect(observers).toHaveLength(1);
+    expect(observers[0].options).toEqual({ rootMargin: '0px 0px -30% 0px', threshold: 0 });
+    expect(observers[0].options).toBe(PREVIEW_OBSERVER_OPTIONS);
+    expect(observers[0].observed).toEqual([overlay]);
+  });
+
+  it('sends teaser_preview_reached once the section intersects the shrunken root, then stops observing', () => {
+    const { win, observers } = fakeWindow();
+    const send = vi.fn();
+    observePreview(win, send);
+    observers[0].callback([{ isIntersecting: false }]);
+    expect(send).not.toHaveBeenCalled();
+    observers[0].callback([{ isIntersecting: true }]);
+    expect(send).toHaveBeenCalledWith('teaser_preview_reached');
+    expect(observers[0].disconnected).toBe(true);
+  });
+
+  it('does nothing on a page with no gated section', () => {
+    const { win, observers } = fakeWindow(false);
+    observePreview(win, vi.fn());
+    expect(observers).toHaveLength(0);
+  });
+
+  it('does nothing in a browser without IntersectionObserver', () => {
+    const { win } = fakeWindow();
+    delete win.IntersectionObserver;
+    expect(() => observePreview(win, vi.fn())).not.toThrow();
   });
 });
