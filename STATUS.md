@@ -1,81 +1,75 @@
-# Status — plainsight-website · 2026-08-06
+# Status — plainsight-website · 2026-09-24
 
 ## Now
 
-Rewriting the `cardDescription` teaser on each case study, one project at a
-time, with Adrian reviewing each before moving on. Michelle Pauly is done
-(he wrote the final copy himself). **Next up is AGA Beauty**
-(`src/content/work/02-aga-beauty.md`).
+Second pass of `/dashboard` is pushed (commit 22e03c6) and the Vercel preview
+has rebuilt. Adrian approved the new "The idea" copy and the live-then-coming
+structure; waiting on his next review.
 
-This pass only touches `cardDescription` in frontmatter. That one field feeds
-both the homepage shortlist and `/work`, via `CaseStudyCard.astro`.
+- "The idea" is four blocks (keeps your site current / answers your
+  customers / helps new customers find you / gets better over time). No
+  diagram.
+- "What's live": Change requests, Traffic, Inbox, then Paying for your site,
+  each with its mock. "What's coming": the same four themes; "Get better over
+  time" is the dark section with the Suggested improvements loop panel.
+- Per-module badges are gone; a single Live / Coming pill sits next to each
+  section heading.
+- **Not done:** `psd-explainer.md` in the dashboard repo still has the old
+  "The idea" and grouping. The edit was blocked by the permission classifier
+  (it's a different repo, and the file is untracked there). The page comment
+  in `dashboard.astro` says the page copy is newer than that doc.
 
-## Branch & worktree
+## Branch
 
-- Branch `case-studies-four`, main checkout (no worktree). 19 commits ahead of
-  `main`, 0 behind. No open PR.
-- **Uncommitted, and some of it predates this session:**
-  - `src/content.config.ts` — `results` made optional (see Decisions)
-  - `src/content/homepage/07-work.md` — added "See all of our work" CTA
-  - `src/pages/index.astro`, `src/components/CaseStudyCard.astro`,
-    `src/pages/work/[slug].astro` — homepage shortlist + Michelle case study
-  - `michelle-before-home.png` deleted, `.jpg` added (Adrian re-shot it)
-  - `src/content/work/01-michelle-pauly.md` — the new teaser
-  - `.planning/forms-service-plan.md` — untracked, unrelated to this pass
+- `dashboard-explainer`, pushed to origin, not merged. Do not merge to main.
+- Vercel preview (production project `plain-sight-website-astro`):
+  https://plain-sight-website-astro-git-dashboar-6ce9ab-plain-sight-works.vercel.app/dashboard
+  Behind Vercel Deployment Protection (SSO), so outsiders need a share link
+  or protection turned off. Not changed.
+
+## What the page is
+
+- Copy source: `plain-sight-dashboard/docs/psd-explainer.md` (sibling repo
+  under `D:/Work/Plain Sight/repos/`), except "The idea" and the live/coming
+  grouping, which are newer on the page. Don't add copy beyond short labels.
+- Context only: `psd-canonical.md` §1 and §8. Never sell on CRO, GDD, AEO or AI.
+- Files: `src/pages/dashboard.astro`, `src/components/dashboard/*`
+  (StatusBadge, MockWindow and five HTML/Tailwind UI mocks with placeholder
+  data), `src/components/HeroAurora.astro`.
+- Section order: hero · problem · the idea · why it matters (dark) · what's
+  live · what's coming (three light groups, then the dark "Get better over
+  time") · FAQ · CTA (reuses the homepage CTA entry).
 
 ## Decisions
 
-- **Case study teasers get a rewrite pass, project by project.** Adrian
-  reviews each one before the next starts. Do not batch them.
-- **`results` is optional in the work schema.** A case study only carries a
-  Results block when there is a real outcome to report; without one the
-  section is padding. Michelle ships with no results block. Already
-  implemented, just uncommitted.
-- **Michelle's card copy is Adrian's own wording** and is the register
-  reference for the remaining seven. It stays at intent level ("designed to
-  showcase her work while making it easy for hiring architects to quickly read
-  the most important info"), not at layout-mechanics level.
+- The hero aurora markup and its FPS probe moved from `index.astro` into
+  `HeroAurora.astro`; the homepage uses the component. Behaviour unchanged.
+- The shared process panel in `tailwind.css` now supports a fifth step
+  (`data-active="4"`). The mobile last-item borders use `:last-child`, so
+  panels of any length work; the homepage's 4-step panel was re-checked.
+- `Nav.astro` left alone, as asked.
 
 ## Landmines
 
-Four rejected drafts produced these. All four are now written into
-`~/.claude/skills/plain-sight-writing-guides/guides/marketing-copy.md` under
-**Case study cards**, with a calibration-log entry. Read that section before
-writing any teaser.
-
-- **No before/after the reader can't decode.** "The site is her professional
-  work *now*" implies a comparison to a site nobody has seen. Naming the prior
-  state is fine when it stands alone as a fact ("still running on jQuery-era
-  plugins"). Six of eight cards do this and read fine.
-- **No inventory counts.** "Ten projects in one grid" describes her career,
-  not the work. Adrian: *"If you build a blog, would you lead with how many
-  blog posts there are on it?"*
-- **No definitional properties as achievements.** A portfolio holds
-  professional work. That is what a portfolio is.
-- **No stacked layout mechanics.** One distinguishing design decision maximum;
-  three in a colon-list turns the teaser into a spec sheet.
-- Card clamps at **4 lines** (`line-clamp-4`, `CaseStudyCard.astro:33`).
-  Siblings run ~205–235 characters. Adrian's Michelle copy is ~300 and may
-  clip — unverified in a browser.
+- The mobile menu panel in `Nav.astro` is fixed-position 250px off-screen to
+  the right, so `documentElement.scrollWidth` is 625 at 390px on every page.
+  User scrolling is blocked only by `body { overflow-x: hidden }`. Pre-existing.
+- Playwright MCP can only write inside the repo: save screenshots to
+  `.playwright-mcp/` (gitignored), then move them to the scratchpad.
+- Full-page screenshots of the loop panel can catch detail panes mid-fade if
+  the pointer passes over the nav; screenshot the element with the mouse parked.
+- Case study card rules (no inventory counts, no undecodable before/after,
+  etc.) live in `plain-sight-writing-guides/guides/marketing-copy.md`.
 
 ## Next
 
-1. Rewrite the AGA Beauty `cardDescription` (`02-aga-beauty.md`) against the
-   Case study cards rules. Present the copy, don't ship it silently.
-2. Then, in order and one at a time with review between each: `03-diana-ojeda`,
-   `04-ray-pauly`, `05-crtc`, `06-surfsmash`, `07-templeton-lakewood`,
-   `08-demi`.
-3. Verify the Michelle card doesn't clip at 4 lines on `/work` and the
-   homepage, and decide whether to trim it or raise the clamp.
-4. Commit the branch. It has been carrying uncommitted work across sessions.
+1. Adrian's review of the second pass.
+2. Sync `psd-explainer.md` in the dashboard repo with the page once Adrian
+   OKs editing that repo.
+3. Not run from the page-build skill: `/impeccable` ×2 and Lighthouse.
 
 ## Verified state
 
-- `npm run build` passes (13 pages, 2026-08-06).
-- Michelle's `michelle-before-home.jpg` import is corrected in
-  `[slug].astro:35` and the image processes in the build.
-- `results` is optional in the schema and guarded in the template
-  (`[slug].astro:418`); Michelle renders without it.
-- The four teaser rules are written into `marketing-copy.md`.
-- **Not verified:** whether any card copy clips at the 4-line clamp. Never
-  opened in a browser this session.
+- `npm run build` passes (9 pages, 2026-09-24, second pass).
+- Checked in Playwright at 390 and 1440; a sideways wheel scroll doesn't
+  move the page. Screenshots are in the session scratchpad under `shots/`.
