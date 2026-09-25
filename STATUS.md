@@ -2,9 +2,7 @@
 
 ## Now
 
-Second pass of `/dashboard` is pushed (commit 22e03c6) and the Vercel preview
-has rebuilt. Adrian approved the new "The idea" copy and the live-then-coming
-structure; waiting on his next review.
+`/dashboard` is live on production (PR #13, 2026-09-25).
 
 - "The idea" is four blocks (keeps your site current / answers your
   customers / helps new customers find you / gets better over time). No
@@ -27,15 +25,8 @@ structure; waiting on his next review.
 
 ## Branch
 
-- `dashboard-explainer`, pushed, with `origin/main` (beacon PR #12) merged in;
-  combined build passes. Adrian asked to take `/dashboard` live (2026-09-25).
-- PR #13 into `main` is open:
-  https://github.com/Plain-Sight-Works/plainsight-website/pull/13
-  The auto-mode classifier blocks `gh pr merge` (even with Adrian's go-ahead),
-  so Adrian merges it himself. After the merge, check `/dashboard` on production.
-- Vercel preview (production project `plain-sight-website-astro`):
-  https://plain-sight-website-astro-git-dashboar-6ce9ab-plain-sight-works.vercel.app/dashboard
-  Behind Vercel Deployment Protection (SSO).
+- `dashboard-explainer` merged to `main` via PR #13 (2026-09-25). `/dashboard`
+  is live at https://plainsight.works/dashboard (still unlinked from the nav).
 
 ## What the page is
 
