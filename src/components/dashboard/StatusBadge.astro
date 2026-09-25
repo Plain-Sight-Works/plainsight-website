@@ -1,0 +1,18 @@
+---
+interface Props {
+  status: "live" | "coming";
+}
+
+const { status } = Astro.props;
+---
+
+{status === "live" ? (
+  <span class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-pop px-2.5 py-0.5 text-label font-bold uppercase tracking-wider text-bg-dark-process">
+    <span class="size-1.5 rounded-full bg-bg-dark-process" aria-hidden="true"></span>
+    Live
+  </span>
+) : (
+  <span class="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-current px-2.5 py-0.5 text-label font-semibold uppercase tracking-wider text-text-dim">
+    Coming
+  </span>
+)}

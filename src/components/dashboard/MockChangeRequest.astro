@@ -1,0 +1,24 @@
+---
+import MockWindow from "./MockWindow.astro";
+---
+
+<MockWindow label="New change request">
+  <div class="flex flex-col gap-4">
+    <div>
+      <div class="mb-1.5 text-label font-semibold uppercase tracking-wider text-text-dim">Page</div>
+      <div class="flex items-center justify-between rounded-lg border border-border-alt px-3 py-2 text-15 text-text">
+        Services
+        <svg class="size-4 text-text-dim" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+      </div>
+    </div>
+    <div>
+      <div class="mb-1.5 text-label font-semibold uppercase tracking-wider text-text-dim">What should change?</div>
+      <div class="min-h-20 rounded-lg border border-border-alt px-3 py-2 text-15 leading-relaxed text-text">
+        Add our new Saturday hours, 10 to 2, under the booking button.
+      </div>
+    </div>
+    <div class="flex justify-end">
+      <span class="rounded-lg bg-accent px-4 py-2 text-15 font-semibold text-btn-text">Send request</span>
+    </div>
+  </div>
+</MockWindow>

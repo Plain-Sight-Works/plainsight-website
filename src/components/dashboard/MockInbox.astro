@@ -1,0 +1,32 @@
+---
+import MockWindow from "./MockWindow.astro";
+
+const messages = [
+  { name: "Priya S.", form: "Contact form", text: "Do you have anything open next Tuesday afternoon?", time: "9:14", unread: true },
+  { name: "Tom B.", form: "Quote request", text: "Looking for a price on the full package for a two-bedroom.", time: "Yesterday", unread: true },
+  { name: "Ana M.", form: "Contact form", text: "Is there parking near you?", time: "Mon", unread: false },
+];
+---
+
+<MockWindow label="Inbox">
+  <div class="mb-4 flex flex-wrap items-center gap-2 text-13">
+    <span class="rounded-full bg-accent-subtle px-3 py-1 font-semibold text-primary">All forms</span>
+    <span class="rounded-full border border-border-alt px-3 py-1 text-text-muted">Unread</span>
+    <span class="ml-auto rounded-full border border-border-alt px-3 py-1 text-text-muted">Download</span>
+  </div>
+  <ul class="divide-y divide-border-alt">
+    {messages.map((m) => (
+      <li class="grid grid-cols-[auto_1fr_auto] items-start gap-x-3 py-3">
+        <span class:list={["mt-2 size-2 rounded-full", m.unread ? "bg-accent" : "bg-transparent"]}></span>
+        <div class="min-w-0">
+          <div class="flex flex-wrap items-baseline gap-x-2">
+            <span class:list={["text-15 text-text", m.unread ? "font-bold" : "font-medium"]}>{m.name}</span>
+            <span class="text-13 text-text-dim">{m.form}</span>
+          </div>
+          <p class="truncate text-13 text-text-muted">{m.text}</p>
+        </div>
+        <span class="text-13 text-text-dim">{m.time}</span>
+      </li>
+    ))}
+  </ul>
+</MockWindow>
