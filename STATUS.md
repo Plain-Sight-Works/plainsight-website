@@ -27,11 +27,15 @@ structure; waiting on his next review.
 
 ## Branch
 
-- `dashboard-explainer`, pushed to origin, not merged. Do not merge to main.
+- `dashboard-explainer`, pushed, with `origin/main` (beacon PR #12) merged in;
+  combined build passes. Adrian asked to take `/dashboard` live (2026-09-25).
+- PR #13 into `main` is open:
+  https://github.com/Plain-Sight-Works/plainsight-website/pull/13
+  The auto-mode classifier blocks `gh pr merge` (even with Adrian's go-ahead),
+  so Adrian merges it himself. After the merge, check `/dashboard` on production.
 - Vercel preview (production project `plain-sight-website-astro`):
   https://plain-sight-website-astro-git-dashboar-6ce9ab-plain-sight-works.vercel.app/dashboard
-  Behind Vercel Deployment Protection (SSO), so outsiders need a share link
-  or protection turned off. Not changed.
+  Behind Vercel Deployment Protection (SSO).
 
 ## What the page is
 
