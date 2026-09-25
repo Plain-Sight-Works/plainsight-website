@@ -9,7 +9,8 @@ structure; waiting on his next review.
 - "The idea" is four blocks (keeps your site current / answers your
   customers / helps new customers find you / gets better over time). No
   diagram.
-- "What's live": Change requests, Traffic, Inbox, then Paying for your site,
+- "What's live": Change requests, Traffic, Inbox, then the payments block (retitled
+  "Pay up front, in stages or monthly", body copy unchanged),
   each with its mock. "What's coming": the same four themes; "Get better over
   time" is the dark section with the Suggested improvements loop panel.
 - The product is "Plain Sight Dashboard", never "The Plain Sight Dashboard"
