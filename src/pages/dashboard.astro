@@ -10,26 +10,31 @@ import MockTraffic from "../components/dashboard/MockTraffic.astro";
 import MockSuggestedFix from "../components/dashboard/MockSuggestedFix.astro";
 import MockPayments from "../components/dashboard/MockPayments.astro";
 
-// Copy source: plain-sight-dashboard/docs/psd-explainer.md. Approved as written.
+// Copy source: plain-sight-dashboard/docs/psd-explainer.md. "The idea" and the live/coming
+// grouping here are newer than that doc; update it when it catches up.
 
-type Status = "live" | "coming";
-type Module = { title: string; status: Status; description: string };
+type Module = { title: string; description: string };
 
 const ideaParts = [
   {
-    lead: "Your business keeps the website current.",
-    body: "What you know about your business goes into the dashboard once: your hours, services and prices, and the answers to the questions customers ask. From there it keeps your website, your Google listing and the assistant on your site up to date.",
-    color: "bg-primary-light",
+    lead: "It keeps your site current.",
+    body: "You tell the dashboard your hours, services, prices and the answers to the questions customers ask, once. It keeps your website and your Google listing up to date from that.",
+    icon: `<path d="M21 12a9 9 0 1 1-3-6.7"/><polyline points="21 3 21 9 15 9"/>`,
   },
   {
-    lead: "The website keeps you informed.",
-    body: "Every enquiry arrives in one inbox, and the dashboard tracks how people find your site and what they do once they're on it.",
-    color: "bg-secondary-light",
+    lead: "It answers your customers.",
+    body: "An assistant on your site answers visitors' questions from what you've told the dashboard. Every enquiry lands in one inbox, a personal reply goes out within a minute, and you can answer from the dashboard with your own business email.",
+    icon: `<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>`,
   },
   {
-    lead: "The dashboard turns all of it into improvements.",
-    body: "Every night it reads how visitors used your site and what customers asked. When it finds something that's costing you enquiries, like a contact form people abandon halfway, a phone number nobody taps on mobile, or a question fifteen people asked this month that no page answers, it writes up the change it recommends. You approve it, the change goes live, and the dashboard checks whether more people got in touch afterward. Nobody has to read a report or work out what the numbers mean.",
-    color: "bg-tertiary",
+    lead: "It helps new customers find you.",
+    body: "New blog posts about your work, drafted from what you've told the dashboard and reviewed by a person, give Google more to show when people search for what you do. The dashboard tracks how often you show up in Google, where you rank nearby, and what your reviews say.",
+    icon: `<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>`,
+  },
+  {
+    lead: "It gets better over time.",
+    body: "It reads how visitors use your site and what customers ask, suggests a change when something is costing you enquiries, and checks afterward whether it worked. You approve every change.",
+    icon: `<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>`,
   },
 ];
 
@@ -40,32 +45,49 @@ const benefits = [
   { lead: "It's all behind one sign-in.", body: "Traffic, enquiries, improvements, change requests and billing." },
 ];
 
-const keepCurrent: Module[] = [
-  { title: "Knowledge base", status: "coming", description: "Upload what you already have, like price lists, FAQs, service manuals and old website copy, and the dashboard turns it into one source of truth about your business." },
-  { title: "Business details, banners, calendars and FAQs", status: "coming", description: "Update your hours, services, an announcement or an events calendar in the dashboard, and your website and Google listing update with it." },
-  { title: "Site assistant", status: "coming", description: "A chat assistant on your website that answers visitors' questions from your knowledge base, and hands the conversation to you when it should." },
-  { title: "Blog posts", status: "coming", description: "New posts about the work you do, drafted from your knowledge base and reviewed by a person before anything is published." },
-  { title: "Change requests", status: "live", description: "Want something changed yourself? Pick the page, describe the change, and send it to us." },
-  { title: "Request history and status", status: "coming", description: "Every request you've sent, and whether it's received, in progress or done." },
+const live = [
+  { title: "Change requests", description: "Want something changed yourself? Pick the page, describe the change, and send it to us.", mock: "change" },
+  { title: "Traffic", description: "How many people visited, where they came from (Google, social, another website) and which pages they read, for every site on your account.", mock: "traffic" },
+  { title: "Inbox", description: "Every message sent through your site's forms, in one list. Mark them read, archive them, filter by form or site, and download the list for Excel or Google Sheets.", mock: "inbox" },
 ];
 
-const knowHappening: Module[] = [
-  { title: "Traffic", status: "live", description: "How many people visited, where they came from (Google, social, another website) and which pages they read, for every site on your account." },
-  { title: "Google search results", status: "coming", description: "How often your site shows up in Google, how often people click, and the searches they typed to find you." },
-  { title: "Your Google Business Profile", status: "coming", description: "Calls, direction requests and profile views from your Google listing, next to your website numbers." },
-  { title: "Your headline numbers", status: "coming", description: "The numbers that matter most, on the first screen after you sign in, compared with last month." },
-  { title: "Local rankings", status: "coming", description: "Where you rank when someone nearby searches for what you do, on a map of your area." },
-  { title: "Reviews and listings", status: "coming", description: "New reviews as they arrive, review requests sent to recent customers, and your business details checked across the directories Google looks at." },
-  { title: "Inbox", status: "live", description: "Every message sent through your site's forms, in one list. Mark them read, archive them, filter by form or site, and download the list for Excel or Google Sheets." },
-  { title: "Where your leads come from", status: "coming", description: "For each enquiry, how that person first found you (a Google search, your listing, an ad, a referral) and the pages they read before getting in touch. Over a month, it shows which sources and pages bring you customers." },
-  { title: "Reply from the dashboard", status: "coming", description: "Answer an enquiry without leaving the dashboard, from your own business email address." },
-  { title: "Instant replies", status: "coming", description: "A personal reply goes out to a new enquiry within a minute, with a few questions that tell you whether it's a good lead." },
-  { title: "Monthly report", status: "coming", description: "A short email each month: what happened on your site, what changed, and what the dashboard is watching." },
+const comingGroups: { title: string; modules: Module[] }[] = [
+  {
+    title: "Keep your site current",
+    modules: [
+      { title: "Knowledge base", description: "Upload what you already have, like price lists, FAQs, service manuals and old website copy, and the dashboard turns it into one source of truth about your business." },
+      { title: "Business details, banners, calendars and FAQs", description: "Update your hours, services, an announcement or an events calendar in the dashboard, and your website and Google listing update with it." },
+      { title: "Request history and status", description: "Every request you've sent, and whether it's received, in progress or done." },
+    ],
+  },
+  {
+    title: "Answer your customers",
+    modules: [
+      { title: "Site assistant", description: "A chat assistant on your website that answers visitors' questions from your knowledge base, and hands the conversation to you when it should." },
+      { title: "Instant replies", description: "A personal reply goes out to a new enquiry within a minute, with a few questions that tell you whether it's a good lead." },
+      { title: "Reply from the dashboard", description: "Answer an enquiry without leaving the dashboard, from your own business email address." },
+    ],
+  },
+  {
+    title: "Help new customers find you",
+    modules: [
+      { title: "Blog posts", description: "New posts about the work you do, drafted from your knowledge base and reviewed by a person before anything is published." },
+      { title: "Google search results", description: "How often your site shows up in Google, how often people click, and the searches they typed to find you." },
+      { title: "Your Google Business Profile", description: "Calls, direction requests and profile views from your Google listing, next to your website numbers." },
+      { title: "Local rankings", description: "Where you rank when someone nearby searches for what you do, on a map of your area." },
+      { title: "Reviews and listings", description: "New reviews as they arrive, review requests sent to recent customers, and your business details checked across the directories Google looks at." },
+      { title: "Where your leads come from", description: "For each enquiry, how that person first found you (a Google search, your listing, an ad, a referral) and the pages they read before getting in touch. Over a month, it shows which sources and pages bring you customers." },
+    ],
+  },
 ];
 
-const customersAsking: Module = { title: "What customers are asking", status: "coming", description: "The questions from your forms and the assistant, grouped by topic and counted. A question that keeps coming up is a page your site is missing." };
-const suggested: Module = { title: "Suggested improvements", status: "coming", description: "Fixes the dashboard recommends from how visitors use your site and what they ask. It works in a loop:" };
-const changeLog: Module = { title: "Change log", status: "coming", description: "Everything that changed on your site, when, and what happened to the numbers afterward." };
+const customersAsking: Module = { title: "What customers are asking", description: "The questions from your forms and the assistant, grouped by topic and counted. A question that keeps coming up is a page your site is missing." };
+const suggested: Module = { title: "Suggested improvements", description: "Fixes the dashboard recommends from how visitors use your site and what they ask. It works in a loop:" };
+const betterAfter: Module[] = [
+  { title: "Your headline numbers", description: "The numbers that matter most, on the first screen after you sign in, compared with last month." },
+  { title: "Monthly report", description: "A short email each month: what happened on your site, what changed, and what the dashboard is watching." },
+  { title: "Change log", description: "Everything that changed on your site, when, and what happened to the numbers afterward." },
+];
 
 const loop = [
   { title: "Watch", description: "The dashboard follows what visitors do on your site and what they ask you." },
@@ -87,7 +109,6 @@ const ctaEntry = (await getCollection("homepage")).find((s) => s.data.section ==
 if (!ctaEntry) throw new Error("Homepage CTA entry missing");
 const { Content: CtaContent } = await render(ctaEntry);
 
-const arrowIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="14 6 20 12 14 18"/></svg>`;
 ---
 
 <Base
@@ -124,59 +145,17 @@ const arrowIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
       <div class="container">
         <div class="mb-14 max-md:mb-10">
           <h2 class="font-heading text-section-title font-extrabold tracking-tight mb-6">The idea</h2>
-          <p class="max-w-[820px] text-section-subtitle text-text-muted leading-relaxed">Every site we build comes with its own dashboard, and the dashboard joins the site to the business behind it. Information flows both ways.</p>
+          <p class="max-w-[820px] text-section-subtitle text-text-muted leading-relaxed">Every site we build comes with its own dashboard. It connects the site to your business, and after launch it takes on most of the work of keeping the site useful.</p>
         </div>
-
-        <!-- Diagram: business and website feed each other through the dashboard -->
-        <div class="mb-16 max-md:mb-12 grid grid-cols-[1fr_auto_1.15fr_auto_1fr] max-lg:grid-cols-1 items-center gap-4 max-lg:gap-3 max-lg:max-w-[420px] max-lg:mx-auto" aria-hidden="true">
-          <div class="rounded-2xl border border-border-alt bg-bg p-6 text-center shadow-sm">
-            <svg class="mx-auto mb-3 size-8 text-primary-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9v11h18V9"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M10 20v-5h4v5"/></svg>
-            <div class="font-heading text-26 font-extrabold tracking-tight">Your business</div>
-          </div>
-
-          <div class="flex flex-col max-lg:flex-row items-center justify-center gap-2 max-lg:gap-8 px-2">
-            <span class="flex items-center gap-1.5 text-primary-light">
-              <span class="flex size-6 items-center justify-center rounded-full bg-primary-light text-label font-bold text-btn-text">1</span>
-              <span class="max-lg:rotate-90" set:html={arrowIcon} />
-            </span>
-            <span class="flex items-center gap-1.5 text-secondary-accessible">
-              <span class="rotate-180 max-lg:rotate-270" set:html={arrowIcon} />
-              <span class="flex size-6 items-center justify-center rounded-full bg-secondary-light text-label font-bold text-bg-dark-process">2</span>
-            </span>
-          </div>
-
-          <div class="relative rounded-2xl bg-bg-dark-process p-8 text-center text-text-light shadow-card-hover ring-1 ring-primary-light/40">
-            <span class="absolute -top-3 -right-3 flex size-8 items-center justify-center rounded-full bg-tertiary text-15 font-bold text-btn-text shadow-sm">3</span>
-            <svg class="mx-auto mb-3 size-9 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><polyline points="21 3 21 9 15 9"/></svg>
-            <div class="font-heading text-36 font-black leading-none tracking-tight">The dashboard</div>
-          </div>
-
-          <div class="flex flex-col max-lg:flex-row items-center justify-center gap-2 max-lg:gap-8 px-2">
-            <span class="flex items-center gap-1.5 text-primary-light">
-              <span class="flex size-6 items-center justify-center rounded-full bg-primary-light text-label font-bold text-btn-text">1</span>
-              <span class="max-lg:rotate-90" set:html={arrowIcon} />
-            </span>
-            <span class="flex items-center gap-1.5 text-secondary-accessible">
-              <span class="rotate-180 max-lg:rotate-270" set:html={arrowIcon} />
-              <span class="flex size-6 items-center justify-center rounded-full bg-secondary-light text-label font-bold text-bg-dark-process">2</span>
-            </span>
-          </div>
-
-          <div class="rounded-2xl border border-border-alt bg-bg p-6 text-center shadow-sm">
-            <svg class="mx-auto mb-3 size-8 text-primary-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            <div class="font-heading text-26 font-extrabold tracking-tight">Your website</div>
-          </div>
-        </div>
-
-        <ol class="grid grid-cols-3 max-lg:grid-cols-1 gap-10 max-lg:gap-8">
-          {ideaParts.map((part, i) => (
-            <li class="flex flex-col gap-4">
-              <span class:list={["flex size-9 items-center justify-center rounded-full text-17 font-bold", part.color, i === 1 ? "text-bg-dark-process" : "text-btn-text"]}>{i + 1}</span>
-              <h3 class="font-sans text-21 font-bold leading-snug tracking-snug text-text">{part.lead}</h3>
+        <div class="grid grid-cols-2 max-md:grid-cols-1 gap-5">
+          {ideaParts.map((part) => (
+            <div class="rounded-2xl bg-bg p-10 max-md:p-7 shadow-sm">
+              <svg class="mb-5 size-9 text-primary-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={part.icon} />
+              <h3 class="font-sans text-item-title font-bold leading-tight tracking-tight text-text mb-4">{part.lead}</h3>
               <p class="text-body text-text-muted leading-relaxed">{part.body}</p>
-            </li>
+            </div>
           ))}
-        </ol>
+        </div>
       </div>
     </section>
 
@@ -195,29 +174,53 @@ const arrowIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
       </div>
     </section>
 
-    <!-- What's inside: groups one and two -->
-    <section class="relative pt-section pb-24 max-md:pt-20 max-md:pb-16 bg-bg">
+    <!-- What's live -->
+    <section class="relative py-section max-md:py-20 bg-bg">
       <div class="container">
-        <h2 class="font-heading text-section-title font-extrabold tracking-tight mb-16 max-md:mb-12">What's inside</h2>
-
-        {[
-          { title: "Keep your site current", modules: keepCurrent, mocks: ["change"] },
-          { title: "Know what's happening", modules: knowHappening, mocks: ["traffic", "inbox"] },
-        ].map((group, gi) => (
-          <div class:list={["grid grid-cols-[minmax(0,5fr)_minmax(0,6fr)] max-lg:grid-cols-1 gap-16 max-lg:gap-10", gi > 0 && "mt-24 max-md:mt-20 border-t border-border-alt pt-24 max-md:pt-16"]}>
-            <div class="lg:sticky lg:top-24 lg:self-start flex flex-col gap-8">
-              <h3 class="font-heading text-subsection-title font-black tracking-tighter leading-tight">{group.title}</h3>
-              {group.mocks.includes("change") && <MockChangeRequest />}
-              {group.mocks.includes("traffic") && <MockTraffic />}
-              {group.mocks.includes("inbox") && <MockInbox />}
+        <div class="mb-16 max-md:mb-12 flex flex-wrap items-center gap-5">
+          <h2 class="font-heading text-section-title font-extrabold tracking-tight">What's live</h2>
+          <StatusBadge status="live" />
+        </div>
+        <div class="flex flex-col gap-24 max-md:gap-16">
+          {live.map((m) => (
+            <div class="grid grid-cols-[minmax(0,5fr)_minmax(0,6fr)] max-lg:grid-cols-1 gap-16 max-lg:gap-8 items-center">
+              <div>
+                <h3 class="font-heading text-subsection-title font-black tracking-tighter leading-tight mb-5">{m.title}</h3>
+                <p class="text-section-prose text-text-muted leading-loose max-w-[520px]">{m.description}</p>
+              </div>
+              {m.mock === "change" && <MockChangeRequest />}
+              {m.mock === "traffic" && <MockTraffic />}
+              {m.mock === "inbox" && <MockInbox />}
             </div>
+          ))}
+          <div class="grid grid-cols-[minmax(0,5fr)_minmax(0,6fr)] max-lg:grid-cols-1 gap-16 max-lg:gap-8 items-center">
+            <div>
+              <h3 class="font-heading text-subsection-title font-black tracking-tighter leading-tight mb-5">Paying for your site</h3>
+              <div class="text-section-prose text-text-muted leading-loose">
+                <p class="mb-6">We build the payment plan around your project. You can pay for the build up front, pay in stages as each part is finished, or turn it into a monthly fee with nothing to pay at the start. When a stage is done, you get an email, look over the work, and approve the payment from your dashboard. Your card is only charged on the day a payment is due.</p>
+                <p>Your schedule, receipts and invoices sit in the dashboard next to everything else, so you can always see what you've paid and what's coming next.</p>
+              </div>
+            </div>
+            <MockPayments />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What's coming -->
+    <section class="relative pt-section pb-24 max-md:pt-20 max-md:pb-16 bg-gradient-to-b from-surface-alt to-surface-gradient-end">
+      <div class="container">
+        <div class="mb-16 max-md:mb-12 flex flex-wrap items-center gap-5">
+          <h2 class="font-heading text-section-title font-extrabold tracking-tight">What's coming</h2>
+          <StatusBadge status="coming" />
+        </div>
+        {comingGroups.map((group, gi) => (
+          <div class:list={["grid grid-cols-[minmax(0,5fr)_minmax(0,6fr)] max-lg:grid-cols-1 gap-16 max-lg:gap-6", gi > 0 && "mt-20 max-md:mt-14"]}>
+            <h3 class="lg:sticky lg:top-24 lg:self-start font-heading text-subsection-title font-black tracking-tighter leading-tight">{group.title}</h3>
             <ul class="divide-y divide-border-alt border-y border-border-alt">
               {group.modules.map((m) => (
                 <li class="py-6">
-                  <div class="mb-2 flex items-start justify-between gap-4">
-                    <h4 class="font-sans text-21 font-bold leading-snug tracking-snug text-text">{m.title}</h4>
-                    <span class="mt-0.5"><StatusBadge status={m.status} /></span>
-                  </div>
+                  <h4 class="mb-2 font-sans text-21 font-bold leading-snug tracking-snug text-text">{m.title}</h4>
                   <p class="text-body text-text-muted leading-relaxed">{m.description}</p>
                 </li>
               ))}
@@ -227,7 +230,7 @@ const arrowIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
       </div>
     </section>
 
-    <!-- What's inside: group three -->
+    <!-- What's coming: get better over time -->
     <section class="section-process relative py-section max-md:py-20">
       <div class="process-blob-blur" aria-hidden="true">
         <div class="process-blob"></div>
@@ -236,17 +239,13 @@ const arrowIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
         <h3 class="font-heading text-subsection-title font-black tracking-tighter leading-tight mb-12 max-md:mb-10">Get better over time</h3>
 
         <div class="mb-16 max-md:mb-12 max-w-[760px] border-y border-border py-6">
-          <div class="mb-2 flex items-start justify-between gap-4">
-            <h4 class="font-sans text-21 font-bold leading-snug tracking-snug text-text">{customersAsking.title}</h4>
-            <span class="mt-0.5"><StatusBadge status={customersAsking.status} /></span>
-          </div>
+          <h4 class="mb-2 font-sans text-21 font-bold leading-snug tracking-snug text-text">{customersAsking.title}</h4>
           <p class="text-body text-text-muted leading-relaxed">{customersAsking.description}</p>
         </div>
 
         <div class="rounded-3xl border border-border bg-bg-dark-hero/60 p-12 max-lg:p-8 max-md:-mx-2 max-md:p-5">
           <div class="mb-12 max-md:mb-8 grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] max-lg:grid-cols-1 gap-12 max-lg:gap-10 items-center">
             <div>
-              <div class="mb-5"><StatusBadge status={suggested.status} /></div>
               <h4 class="font-heading text-section-title font-extrabold leading-none tracking-tight text-text mb-6">{suggested.title}</h4>
               <p class="text-section-subtitle text-text-muted leading-relaxed">{suggested.description}</p>
             </div>
@@ -277,27 +276,14 @@ const arrowIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
           <p class="mt-10 max-md:mt-8 border-t border-border pt-8 text-section-subtitle text-text leading-relaxed max-w-[760px]">When there's nothing worth changing, the dashboard says so and waits for the next real signal.</p>
         </div>
 
-        <div class="mt-16 max-md:mt-12 max-w-[760px] border-y border-border py-6">
-          <div class="mb-2 flex items-start justify-between gap-4">
-            <h4 class="font-sans text-21 font-bold leading-snug tracking-snug text-text">{changeLog.title}</h4>
-            <span class="mt-0.5"><StatusBadge status={changeLog.status} /></span>
-          </div>
-          <p class="text-body text-text-muted leading-relaxed">{changeLog.description}</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Paying for your site -->
-    <section class="relative py-section max-md:py-20 bg-gradient-to-b from-surface-alt to-surface-gradient-end">
-      <div class="container grid grid-cols-[minmax(0,6fr)_minmax(0,5fr)] max-lg:grid-cols-1 gap-16 max-lg:gap-12 items-center">
-        <div>
-          <h2 class="font-heading text-section-title font-extrabold tracking-tight mb-8">Paying for your site</h2>
-          <div class="text-section-prose text-text-muted leading-loose">
-            <p class="mb-6">We build the payment plan around your project. You can pay for the build up front, pay in stages as each part is finished, or turn it into a monthly fee with nothing to pay at the start. When a stage is done, you get an email, look over the work, and approve the payment from your dashboard. Your card is only charged on the day a payment is due.</p>
-            <p>Your schedule, receipts and invoices sit in the dashboard next to everything else, so you can always see what you've paid and what's coming next.</p>
-          </div>
-        </div>
-        <MockPayments />
+        <ul class="mt-16 max-md:mt-12 max-w-[760px] divide-y divide-border border-y border-border">
+          {betterAfter.map((m) => (
+            <li class="py-6">
+              <h4 class="mb-2 font-sans text-21 font-bold leading-snug tracking-snug text-text">{m.title}</h4>
+              <p class="text-body text-text-muted leading-relaxed">{m.description}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
 
