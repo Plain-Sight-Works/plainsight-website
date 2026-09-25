@@ -10,8 +10,8 @@ structure; waiting on his next review.
   customers / helps new customers find you / gets better over time). No
   diagram.
 - "What's live": Change requests, Traffic, Inbox, then the payments block (retitled
-  "A payment plan that fits your budget", body copy unchanged; the headline
-  sells flexibility for businesses that can't pay a large sum up front),
+  "Pay the way that works for you", body copy unchanged; the headline
+  sells general flexibility, not low budget),
   each with its mock. "What's coming": the same four themes; "Get better over
   time" is the dark section with the Suggested improvements loop panel.
 - The product is "Plain Sight Dashboard", never "The Plain Sight Dashboard"
