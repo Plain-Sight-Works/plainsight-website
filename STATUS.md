@@ -14,6 +14,8 @@ structure; waiting on his next review.
   time" is the dark section with the Suggested improvements loop panel.
 - The product is "Plain Sight Dashboard", never "The Plain Sight Dashboard"
   (Adrian, 2026-09-24). Applied across the page.
+- "Why it matters" is removed (Adrian, 2026-09-24): it repeated the idea
+  blocks, and the one-sign-in point is irrelevant. Don't bring it back.
 - Per-module badges are gone; a single Live / Coming pill sits next to each
   section heading.
 - **Not done:** `psd-explainer.md` in the dashboard repo still has the old
@@ -38,8 +40,7 @@ structure; waiting on his next review.
 - Files: `src/pages/dashboard.astro`, `src/components/dashboard/*`
   (StatusBadge, MockWindow and five HTML/Tailwind UI mocks with placeholder
   data), `src/components/HeroAurora.astro`.
-- Section order: hero · problem · the idea · why it matters (dark) · what's
-  live · what's coming (three light groups, then the dark "Get better over
+- Section order: hero · problem · the idea · what's live · what's coming (three light groups, then the dark "Get better over
   time") · FAQ · CTA (reuses the homepage CTA entry).
 
 ## Decisions
