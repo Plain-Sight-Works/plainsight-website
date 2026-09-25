@@ -12,10 +12,12 @@ structure; waiting on his next review.
 - "What's live": Change requests, Traffic, Inbox, then Paying for your site,
   each with its mock. "What's coming": the same four themes; "Get better over
   time" is the dark section with the Suggested improvements loop panel.
+- The product is "Plain Sight Dashboard", never "The Plain Sight Dashboard"
+  (Adrian, 2026-09-24). Applied across the page.
 - Per-module badges are gone; a single Live / Coming pill sits next to each
   section heading.
 - **Not done:** `psd-explainer.md` in the dashboard repo still has the old
-  "The idea" and grouping. The edit was blocked by the permission classifier
+  "The idea", the old grouping and "The Plain Sight Dashboard". The edit was blocked by the permission classifier
   (it's a different repo, and the file is untracked there). The page comment
   in `dashboard.astro` says the page copy is newer than that doc.
 

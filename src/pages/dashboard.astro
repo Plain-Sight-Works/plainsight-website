@@ -38,13 +38,6 @@ const ideaParts = [
   },
 ];
 
-const benefits = [
-  { lead: "Your website improves without you managing it.", body: "The dashboard finds what's costing you enquiries and proposes the fix. Your part is saying yes or no." },
-  { lead: "Your customers get answers faster.", body: "The assistant handles the common questions, and every enquiry arrives in one place." },
-  { lead: "You stay in control.", body: "The dashboard suggests; you decide. Every change waits for your approval, however long we've worked together." },
-  { lead: "It's all behind one sign-in.", body: "Traffic, enquiries, improvements, change requests and billing." },
-];
-
 const live = [
   { title: "Change requests", description: "Want something changed yourself? Pick the page, describe the change, and send it to us.", mock: "change" },
   { title: "Traffic", description: "How many people visited, where they came from (Google, social, another website) and which pages they read, for every site on your account.", mock: "traffic" },
@@ -153,21 +146,6 @@ const { Content: CtaContent } = await render(ctaEntry);
               <svg class="mb-5 size-9 text-primary-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={part.icon} />
               <h3 class="font-sans text-item-title font-bold leading-tight tracking-tight text-text mb-4">{part.lead}</h3>
               <p class="text-body text-text-muted leading-relaxed">{part.body}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- Why it matters -->
-    <section class="dark-section relative py-section max-md:py-20 bg-[var(--color-bg-dark-process)]">
-      <div class="container">
-        <h2 class="font-heading text-section-title font-extrabold tracking-tight text-text mb-14 max-md:mb-10">Why it matters</h2>
-        <div class="grid grid-cols-2 max-md:grid-cols-1 gap-x-16 gap-y-12 max-md:gap-y-10">
-          {benefits.map((b) => (
-            <div class="border-t border-border pt-6">
-              <h3 class="font-sans text-item-title font-bold leading-tight tracking-tight text-text mb-3">{b.lead}</h3>
-              <p class="text-body text-text-muted leading-relaxed">{b.body}</p>
             </div>
           ))}
         </div>
