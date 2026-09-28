@@ -2,11 +2,11 @@
 
 ## Now
 
-`/dashboard` is live on production (PR #13, 2026-09-25).
-
 The full portfolio is live on production (PR #15, 2026-09-28): /work lists
 all eight case studies, none has `published: false`. The homepage still
 shows two featured cards (Diana, Templeton/Lakewood).
+
+`/dashboard` is live on production (PR #13, 2026-09-25).
 
 - "The idea" is four blocks (keeps your site current / answers your
   customers / helps new customers find you / gets better over time). No
