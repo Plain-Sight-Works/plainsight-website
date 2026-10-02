@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Integrilex website · Build proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@700;800;900&family=Fira+Code:wght@500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #2B9CB5;
+    --teal-deep: #1E7F95;
+    --teal-pale: #E5F4F7;
+    --navy: #1F2937;
+    --ink: #111827;
+    --muted: #6B7280;
+    --line: #E5E7EB;
+    --line-dark: rgba(255, 255, 255, 0.14);
+    --paper: #FFFFFF;
+    --wash: #F4F8F9;
+
+    --step--1: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
+    --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+    --step-1: clamp(1.25rem, 1.15rem + 0.5vw, 1.625rem);
+    --step-2: clamp(1.75rem, 1.45rem + 1.5vw, 2.75rem);
+    --step-3: clamp(2.5rem, 1.9rem + 3vw, 4.5rem);
+    --step-4: clamp(3.25rem, 2.2rem + 5.4vw, 7.5rem);
+
+    --space-s: clamp(0.75rem, 0.7rem + 0.25vw, 1rem);
+    --space-m: clamp(1.25rem, 1.1rem + 0.6vw, 1.75rem);
+    --space-l: clamp(2rem, 1.6rem + 2vw, 3.5rem);
+    --space-xl: clamp(4rem, 3rem + 5vw, 8rem);
+    --gutter: clamp(1rem, 0.5rem + 3vw, 3rem);
+
+    --mono: "Fira Code", ui-monospace, monospace;
+    --display: "Darker Grotesque", system-ui, sans-serif;
+    --body: "Manrope", system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--navy);
+    font: 400 var(--step-0)/1.65 var(--body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; }
+  p { margin: 0 0 1rem; }
+  h1, h2, h3, h4 { margin: 0; }
+
+  .wrap { max-width: 80rem; margin: 0 auto; padding: 0 var(--gutter); }
+  .label {
+    font: 500 0.75rem/1 var(--mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .wordmark { font: 900 1.5rem/1 var(--display); letter-spacing: -0.01em; text-decoration: none; }
+  .wordmark span { color: var(--teal); }
+
+  /* Top bar */
+  .bar {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 20;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+  }
+  .bar.show { transform: none; }
+  .bar .wrap { display: flex; align-items: center; gap: var(--space-m); height: 4rem; }
+  .bar nav { flex: 1; min-width: 0; }
+  .bar ol { list-style: none; margin: 0 auto; padding: 0; display: flex; justify-content: center; gap: 0.25rem; overflow-x: auto; scrollbar-width: none; }
+  .bar ol::-webkit-scrollbar { display: none; }
+  .bar ol a {
+    display: block;
+    white-space: nowrap;
+    padding: 0.45rem 0.8rem;
+    border-radius: 999px;
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+  .bar ol a:hover { color: var(--ink); }
+  .bar ol a[aria-current="true"] { color: var(--ink); background: var(--teal-pale); }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font: 600 var(--step-0)/1 var(--body);
+    color: #fff;
+    background: var(--teal);
+    border: 0;
+    border-radius: 999px;
+    padding: 1rem 1.6rem;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.2s ease;
+  }
+  .btn:hover { background: var(--teal-deep); }
+  .btn:focus-visible, .bar a:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+  .btn svg { transition: transform 0.2s ease; }
+  .btn:hover svg { transform: translateY(2px); }
+  .btn.ghost { background: transparent; color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.45); }
+  .btn.ghost:hover { background: rgba(255, 255, 255, 0.1); }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  footer a { color: #fff; }
+  .btn.small { font-size: var(--step--1); padding: 0.7rem 1.15rem; }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    background: var(--navy);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    width: 70vmax;
+    height: 70vmax;
+    right: -25vmax;
+    top: -30vmax;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(43, 156, 181, 0.45) 0%, rgba(43, 156, 181, 0) 65%);
+    pointer-events: none;
+  }
+  .hero > * { position: relative; width: 100%; }
+  .hero-top { display: flex; justify-content: space-between; align-items: center; padding-top: var(--space-m); padding-bottom: var(--space-m); }
+  .hero-top .label { color: rgba(255, 255, 255, 0.6); }
+  .hero-body { align-self: center; padding-top: var(--space-l); padding-bottom: var(--space-l); }
+  .hero .eyebrow { color: var(--teal); }
+  .hero h1 {
+    font: 900 var(--step-4)/0.88 var(--display);
+    letter-spacing: -0.025em;
+    margin: 1.5rem 0 var(--space-l);
+    max-width: 12ch;
+  }
+  .hero-row { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--space-l); }
+  .meta { display: flex; flex-wrap: wrap; gap: var(--space-l); margin: 0; }
+  .meta dt { color: rgba(255, 255, 255, 0.55); margin-bottom: 0.6rem; }
+  .meta dd { margin: 0; font-weight: 600; font-size: var(--step-1); }
+  .hero-foot { border-top: 1px solid var(--line-dark); padding-top: 1rem; padding-bottom: 1rem; display: flex; justify-content: space-between; color: rgba(255, 255, 255, 0.55); }
+
+  /* Sections */
+  section { padding: var(--space-xl) 0; border-top: 1px solid var(--line); }
+  section:first-child { border-top: 0; }
+  .sec { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--space-m) var(--space-l); }
+  .sec > header { align-self: start; position: sticky; top: 6rem; }
+  .sec > header .label { color: var(--teal); display: block; margin-bottom: 1rem; }
+  .sec h2 { font: 800 var(--step-3)/0.95 var(--display); letter-spacing: -0.02em; color: var(--ink); }
+  .prose { max-width: 42rem; }
+  .prose > :last-child { margin-bottom: 0; }
+  .lead { font-size: var(--step-1); line-height: 1.5; color: var(--ink); font-weight: 500; margin-bottom: 1.5rem; }
+  .prose h3 { font: 800 clamp(1.5rem, 1.3rem + 0.9vw, 2rem)/1.1 var(--display); color: var(--ink); margin: var(--space-l) 0 0.75rem; }
+  .prose h3:first-child { margin-top: 0; }
+  .prose ul { margin: 0 0 1rem; padding-left: 1.25rem; }
+  .prose li { margin-bottom: 0.5rem; padding-left: 0.25rem; }
+  .prose li::marker { color: var(--teal); }
+  .prose strong { color: var(--ink); font-weight: 700; }
+  .figure { font: 900 clamp(3rem, 2.4rem + 2.6vw, 4.75rem)/0.9 var(--display); letter-spacing: -0.02em; color: var(--ink); margin: 0.25rem 0 0.4rem; }
+  .figure-note { display: block; color: var(--muted); font-size: var(--step--1); margin-bottom: 1rem; }
+
+  .prose.wide { max-width: 52rem; }
+  .plans { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-s); margin: 1.25rem 0 1rem; }
+  .plan { border: 1px solid var(--line); border-top: 4px solid var(--teal); border-radius: 12px; padding: var(--space-m); background: var(--paper); }
+  .plan-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+  .plan h4 { font: 800 1.625rem/1.05 var(--display); color: var(--ink); }
+  .plan-price { font: 800 2rem/1 var(--display); color: var(--ink); text-align: right; white-space: nowrap; }
+  .plan-price small { display: block; font: 500 0.8125rem/1.4 var(--body); color: var(--muted); }
+  .plan-sub { color: var(--muted); font-size: var(--step--1); margin: 0.5rem 0 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line); }
+  .plan ul { margin: 0; font-size: var(--step--1); line-height: 1.55; }
+  .plan li { margin-bottom: 0.45rem; }
+  .fine { color: var(--muted); font-size: var(--step--1); }
+  @media (max-width: 640px) { .plans { grid-template-columns: minmax(0, 1fr); } }
+
+  /* Next steps */
+  .next { background: var(--teal); color: #fff; border-top: 0; }
+  .next .sec h2, .next .lead { color: #fff; }
+  .next .sec > header .label { color: rgba(255, 255, 255, 0.75); }
+  footer { background: var(--navy); color: rgba(255, 255, 255, 0.6); }
+  footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding-top: var(--space-m); padding-bottom: var(--space-m); flex-wrap: wrap; }
+  footer .wordmark { color: #fff; font-size: 1.25rem; }
+
+  @media (max-width: 1080px) {
+    .bar .btn { display: none; }
+    .bar ol { justify-content: flex-start; }
+  }
+  @media (max-width: 760px) {
+    .sec { grid-template-columns: minmax(0, 1fr); }
+    .sec > header { position: static; }
+    .bar .wordmark { display: none; }
+    .bar .wrap { padding: 0 0.25rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+
+  @media print {
+    @page { size: letter; margin: 0.6in; }
+    body { font-size: 10.5pt; }
+    .bar, .btn { display: none !important; }
+    .hero { min-height: auto; height: 9.5in; page-break-after: always; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    section { padding: 0.4in 0; page-break-inside: auto; }
+    .next { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .sec > header { position: static; }
+    .plan { page-break-inside: avoid; }
+    .sec { grid-template-columns: minmax(0, 1fr); gap: 0.75rem; }
+    .prose, .prose.wide { max-width: none; }
+    .sec h2 { font-size: 30pt; }
+    .prose h3 { page-break-after: avoid; }
+    section:not(#pricing):not(#website) { break-inside: avoid; }
+    footer a, .hero-actions { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="bar" id="bar">
+  <div class="wrap">
+    <a class="wordmark" href="#top">Plain Sight<span>.</span></a>
+    <nav aria-label="Proposal sections">
+      <ol>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#website">The website</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#timeline">Timeline</a></li>
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#terms">Payment terms</a></li>
+        <li><a href="#not-included">Not included</a></li>
+      </ol>
+    </nav>
+    <a class="btn small" href="#next-steps">Next steps</a>
+  </div>
+</header>
+
+<div class="hero" id="top">
+  <div class="wrap hero-top">
+    <span class="wordmark">Plain Sight<span>.</span></span>
+    <span class="label">October 2026</span>
+  </div>
+  <div class="wrap hero-body">
+    <span class="label eyebrow">Build proposal</span>
+    <h1>Integrilex website</h1>
+    <div class="hero-row">
+      <dl class="meta">
+        <div><dt class="label">Prepared for</dt><dd>Integrilex</dd></div>
+        <div><dt class="label">Prepared by</dt><dd>Plain Sight</dd></div>
+      </dl>
+      <div class="hero-actions">
+        <a class="btn" href="#overview">
+          Read the proposal
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v12m0 0 5-5m-5 5L3 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn ghost" href="integrilex-website-proposal.pdf" download>Download PDF</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap hero-foot label"><span>Integrilex</span><span>Version 1.0</span></div>
+</div>
+
+<main>
+  <section id="overview">
+    <div class="wrap sec">
+      <header><span class="label">01</span><h2>Overview</h2></header>
+      <div class="prose">
+        <p class="lead">Integrilex is a Toronto law firm. Most of its clients come through referrals, and they often look the firm up online before they call. Plain Sight will build a new website for Integrilex that leaves those visitors feeling the firm understands what they are going through, has the experience to protect them, and is easy to talk to: calm and warm, written in plain English, and polished enough to show an established practice.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="website">
+    <div class="wrap sec">
+      <header><span class="label">02</span><h2>The website</h2></header>
+      <div class="prose">
+        <p class="lead">The website will have four or five pages, depending on how the final copy is arranged. The working list is:</p>
+        <ul>
+          <li><strong>Home.</strong> What the firm does and who it helps, with links into the rest of the site.</li>
+          <li><strong>About.</strong> The lawyers, their backgrounds, and the languages the firm works in.</li>
+          <li><strong>Areas of practice.</strong> The firm's practice areas, each with a short summary and a fuller description.</li>
+          <li><strong>Contact.</strong> A contact form, phone number, email address and office address.</li>
+        </ul>
+        <h3>Deliverables</h3>
+        <ul>
+          <li>The pages listed above, with layouts for phones, tablets and computers</li>
+          <li>A design for the site, based on Integrilex's logo and brand colours, with up to two rounds of revisions. If Integrilex has no design references to share, Plain Sight will propose two directions for the home page to choose from.</li>
+          <li>Integrilex's content structured, formatted and placed on the pages, with an editing pass for consistency</li>
+          <li>A contact form, with each enquiry sent to Integrilex by email</li>
+          <li>Search setup on every page, so the site is indexed and appears when someone searches for Integrilex by name</li>
+          <li>Testing across browsers, phones and tablets before launch</li>
+          <li>Publishing the site and connecting it to Integrilex's domain</li>
+          <li>Written feedback on the tone and structure of Integrilex's draft copy</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="wrap sec">
+      <header><span class="label">03</span><h2>Pricing</h2></header>
+      <div class="prose wide">
+        <p class="lead">Integrilex can pay for the website in one of two ways: a one-time payment for the website, split between signing and launch, followed by a monthly maintenance plan; or a fixed monthly subscription with nothing to pay before launch.</p>
+
+        <h3>The website</h3>
+        <div class="plans">
+          <article class="plan">
+            <div class="plan-top"><h4>One-time payment</h4><div class="plan-price">$2,500<small>one time</small></div></div>
+            <p class="plan-sub">Half on signing, half at launch</p>
+            <ul>
+              <li>The website, paid in two instalments</li>
+              <li>From launch, one of the two maintenance plans below</li>
+            </ul>
+          </article>
+          <article class="plan">
+            <div class="plan-top"><h4>Monthly subscription</h4><div class="plan-price">$200<small>per month</small></div></div>
+            <p class="plan-sub">Nothing to pay before launch</p>
+            <ul>
+              <li>The website and everything in the Essential plan</li>
+              <li>12-month minimum, then month to month</li>
+            </ul>
+          </article>
+        </div>
+        <p class="fine">If Integrilex cancels the subscription before the 12 months are up, the difference between what has been paid and the $2,500 website price is due.</p>
+
+        <h3>Maintenance plans</h3>
+        <p>With the one-time payment, the site runs on one of two monthly plans from launch, each with a 12-month minimum and then month to month.</p>
+        <div class="plans">
+          <article class="plan">
+            <div class="plan-top"><h4>Essential</h4><div class="plan-price">$50<small>per month</small></div></div>
+            <p class="plan-sub">Hosting and care, with changes billed by time</p>
+            <ul>
+              <li>Hosting, backups, monitoring and site statistics</li>
+              <li>Changes billed by time: $25 for the first 15 minutes, then $22.50 for each further 15 minutes</li>
+              <li>Each change quoted before work starts and added to the next monthly bill</li>
+            </ul>
+          </article>
+          <article class="plan">
+            <div class="plan-top"><h4>Retainer</h4><div class="plan-price">$250<small>per month</small></div></div>
+            <p class="plan-sub">Everything in Essential, plus:</p>
+            <ul>
+              <li>Unlimited small and medium changes, one request at a time</li>
+              <li>Two hours of development work a month for larger work such as a new page. Unused hours carry over for 30 days.</li>
+              <li>A reply within one business day, and each change completed within five business days</li>
+            </ul>
+          </article>
+        </div>
+
+        <p>A change is one edit to one page. The Retainer plan includes all small and medium changes:</p>
+        <ul>
+          <li><strong>Small:</strong> a text edit on one page, swapping in a supplied photo, updating hours or contact details, or adding a downloadable file such as a PDF.</li>
+          <li><strong>Medium:</strong> a new section on an existing page, or reorganizing the content of a page.</li>
+          <li><strong>Large:</strong> a new page, a new page layout, or anything that needs new design. On the Retainer plan, large changes use the development hours. Work beyond those hours, and large changes on the Essential plan, are billed at $90 an hour.</li>
+        </ul>
+
+        <h3>Optional add-ons</h3>
+        <p>Add-ons are one-time fees, available under either payment option, and chosen at the start of the project.</p>
+        <p><strong>Spanish version, $400.</strong> The whole site in Spanish, with a language switch in the header and search setup for each language. Plain Sight translates it with AI, and Integrilex reviews the translation before launch.</p>
+        <p><strong>Italian version, $200.</strong> The whole site in Italian as well, added alongside the Spanish version and reviewed the same way.</p>
+        <p><strong>Photography brief and mood board, $300.</strong> Reference images and an aesthetic direction for the site's photographs, with a written brief for the photographer or for Integrilex: the shots needed, the setting and light that suit the design, and the image sizes the site uses.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="timeline">
+    <div class="wrap sec">
+      <header><span class="label">04</span><h2>Timeline</h2></header>
+      <div class="prose">
+        <p class="lead">The website will take two to three weeks from kickoff to launch, depending on how quickly each review comes back.</p>
+        <h3>Assumptions</h3>
+        <ul>
+          <li>Integrilex sends the written content, photographs and logo files by kickoff. The timeline starts once they are in hand.</li>
+          <li>Integrilex names one person to give feedback and approvals, and replies to each review within two business days.</li>
+          <li>Feedback for each review is sent together as one list.</li>
+          <li>With kickoff by October 13, the site will launch between October 27 and November 3, ahead of the office event on November 10. If the new photographs are not ready by kickoff, the site will launch with the best of the current photographs, and Plain Sight will swap in the new ones at no additional cost.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="dashboard">
+    <div class="wrap sec">
+      <header><span class="label">05</span><h2>Plain Sight Dashboard</h2></header>
+      <div class="prose">
+        <p class="lead">Plain Sight Dashboard is the website management platform Plain Sight uses to host and maintain the sites it builds.</p>
+        <p>Every website needs hosting to stay online. With Plain Sight, that hosting runs through the dashboard, and Integrilex pays for it through its maintenance plan or subscription. Plain Sight keeps the site online, backed up, monitored and up to date, and Integrilex gets the tools to see how the site is doing and to manage it day to day:</p>
+        <ul>
+          <li><strong>Statistics.</strong> How many people visited the site, where they came from, and which pages they read.</li>
+          <li><strong>Inbox.</strong> Every message sent through the contact form, kept in one place as well as arriving by email.</li>
+          <li><strong>Changes.</strong> A short form for asking Plain Sight to change something on the site, with the status of each request until it is live. Small and medium changes are included on the Retainer plan.</li>
+          <li><strong>Billing.</strong> Invoices, payments and the current plan.</li>
+        </ul>
+        <p>Integrilex signs in with a link sent by email, with no password to remember.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="terms">
+    <div class="wrap sec">
+      <header><span class="label">06</span><h2>Payment terms</h2></header>
+      <div class="prose">
+        <ul>
+          <li>Paying a year in advance gets two months free on the Essential and Retainer plans.</li>
+          <li>Add-ons are billed half on signing and half at launch.</li>
+          <li>Integrilex owns its domain name, registers it in its own name and pays for it directly.</li>
+          <li>Invoices are payable within 15 days. Prices are in Canadian dollars and do not include tax.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="not-included">
+    <div class="wrap sec">
+      <header><span class="label">07</span><h2>Not included</h2></header>
+      <div class="prose">
+        <ul>
+          <li><strong>Writing the content.</strong> Integrilex provides the written content. Plain Sight edits it for consistency and places it on the pages.</li>
+          <li><strong>Photography and video production.</strong> Integrilex provides photographs and any video.</li>
+          <li><strong>Logo and brand design.</strong> The site uses Integrilex's existing logo.</li>
+          <li><strong>Ongoing search work.</strong> The site is set up to be found by name. Work to rank for broader search terms is separate.</li>
+          <li><strong>Professional translation.</strong> The Spanish and Italian add-ons use AI translation, which Integrilex reviews before launch.</li>
+          <li><strong>Law Society of Ontario review.</strong> Checking the site's content against the Law Society's marketing rules stays with Integrilex.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="next-steps" class="next">
+    <div class="wrap sec">
+      <header><span class="label">08</span><h2>Next steps</h2></header>
+      <div class="prose">
+        <p class="lead">On acceptance, Plain Sight will send the agreement for the chosen payment option, along with the content checklist.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="wordmark">Plain Sight<span>.</span></span>
+    <span class="label">Integrilex website · Build proposal · v1.0 · <a href="integrilex-website-proposal.pdf" download>Download PDF</a></span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var bar = document.getElementById('bar');
+    var hero = document.getElementById('top');
+    new IntersectionObserver(function (entries) {
+      bar.classList.toggle('show', !entries[0].isIntersecting);
+    }, { threshold: 0.05 }).observe(hero);
+
+    var links = Array.prototype.slice.call(document.querySelectorAll('.bar ol a'));
+    var byId = {};
+    links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var link = byId[entry.target.id];
+        links.forEach(function (a) { a.removeAttribute('aria-current'); });
+        if (!link) return;
+        link.setAttribute('aria-current', 'true');
+        // scrollIntoView here would cancel the page's in-progress smooth scroll
+        var list = link.closest('ol');
+        if (list.scrollWidth > list.clientWidth) {
+          list.scrollLeft = link.offsetLeft - list.clientWidth / 2 + link.offsetWidth / 2;
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+
+    document.querySelectorAll('main section').forEach(function (s) { observer.observe(s); });
+  })();
+</script>
+</body>
+</html>
